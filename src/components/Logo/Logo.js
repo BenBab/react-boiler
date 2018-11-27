@@ -2,10 +2,13 @@ import React from 'react';
 
 import burgerLogo from '../../assets/images/burger-logo.png';
 import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
 
 const logo = (props) => (
     <StyledLogo>
-        <img src={burgerLogo} alt="Logo" />
+        <NavLink to={'/'}>
+            <img src={burgerLogo} alt="Logo" />
+        </NavLink>    
     </StyledLogo>
 );
 
@@ -16,7 +19,7 @@ const StyledLogo = styled.div`
     box-sizing: border-box;
     border-radius: 5px;
 
-    > img {
+    > a img {
         height: 100%;
     }
 `;

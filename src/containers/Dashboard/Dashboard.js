@@ -1,19 +1,15 @@
 import React, { Component } from 'react'
-import axios from 'axios';
 
 export default class Dashboard extends Component {
   
-  componentDidMount(){
-    axios.get('https://jsonplaceholder.typicode.com/users')
-    .then(response => {
-      console.log('initial response', response)
-    })
-  }
-
   render() {
+    console.log('dashboard props' , this.props)
+    const { pageInfo } = this.props
+    if ( !pageInfo ) {return <div> loading...</div>}
+
     return (
       <div>
-        bashboard info
+        {pageInfo.title}
       </div>
     )
   }
