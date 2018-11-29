@@ -1,39 +1,39 @@
 import React, { Component } from 'react';
-import { Route }  from 'react-router-dom';
-import axios from 'axios';
+import { Route, withRouter }  from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import Layout from './hoc/Layout/Layout';
 import Dashboard from './containers/Dashboard/Dashboard';
 import Admin from './containers/Admin/Admin';
+import Auth from './containers/Auth/Auth';
 import ContactUs from './components/Pages/ContactUs/ContactUs';
 //import DynamicPage from './components/Pages/DynamicPage/DynamicPage'
 
 import { ThemeProvider } from 'styled-components';
 import { mainTheme } from './styles/theme';
+import * as actions from './store/actions/index';
 
 class App extends Component {
 
-  state = {
-    data: null
-  }
-  
   componentDidMount(){
-    axios.get('https://react-boiler-5ecbd.firebaseio.com/siteInfo.json')
-    .then(response => {
-      console.log('initial response', response)
-      this.setState({ data: response.data})
-    })
+    // axios.get('https://react-boiler-5ecbd.firebaseio.com/siteInfo.json')
+    // .then(response => {
+    //   console.log('initial response', response)
+    //   this.setState({ data: response.data})
+    // })
+    this.props.onInitWebsiteState();
   }
 
   render() {
-    console.log(this.state)
+    //console.log('app file state', this.state)
+    console.log('app file props', this.props)
     let dynamicRoutes = null
     let homePage = null
 
-    if (this.state.data !== null){
-      homePage = this.state.data.home
+    if (this.props.home !== null){
+      homePage = this.props.home
 
-      dynamicRoutes = this.state.data.navigationItems.map( (item, i) => {
+      dynamicRoutes = this.props.navigationItems.map( (item, i) => {
         if (!item.dropdownPages){
           return <Route key={i} path={'/' + item.route } render={(props) => (<Dashboard pageInfo={item} {...props} />)}/>
         }
@@ -51,6 +51,7 @@ class App extends Component {
         <Layout>
           <Route path='/' exact render={(props) => (<Dashboard pageInfo={homePage} {...props} />)} />
           <Route path='/admin' component={Admin} />
+          <Route path='/authenticate-admin' component={Auth} />
           <Route path='/ContactUs' component={ContactUs} />
           {dynamicRoutes}
         </Layout>
@@ -59,4 +60,19 @@ class App extends Component {
   }
 }
 
-export default App;
+
+const mapStateToProps = state => {
+  return {
+      home: state.dashboard.home,
+      navigationItems: state.dashboard.navigationItems
+  };
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+      onInitWebsiteState: () => dispatch(actions.initWebsiteState()),
+  }
+}
+
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

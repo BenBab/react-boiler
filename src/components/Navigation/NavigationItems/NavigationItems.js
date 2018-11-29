@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import styled from 'styled-components';
 import NavigationItem from './NavigationItem/NavigationItem';
@@ -27,7 +28,7 @@ class NavigationItems extends Component {
         const selected = event.target.innerText
         //const selectedIndex = this.state.navigationItems.find( item => { item.title === selected})
         //const stateCopy = { ...this.state.navigationItems }
-        const navigationItems = this.state.navigationItems.map( item => {
+        const navigationItems = this.props.navigationItems.map( item => {
             if (item.title === selected){
                 item.selected = !item.selected;
                 if (!item.dropdownPages){
@@ -47,8 +48,8 @@ class NavigationItems extends Component {
 
         let navigationItems = null;
         
-        if (this.state.navigationItems.length > 0){
-            navigationItems = this.state.navigationItems.map( (navItem, index) => {
+        if (this.props.navigationItems.length > 0){
+            navigationItems = this.props.navigationItems.map( (navItem, index) => {
                 return (
                  <div key={index} onClick={this.handleNavSelection}>
                      <NavigationItem selected={navItem.selected} dropdownMenu={navItem.dropdownPages}>{navItem.title}</NavigationItem>
@@ -84,4 +85,11 @@ const StyledNavItems = styled.div`
     
 `;
 
-export default withRouter(NavigationItems);
+const mapStateToProps = state => {
+    return {
+        navigationItems: state.dashboard.navigationItems
+    };
+}
+
+
+export default connect(mapStateToProps)(withRouter(NavigationItems));
