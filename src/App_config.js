@@ -1,1 +1,1 @@
-export const siteName = 'siteInfo'
+export const siteName = 'djHire'

@@ -40,8 +40,6 @@ export const checkAuthTimeout = (expirationTime) => {
 }
 
 export const auth = ( email, password, admin ) => {
-    
-
     return dispatch => {
         dispatch(authStart());
         if (email !== admin){

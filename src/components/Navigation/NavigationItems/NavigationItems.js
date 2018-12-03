@@ -5,24 +5,6 @@ import styled from 'styled-components';
 import NavigationItem from './NavigationItem/NavigationItem';
 import { withRouter } from 'react-router-dom';
 class NavigationItems extends Component {
-    state = {
-        navigationItems : [ 
-        {
-          dropdownPages : [ { route : "wedding-dj", title : "wedding dj" }, { route : "21st-dj", title : "21st Dj" } ],
-          route : "services",
-          selected : false,
-          title : "Services"
-        }, { 
-          dropdownPages : [ { route : "who-we-are", title : "Who we are" }, {route : "reviews", title : "Reviews" } ],
-          route : "about-us",
-          selected : false,
-          title : "About us"
-        }, {
-          route : "book-now",
-          selected : false,
-          title : "Book Now"
-        } ]
-      }
     
     handleNavSelection = (event) => {
         const selected = event.target.innerText
