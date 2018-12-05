@@ -1,12 +1,21 @@
 import React, { Component } from 'react'
-
+import { connect } from 'react-redux';
 import Input from '../UI/Input'
+import Flex from '../UI/Wrappers/Flex'
+
+import * as actions from '../../store/actions/index';
 
 export class NewPageForm extends Component {
   state = {
     title: '',
     checked : false,
     selectVal: null
+  }
+
+  componentDidMount(){
+    if(this.props.navigationItems.length > 0){
+      this.setState({selectVal: this.props.navigationItems[0].title})
+    }
   }
 
   handleCheckbox = name => event => {
@@ -43,10 +52,25 @@ export class NewPageForm extends Component {
             </div>
         }
         </form>
+        <Flex justifyContent="flex-end" margin="5px">
+          <button onClick={this.props.handleClose} >
+            Cancel
+          </button>
+          <button onClick={() => this.props.handleSubmit(this.state)} >
+            Confirm
+          </button>
+        </Flex>
+        
       </div>
     )
   }
 }
 
-export default NewPageForm
+const mapDispatchToProps = dispatch => {
+  return {
+      updateNewPageData: () => dispatch(actions.newPageData()),
+  }
+}
+
+export default connect(null, mapDispatchToProps)(NewPageForm)
 

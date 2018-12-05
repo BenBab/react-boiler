@@ -9,13 +9,15 @@ import './styles/index.css';
 import App from './App';
 import dashboardReducer from './store/reducers/dashboardReducer'
 import authReducer from './store/reducers/authReducer'
+import adminReducer from './store/reducers/adminReducer'
 import * as serviceWorker from './serviceWorker';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
     dashboard: dashboardReducer ,
-    auth: authReducer
+    auth: authReducer,
+    admin: adminReducer
 });
 
 const store = createStore(rootReducer, composeEnhancers(

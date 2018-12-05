@@ -31,12 +31,14 @@ class Admin extends Component {
     this.props.onLogoutClick()
   }
 
-  handleNewPageButton = () => {
+  handleNewPageButton = (event) => {
+    event.preventDefault();
     this.setState({newPageOpen : !this.state.newPageOpen})
   }
 
-  submitNewPage = () => {
+  submitNewPage = (newPage_State) => {
     const url = `https://react-boiler-5ecbd.firebaseio.com/${siteName}/navigationItems`
+    console.log('newPage_State', newPage_State);
 
     // axios.post(url, newPageObj)
     // .then(response => {
@@ -61,11 +63,14 @@ class Admin extends Component {
         <button onClick={this.logoutHandler}>logout</button>
         <Modal 
           open={this.state.newPageOpen}
-          navigationItems={this.props.navigationItems} 
-          handleClose={this.handleNewPageButton}
+          navigationItems={this.props.navigationItems}
+          handleClose={this.handleNewPageButton} 
           title="Add a new Webpage"
           description="Here you can add a new page to your website which will show in the header navigation. You can also make the new page a subpage of another navigation link" >
-          <NewPageForm navigationItems={this.props.navigationItems} />
+          <NewPageForm
+            navigationItems={this.props.navigationItems} 
+            handleClose={this.handleNewPageButton} 
+            handleSubmit={this.submitNewPage} />
         </Modal>
           <div>
             <Accordian title={'Homepage'}><div>hello</div></Accordian>
