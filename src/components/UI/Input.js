@@ -11,7 +11,7 @@ console.log('inputProps', props)
   
   switch ( props.inputtype ){
     case ( 'input' ):
-        inputElement = <input />
+        inputElement = <input name={props.name} value={props.value} onChange={props.onChange}/>
     break;
     case ( 'textarea' ):
         inputElement = <textarea />

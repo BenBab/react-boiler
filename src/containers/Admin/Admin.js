@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index'
+import { siteName } from '../../App_config'
 
 import Accordian from '../../components/UI/Accordian'
 import Tabs from '../../components/UI/Tabs/Tabs'
@@ -32,6 +33,22 @@ class Admin extends Component {
 
   handleNewPageButton = () => {
     this.setState({newPageOpen : !this.state.newPageOpen})
+  }
+
+  submitNewPage = () => {
+    const url = `https://react-boiler-5ecbd.firebaseio.com/${siteName}/navigationItems`
+
+    // axios.post(url, newPageObj)
+    // .then(response => {
+    //   console.log(response)
+
+    //   // dispatch(authSuccess(response.data));
+    //   // dispatch(checkAuthTimeout(response.data.expiresIn))
+    // })
+    // .catch(err => {
+    //   console.log(err);
+    //   // dispatch(authFail(err.response.data.error));
+    // })
   }
   
   render() {
