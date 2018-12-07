@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import Input from '../UI/Input'
 import Flex from '../UI/Wrappers/Flex'
+import Button from '../UI/Buttons/Button'
 
 import * as actions from '../../store/actions/index';
 
@@ -28,7 +29,9 @@ export class NewPageForm extends Component {
 
   onInputChange = (event) => {
     const {value, name} = event.target
-    this.setState({ [name]: value })
+    const scrubbedVal = value.replace(/[^\w\s]/gi, '')
+
+    this.setState({ [name]: scrubbedVal })
   }
 
   render() {
@@ -36,7 +39,7 @@ export class NewPageForm extends Component {
     return (
       <div>
         <form>
-        <Input inputtype="input" label="Page Title" name="title" value={this.state.value} onChange={this.onInputChange}/>
+        <Input inputtype="input" label="Page Title" name="title" value={this.state.title} onChange={this.onInputChange}/>
         {this.props.navigationItems.length > 0 &&
             <div>
                 <Input inputtype="checkbox" sideLabel="Is this a dropdown SubPage" checked={this.state.checked} handleChange={this.handleCheckbox}/>
@@ -53,12 +56,14 @@ export class NewPageForm extends Component {
         }
         </form>
         <Flex justifyContent="flex-end" margin="5px">
-          <button onClick={this.props.handleClose} >
+          <Button onClick={this.props.handleClose} >
             Cancel
-          </button>
-          <button onClick={() => this.props.handleSubmit(this.state)} >
+          </Button>
+          <Button 
+            onClick={() => this.props.handleSubmit(this.state)}
+            disabled={this.state.title === '' ? true : false}>
             Confirm
-          </button>
+          </Button>
         </Flex>
         
       </div>
