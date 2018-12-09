@@ -3,14 +3,14 @@ import { updateObject } from '../utility';
 
 const initialState = {
     home: null,
-    navigationItems: [],
+    navigationItems: null,
     admin: null
 };
 
 const setData = (state, action) => {
     return updateObject( state, {
         home: action.data.home,
-        navigationItems: action.data.navigationItems,
+        navigationItems: action.data.navigationItems || null,
         admin: action.data.administrator
     } );
 };

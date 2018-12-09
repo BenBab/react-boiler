@@ -27,24 +27,28 @@ class App extends Component {
   render() {
     //console.log('app file state', this.state)
     console.log('app file props', this.props)
-    let dynamicRoutes = null
+    let dynamicRoutes = []
     let homePage = null
 
     if (this.props.home !== null){
       homePage = this.props.home
-
-      dynamicRoutes = this.props.navigationItems.map( (item, i) => {
-        if (!item.dropdownPages){
-          return <Route key={i} path={'/' + item.route } render={(props) => (<Dashboard pageInfo={item} {...props} />)}/>
-        }
-        else {
-          return item.dropdownPages.map( (dropDownItem, i) => {
-            return <Route key={i} path={'/pages/' + dropDownItem.route } render={(props) => (<Dashboard pageInfo={dropDownItem} {...props} />)} />
-          })
-        }
-      })
+      if (this.props.navigationItems !== null ){
+        const { navigationItems } = this.props
+        
+        dynamicRoutes = Object.keys(navigationItems).map((key, i) => {
+          const item = this.props.navigationItems[key]
+          if (!item.dropdownPages){
+            return <Route key={i} path={'/' + item.route } render={(props) => (<Dashboard pageInfo={item} {...props} />)}/>
+          }
+          else {
+            return Object.keys(item.dropdownPages).map((key, i) => {
+              const dropDownItem = item.dropdownPages[key]
+              return <Route key={i} path={'/pages/' + dropDownItem.route } render={(props) => (<Dashboard pageInfo={dropDownItem} {...props} />)} />
+            })
+          }
+        })
+      }
     }
-
 
     return (
       <ThemeProvider theme={mainTheme}>

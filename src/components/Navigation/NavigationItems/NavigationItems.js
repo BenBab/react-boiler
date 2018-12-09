@@ -10,7 +10,9 @@ class NavigationItems extends Component {
         const selected = event.target.innerText
         //const selectedIndex = this.state.navigationItems.find( item => { item.title === selected})
         //const stateCopy = { ...this.state.navigationItems }
-        const navigationItems = this.props.navigationItems.map( item => {
+
+        const navigationItems = Object.keys(this.props.navigationItems).map(key => {
+            const item = this.props.navigationItems[key]
             if (item.title === selected){
                 item.selected = !item.selected;
                 if (!item.dropdownPages){
@@ -30,8 +32,9 @@ class NavigationItems extends Component {
 
         let navigationItems = null;
         
-        if (this.props.navigationItems.length > 0){
-            navigationItems = this.props.navigationItems.map( (navItem, index) => {
+        if (this.props.navigationItems !== null){
+            navigationItems = Object.keys(this.props.navigationItems).map((key, index) => {
+                const navItem = this.props.navigationItems[key]
                 return (
                  <div key={index} onClick={this.handleNavSelection}>
                      <NavigationItem selected={navItem.selected} dropdownMenu={navItem.dropdownPages}>{navItem.title}</NavigationItem>

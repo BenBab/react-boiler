@@ -5,14 +5,30 @@ import { updateObject } from '../utility'
 const initialState = {
     title: '',
     route: '',
-    navigationItems: []
+    navigationItems: [],
+    loading: false,
+    error: null
+
 }
 
-const newPageData = ( state, action ) => {
-    // const route = 
-
+const addPageStart = ( state, action ) => {
     return updateObject( state, {
-        title: action.title,
+        loading: true,
+        error: null
+    })
+}
+
+const addPageSuccess = ( state, action ) => {
+    return updateObject( state, {
+        loading: false,
+        error: null
+    })
+}
+
+const addPageFail = ( state, action ) => {
+    return updateObject( state, {
+        loading: false,
+        error: action.error
          
     })
 }
@@ -20,12 +36,12 @@ const newPageData = ( state, action ) => {
 
 const reducer = (state = initialState, action) => {
     switch (action.type){
-        case actionTypes.NEW_PAGE_DATA:
-            return newPageData( state, action )
-        // case actionTypes.CLEAR_NEW_PAGE_DATA:
-        //     return clearNewPageData( state, action )
-        // case actionTypes.ADD_PAGE:
-        //     return authFail( state, action )
+        case actionTypes.ADD_PAGE_START:
+            return addPageStart( state, action )
+        case actionTypes.ADD_PAGE_SUCCESS:
+            return addPageSuccess( state, action )
+        case actionTypes.ADD_PAGE_FAIL:
+            return addPageFail( state, action )
         // case actionTypes.ADD_PAGE_SUCCESS:
         //     return authLogout( state, action)
         // case actionTypes.ADD_PAGE_FAIL:

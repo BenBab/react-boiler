@@ -22,18 +22,29 @@ export default class TabMenu extends Component {
         const { value } = this.state;
         const { navigationItems, parent} = this.props;
         console.log('tabs props', this.props)
-        let tabLabels = <Tab label="No Header Navigation menu exists yet" /> 
+        let tabLabels = null
         let tabitems = null
 
 
-        if( navigationItems.length > 0 ){
-            tabLabels = navigationItems.map( (item, index) => {
+        if( navigationItems !== null ){
+            tabLabels = Object.keys(navigationItems).map((key, index) => {
+                const item = navigationItems[key]
                 //passes the item title down to tabItems, which then runs tabs again if there is a drop down, and passes a parent value back
                 return <Tab key={index} label={ parent ? parent+' - '+item.title : item.title} />            
             })
-            tabitems = navigationItems.map( (item, index) => {
-                return( value === index && <TabItems key={index} itemProps={item}>{item.title }</TabItems> )
-            })
+
+            tabitems = Object.keys(navigationItems).map((key, index) => {
+                return( value === index && <TabItems key={index} itemProps={navigationItems[key]}>{navigationItems[key].title }</TabItems> )
+            });
+
+
+            // tabLabels = navigationItems.map( (item, index) => {
+            //     //passes the item title down to tabItems, which then runs tabs again if there is a drop down, and passes a parent value back
+            //     return <Tab key={index} label={ parent ? parent+' - '+item.title : item.title} />            
+            // })
+            // tabitems = navigationItems.map( (item, index) => {
+            //     return( value === index && <TabItems key={index} itemProps={item}>{item.title }</TabItems> )
+            // })
         }
 
         if (tabitems === null && tabLabels === null) return <div></div>

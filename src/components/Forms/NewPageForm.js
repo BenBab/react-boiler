@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Input from '../UI/Input'
 import Flex from '../UI/Wrappers/Flex'
 import Button from '../UI/Buttons/Button'
+import Spinner from '../UI/Spinner'
 
 import * as actions from '../../store/actions/index';
 
@@ -14,8 +15,16 @@ export class NewPageForm extends Component {
   }
 
   componentDidMount(){
-    if(this.props.navigationItems.length > 0){
-      this.setState({selectVal: this.props.navigationItems[0].title})
+    if(this.props.navigationItems !== null){
+      // this.setState({selectVal: this.props.navigationItems[0].title})
+      let title = ''
+      for (var prop in this.props.navigationItems) {
+        title = this.props.navigationItems[prop].title
+        break;
+      }
+
+      this.setState({selectVal: title})
+    
     }
   }
 
@@ -40,7 +49,7 @@ export class NewPageForm extends Component {
       <div>
         <form>
         <Input inputtype="input" label="Page Title" name="title" value={this.state.title} onChange={this.onInputChange}/>
-        {this.props.navigationItems.length > 0 &&
+        {this.props.navigationItems !== null &&
             <div>
                 <Input inputtype="checkbox" sideLabel="Is this a dropdown SubPage" checked={this.state.checked} handleChange={this.handleCheckbox}/>
                 <br/>
@@ -64,6 +73,9 @@ export class NewPageForm extends Component {
             disabled={this.state.title === '' ? true : false}>
             Confirm
           </Button>
+          {this.props.loading && 
+            <Spinner/>
+          }
         </Flex>
         
       </div>
@@ -71,11 +83,12 @@ export class NewPageForm extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-      updateNewPageData: () => dispatch(actions.newPageData()),
-  }
-}
+// const mapDispatchToProps = dispatch => {
+//   return {
+//       //updateNewPageData: () => dispatch(actions.newPageData()),
+//   }
+// }
 
-export default connect(null, mapDispatchToProps)(NewPageForm)
+//export default connect(null, mapDispatchToProps)(NewPageForm)
+export default NewPageForm
 

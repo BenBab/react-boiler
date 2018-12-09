@@ -17,7 +17,8 @@ console.log('inputProps', props)
         inputElement = <textarea />
     break;
     case ( 'select' ):
-        selectItems = props.items.map( (item) => {
+        selectItems = Object.keys(props.items).map(key => { 
+            const item = props.items[key]
             return <option key={item.route} value={item.title}>{item.title}</option>       
         })
         inputElement =

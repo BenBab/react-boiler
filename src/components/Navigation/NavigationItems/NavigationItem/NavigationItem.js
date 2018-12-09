@@ -5,7 +5,8 @@ import { NavLink } from 'react-router-dom';
 const navigationItem = ( props ) => {
     let menuItem = null
     if (props.dropdownMenu){
-        menuItem = props.dropdownMenu.map((menuItem, i) => {
+        menuItem = Object.keys(props.dropdownMenu).map((key, i) => {
+            const menuItem = props.dropdownMenu[key]
             return (
                 <li key={i}>
                     <NavLink to={'/pages/' + menuItem.route}>{menuItem.title}</NavLink>
