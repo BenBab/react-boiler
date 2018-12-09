@@ -8,13 +8,16 @@ import Accordian from '../../components/UI/Accordian';
 import Tabs from '../../components/UI/Tabs/Tabs';
 import Modal from '../../components/UI/Modal';
 import Button from '../../components/UI/Buttons/Button';
+import Toast from '../../components/UI/Toast';
+
 import NewPageForm from '../../components/Forms/NewPageForm';
 class Admin extends Component {
 
   state = {
     newPageOpen : false,
     loading: false,
-    error: null
+    error: null,
+    newPageToast: null
 
 
   }
@@ -89,7 +92,12 @@ class Admin extends Component {
           this.props.onInitWebsiteState()
         })
         .then(() =>{
-          this.setState({loading: false, error: null, newPageOpen: false})
+          this.setState({loading: false, error: null, newPageOpen: false, newPageToast: 'New Page added successfully' })
+        })
+        .then(() => {
+          setTimeout(() => { 
+              this.setState({newPageToast: null}); 
+          }, 7000 );
         })
         .catch(err => {
           console.log(err);
@@ -100,7 +108,6 @@ class Admin extends Component {
   }
 
   // this.props.addPage(url, newPageObj)
-  
   
   render() {
     console.log('Admin Page props', this.props)
@@ -135,7 +142,9 @@ class Admin extends Component {
             
             </Accordian>
           </div>
-
+          { this.state.newPageToast !== null &&
+            <Toast message={this.state.newPageToast} />
+          }
 
       </div>
     )

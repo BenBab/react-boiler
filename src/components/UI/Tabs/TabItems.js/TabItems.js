@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components';
+import Input from '../../Input'
 
 import Tabs from '../Tabs'
  
@@ -12,6 +13,9 @@ const TabItems = (props) => {
     return (
         <StyledTabItems>
           {props.children}
+          <Input inputtype="input" label='Top Image' />
+          <Input inputtype="textarea" label='Main Body Text'  />
+
         </StyledTabItems>
     );
 }

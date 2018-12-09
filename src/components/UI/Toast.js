@@ -8,6 +8,11 @@ class Toast extends Component {
     open: false,
   };
 
+  componentDidMount(){
+    this.setState({ open: true });
+
+  }
+
   handleClick = () => {
     this.setState({ open: true });
   };
@@ -26,7 +31,7 @@ class Toast extends Component {
           <Snackbar
           anchorOrigin={{
             vertical: 'bottom',
-            horizontal: 'left',
+            horizontal: 'center',
           }}
           open={this.state.open}
           autoHideDuration={6000}
@@ -34,23 +39,18 @@ class Toast extends Component {
           ContentProps={{
             'aria-describedby': 'message-id',
           }}
-          message={<span id="message-id">Note archived</span>}
+          message={<span id="message-id">{this.props.message}</span>}
           action={[
-            <Button key="undo" color="secondary" size="small" onClick={this.handleClose}>
-              UNDO
-            </Button>,
             <IconButton
               key="close"
               aria-label="Close"
               color="inherit"
-              className={classes.close}
               onClick={this.handleClose}
             >
               <CloseIcon />
             </IconButton>,
           ]}
         />
-        
       </div>
     )
   }
