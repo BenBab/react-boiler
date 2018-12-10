@@ -34,7 +34,7 @@ export default class TabMenu extends Component {
             })
 
             tabitems = Object.keys(navigationItems).map((key, index) => {
-                return( value === index && <TabItems key={index} itemProps={navigationItems[key]}>{navigationItems[key].title }</TabItems> )
+                return( value === index && <TabItems key={index} itemProps={navigationItems[key]}><h2>{ navigationItems[key].title }</h2></TabItems> )
             });
 
 

@@ -8,5 +8,5 @@ export {
 } from './authActions'
 
 export {
-    addNewPage
+    updatePage
 } from './adminActions'

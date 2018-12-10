@@ -2,57 +2,57 @@ import * as actionTypes from './actionTypes'
 import axios from 'axios'
 
 
-export const addPageStart = () => {
+export const updatePageStart = () => {
     return {
-        type: actionTypes.ADD_PAGE_START
+        type: actionTypes.UPDATE_PAGE_START
     };
 }
 
-export const addPageSuccess = () => {
+export const updatePageSuccess = () => {
     return {
-        type: actionTypes.ADD_PAGE_SUCCESS
+        type: actionTypes.UPDATE_PAGE_SUCCESS
     };
 }
 
-export const addPageFail = () => {
+export const updatePageFail = () => {
     return {
-        type: actionTypes.ADD_PAGE_FAIL
+        type: actionTypes.UPDATE_PAGE_FAIL
     };
 }
 
 
-// export const addNewPage = (pageInfo) => {
+// export const updateNewPage = (pageInfo) => {
 //     return {
-//         type: actionTypes.ADD_PAGE,
+//         type: actionTypes.UPDATE_PAGE,
 //         pageInfo
 //     };
 // }
 
 
-export const addNewPage = ( url, pageInfo ) => {
+export const updatePage= ( url, pageInfo ) => {
     return dispatch => {
-        dispatch(addPageStart());
+        dispatch(updatePageStart());
         if (pageInfo.title === ''){
             const error = { message: "INVALID_TITLE"}
-            dispatch(addPageFail(error))}
+            dispatch(updatePageFail(error))}
         else {
-            console.log('new page initial')
+            console.log('update page initial')
             axios.post(url, pageInfo)
             .then(response => {
-                console.log('new page resopnse',response)
+                console.log('update page resopnse',response)
                 // dispatch(authSuccess(response.data));
                 // dispatch(checkAuthTimeout(response.data.expiresIn))
             })
             .catch(err => {
                 console.log(err);
-                dispatch(addPageFail(err.response.data.error));
+                dispatch(updatePageFail(err.response.data.error));
             })
         }
     };
 }
 
 
-// export const addPage = (payload) => {
+// export const updatePage = (payload) => {
 //     return dispatch => {
         
 

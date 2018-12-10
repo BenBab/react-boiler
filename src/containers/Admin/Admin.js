@@ -162,7 +162,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => {
   return {
     onLogoutClick: () => dispatch(actions.logout()),
-    addPage: (pageInfo, url) => dispatch(actions.addNewPage( pageInfo, url )),
+    updatePage: (pageInfo, url) => dispatch(actions.updatePage( pageInfo, url )),
     onInitWebsiteState: () => dispatch(actions.initWebsiteState()),
   }
 }

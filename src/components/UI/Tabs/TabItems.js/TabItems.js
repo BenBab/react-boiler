@@ -1,7 +1,8 @@
 import React from 'react'
 import styled from 'styled-components';
-import Input from '../../Input'
+import Paper from '@material-ui/core/Paper';
 
+import Input from '../../Input'
 import Tabs from '../Tabs'
  
 const TabItems = (props) => {
@@ -10,13 +11,16 @@ const TabItems = (props) => {
         return( <Tabs navigationItems={props.itemProps.dropdownPages} parent={props.children}/>  )
     }
 
-    return (
-        <StyledTabItems>
-          {props.children}
-          <Input inputtype="input" label='Top Image' />
-          <Input inputtype="textarea" label='Main Body Text'  />
+    const { mainText } = props.itemProps.content
 
-        </StyledTabItems>
+    return (
+        <Paper elevation={20}>
+            <StyledTabItems>
+              {props.children}
+              <Input inputtype="input" label='Top Image' />
+              <Input inputtype="textarea" label='Main Body Text' value={mainText}/>
+            </StyledTabItems>
+        </Paper>
     );
 }
 

@@ -14,7 +14,7 @@ console.log('inputProps', props)
         inputElement = <input name={props.name} value={props.value} onChange={props.onChange}/>
     break;
     case ( 'textarea' ):
-        inputElement = <textarea />
+        inputElement = <textarea name={props.name} value={props.value} onChange={props.onChange}/>
     break;
     case ( 'select' ):
         selectItems = Object.keys(props.items).map(key => { 

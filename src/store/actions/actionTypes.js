@@ -7,8 +7,8 @@ export const AUTH_LOGOUT = 'AUTH_LOGOUT'
 
 // export const NEW_PAGE_DATA = 'NEW_PAGE_DATA'
 // export const CLEAR_NEW_PAGE_DATA = 'CLEAR_NEW_PAGE_DATA'
-export const ADD_PAGE_START = 'ADD_PAGE_START'
-// export const ADD_PAGE = 'ADD_PAGE'
-export const ADD_PAGE_SUCCESS = 'ADD_PAGE_SUCCESS'
-export const ADD_PAGE_FAIL= 'ADD_PAGE_FAIL'
+export const UPDATE_PAGE_START = 'UPDATE_PAGE_START'
+// export const UPDATE_PAGE = 'UPDATE_PAGE'
+export const UPDATE_PAGE_SUCCESS = 'UPDATE_PAGE_SUCCESS'
+export const UPDATE_PAGE_FAIL= 'UPDATE_PAGE_FAIL'
 
