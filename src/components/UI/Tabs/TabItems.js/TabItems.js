@@ -4,6 +4,8 @@ import Paper from '@material-ui/core/Paper';
 
 import Input from '../../Input'
 import Tabs from '../Tabs'
+import Button from '../../Buttons/Button'
+import Flex from '../../Wrappers/Flex'
  
 const TabItems = (props) => {
     console.log('tabItems props', props)
@@ -25,6 +27,10 @@ const TabItems = (props) => {
               <Input inputtype="input" label='Top Image' onChange={handleChange}/>
               <Input inputtype="textarea" label='Main Body Text' name='mainText' value={mainText} onChange={handleChange}/>
             </StyledTabItems>
+            <Flex justifyContent='flex-end'>
+                <Button margin="2px 0 15px" >Cancel</Button>
+                <Button margin="2px 20px 15px" onClick={props.updatePageSubmit}>Update</Button>
+            </Flex>
         </Paper>
     );
 }

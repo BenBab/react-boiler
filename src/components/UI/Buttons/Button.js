@@ -6,7 +6,7 @@ const button = (props) => {
     const { disabled = false,  } = props
     
     return (
-        <StyledButton>
+        <StyledButton margin={props.margin}>
             <Button variant="contained" onClick={props.onClick} disabled={disabled}>
                 {props.children}
             </Button>
@@ -15,7 +15,7 @@ const button = (props) => {
 };
 
 const StyledButton = styled.div`
-    margin: 5px;
+    margin: ${props => props.margin || '5px'};
 `;
 
 export default button;

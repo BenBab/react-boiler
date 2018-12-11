@@ -111,6 +111,10 @@ class Admin extends Component {
     this.props.onChangePageState(eventTarget, key, parent)
   }
 
+  updatePageSubmit(eventTarget, key, parent){
+
+  }
+
   // this.props.addPage(url, newPageObj)
   
   render() {
@@ -140,7 +144,10 @@ class Admin extends Component {
                   handleSubmit={this.submitNewPage} />
               </Modal>
               <br/><br/>
-              <Tabs navigationItems={this.props.navigationItems} onChange={this.updatePage.bind(this)} />
+              <Tabs 
+                navigationItems={this.props.navigationItems} 
+                updatePageSubmit={this.updatePageSubmit} 
+                onChange={this.updatePage.bind(this)} />
               <br/>
             </div>
             
