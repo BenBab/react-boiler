@@ -1,4 +1,5 @@
 export const SETDATA = 'SETDATA';
+export const CHANGE_PAGE_DATA = 'CHANGE_PAGE_DATA'
 
 export const AUTH_START = 'AUTH_START'
 export const AUTH_SUCCESS = 'AUTH_SUCCESS'

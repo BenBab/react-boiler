@@ -20,15 +20,6 @@ export const updatePageFail = () => {
     };
 }
 
-
-// export const updateNewPage = (pageInfo) => {
-//     return {
-//         type: actionTypes.UPDATE_PAGE,
-//         pageInfo
-//     };
-// }
-
-
 export const updatePage= ( url, pageInfo ) => {
     return dispatch => {
         dispatch(updatePageStart());
@@ -50,12 +41,4 @@ export const updatePage= ( url, pageInfo ) => {
         }
     };
 }
-
-
-// export const updatePage = (payload) => {
-//     return dispatch => {
-        
-
-//     };
-// }
 

@@ -25,3 +25,16 @@ export const initWebsiteState = () => {
             } );
     };
 };
+
+
+export const changePageState = (eventTarget, key, parent ) => {
+    console.log('action',eventTarget, key, parent)
+    return {
+        type: actionTypes.CHANGE_PAGE_DATA,
+        eventTarget,
+        id: key,
+        parentId: parent
+    }
+}
+
+

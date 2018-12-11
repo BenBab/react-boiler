@@ -15,10 +15,9 @@ class Admin extends Component {
 
   state = {
     newPageOpen : false,
+    newPageToast: null,
     loading: false,
     error: null,
-    newPageToast: null
-
 
   }
   
@@ -107,6 +106,11 @@ class Admin extends Component {
     )
   }
 
+  updatePage(eventTarget, key, parent){
+    console.log(eventTarget.value, key, parent)
+    this.props.onChangePageState(eventTarget, key, parent)
+  }
+
   // this.props.addPage(url, newPageObj)
   
   render() {
@@ -136,7 +140,7 @@ class Admin extends Component {
                   handleSubmit={this.submitNewPage} />
               </Modal>
               <br/><br/>
-              <Tabs navigationItems={this.props.navigationItems}/>
+              <Tabs navigationItems={this.props.navigationItems} onChange={this.updatePage.bind(this)} />
               <br/>
             </div>
             
@@ -155,15 +159,16 @@ const mapStateToProps = (state) => {
   return {
     isAuthenticated: state.auth.token !== null,
     home: state.dashboard.home,
-    navigationItems: state.dashboard.navigationItems
+    navigationItems: state.dashboard.navigationItems,
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    onLogoutClick: () => dispatch(actions.logout()),
-    updatePage: (pageInfo, url) => dispatch(actions.updatePage( pageInfo, url )),
     onInitWebsiteState: () => dispatch(actions.initWebsiteState()),
+    onLogoutClick: () => dispatch(actions.logout()),
+    onChangePageState: (eventTarget, key, parent) => dispatch(actions.changePageState(eventTarget, key, parent)),
+    onUpdatePageSubmit: (pageInfo, url) => dispatch(actions.updatePage( pageInfo, url )),
   }
 }
 

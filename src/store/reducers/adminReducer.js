@@ -3,9 +3,8 @@ import { updateObject } from '../utility'
 
 
 const initialState = {
-    title: '',
-    route: '',
-    navigationItems: [],
+    topImage: '',
+    mainText: '',
     loading: false,
     error: null
 

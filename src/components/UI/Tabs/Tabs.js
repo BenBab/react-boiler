@@ -20,7 +20,7 @@ export default class TabMenu extends Component {
 
     render() {
         const { value } = this.state;
-        const { navigationItems, parent} = this.props;
+        const { navigationItems, parent, parentId } = this.props;
         console.log('tabs props', this.props)
         let tabLabels = null
         let tabitems = null
@@ -30,11 +30,11 @@ export default class TabMenu extends Component {
             tabLabels = Object.keys(navigationItems).map((key, index) => {
                 const item = navigationItems[key]
                 //passes the item title down to tabItems, which then runs tabs again if there is a drop down, and passes a parent value back
-                return <Tab key={index} label={ parent ? parent+' - '+item.title : item.title} />            
+                return <Tab key={index} label={ parent ? parent.props.children+' - '+item.title : item.title} />            
             })
 
             tabitems = Object.keys(navigationItems).map((key, index) => {
-                return( value === index && <TabItems key={index} itemProps={navigationItems[key]}><h2>{ navigationItems[key].title }</h2></TabItems> )
+                return( value === index && <TabItems key={index} pageId={key} parentId={parentId || null} itemProps={navigationItems[key]} onChange={this.props.onChange}><h2>{ navigationItems[key].title }</h2></TabItems> )
             });
 
 

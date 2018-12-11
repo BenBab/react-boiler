@@ -1,5 +1,6 @@
 export {
-    initWebsiteState
+    initWebsiteState,
+    changePageState
 } from './dashboardActions';
 
 export {
