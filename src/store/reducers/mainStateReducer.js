@@ -43,11 +43,13 @@ const updatePageState = ( state, action ) => {
 }
 
 const revertState = (state, action) => {
-    return updateObject( state, {
-        home : state.state_copy.home,
-        navigationItems: state.state_copy.navigationItems,
-        state_copy: null
-    });
+    if (state.state_copy !== null){
+        return updateObject( state, {
+            home : state.state_copy.home,
+            navigationItems: state.state_copy.navigationItems,
+            state_copy: null
+        });
+    }else { return state }
 }
 
 const reducer = ( state = initialState, action ) => {

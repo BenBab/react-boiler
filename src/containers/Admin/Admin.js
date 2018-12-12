@@ -143,6 +143,8 @@ class Admin extends Component {
         </div>
         <button onClick={this.logoutHandler}>logout</button>
           <div>
+            <Accordian title={'Media'}><div>hello</div></Accordian>
+            <br/>
             <Accordian title={'Homepage'}><div>hello</div></Accordian>
             <br/>
             <Accordian title='Header Navigation'>
