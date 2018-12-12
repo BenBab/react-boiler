@@ -1,7 +1,8 @@
 export {
     initWebsiteState,
-    changePageState
-} from './dashboardActions';
+    changePageState,
+    revertStateChange
+} from './mainStateActions';
 
 export {
     auth,
@@ -9,5 +10,5 @@ export {
 } from './authActions'
 
 export {
-    updatePage
+    updatePageSubmit
 } from './adminActions'

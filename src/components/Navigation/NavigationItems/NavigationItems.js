@@ -72,7 +72,7 @@ const StyledNavItems = styled.div`
 
 const mapStateToProps = state => {
     return {
-        navigationItems: state.dashboard.navigationItems
+        navigationItems: state.mainState.navigationItems
     };
 }
 

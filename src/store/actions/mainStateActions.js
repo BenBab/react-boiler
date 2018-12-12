@@ -26,8 +26,13 @@ export const initWebsiteState = () => {
     };
 };
 
+export const changePageState_Start = () => {
+    return {
+        type: actionTypes.CHECK_STATE_BACKUP,
+    }
+}
 
-export const changePageState = (eventTarget, key, parent ) => {
+export const changePageState_update = (eventTarget, key, parent ) => {
     console.log('action',eventTarget, key, parent)
     return {
         type: actionTypes.CHANGE_PAGE_DATA,
@@ -35,6 +40,20 @@ export const changePageState = (eventTarget, key, parent ) => {
         id: key,
         parentId: parent
     }
+}
+
+export const revertStateChange = () => {
+    return {
+        type: actionTypes.REVERT_STATE_CHANGE,
+    }
+}
+
+
+export const changePageState = (eventTarget, key, parent ) => {
+    return dispatch => {
+        dispatch(changePageState_Start());
+        dispatch(changePageState_update(eventTarget, key, parent));
+    };
 }
 
 

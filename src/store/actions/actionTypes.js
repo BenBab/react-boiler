@@ -1,15 +1,19 @@
+//mainState actions
 export const SETDATA = 'SETDATA';
+export const CHECK_STATE_BACKUP = 'CHECK_STATE_BACKUP'
 export const CHANGE_PAGE_DATA = 'CHANGE_PAGE_DATA'
+export const REVERT_STATE_CHANGE = 'REVERT_STATE_CHANGE'
 
+//auth actions
 export const AUTH_START = 'AUTH_START'
 export const AUTH_SUCCESS = 'AUTH_SUCCESS'
 export const AUTH_FAILED = 'AUTH_FAILED'
 export const AUTH_LOGOUT = 'AUTH_LOGOUT'
 
-// export const NEW_PAGE_DATA = 'NEW_PAGE_DATA'
-// export const CLEAR_NEW_PAGE_DATA = 'CLEAR_NEW_PAGE_DATA'
+//admin actions
 export const UPDATE_PAGE_START = 'UPDATE_PAGE_START'
-// export const UPDATE_PAGE = 'UPDATE_PAGE'
 export const UPDATE_PAGE_SUCCESS = 'UPDATE_PAGE_SUCCESS'
 export const UPDATE_PAGE_FAIL= 'UPDATE_PAGE_FAIL'
+export const RESET_UPDATE_TOAST= 'RESET_UPDATE_TOAST'
+export const REMOVE_STATE_BACKUP = 'REMOVE_STATE_BACKUP'
 

@@ -75,7 +75,7 @@ const mapStateToProps = state => {
   return {
     loading: state.auth.loading,
     error: state.auth.error,
-    admin: state.dashboard.admin,
+    admin: state.mainState.admin,
     isAuthenticated: state.auth.token !== null
   }
 }

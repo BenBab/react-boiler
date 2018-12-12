@@ -7,7 +7,7 @@ import thunk from 'redux-thunk';
 
 import './styles/index.css';
 import App from './App';
-import dashboardReducer from './store/reducers/dashboardReducer'
+import mainStateReducer from './store/reducers/mainStateReducer'
 import authReducer from './store/reducers/authReducer'
 import adminReducer from './store/reducers/adminReducer'
 import * as serviceWorker from './serviceWorker';
@@ -15,7 +15,7 @@ import * as serviceWorker from './serviceWorker';
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
-    dashboard: dashboardReducer ,
+    mainState: mainStateReducer ,
     auth: authReducer,
     admin: adminReducer
 });

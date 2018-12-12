@@ -67,8 +67,8 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return {
-      home: state.dashboard.home,
-      navigationItems: state.dashboard.navigationItems
+      home: state.mainState.home,
+      navigationItems: state.mainState.navigationItems
   };
 }
 

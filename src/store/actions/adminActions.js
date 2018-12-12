@@ -8,36 +8,55 @@ export const updatePageStart = () => {
     };
 }
 
-export const updatePageSuccess = () => {
+export const updatePageSuccess = (pageData) => {
     return {
-        type: actionTypes.UPDATE_PAGE_SUCCESS
+        type: actionTypes.UPDATE_PAGE_SUCCESS,
+        pageData
     };
 }
 
-export const updatePageFail = () => {
+export const updatePageFail = (error) => {
     return {
-        type: actionTypes.UPDATE_PAGE_FAIL
+        type: actionTypes.UPDATE_PAGE_FAIL,
+        error: error
     };
 }
 
-export const updatePage= ( url, pageInfo ) => {
+export const removeStateBackup = () => {
+    return {
+        type: actionTypes.REMOVE_STATE_BACKUP
+    };
+}
+
+export const resetToast = () =>{
+    return {
+        type: actionTypes.RESET_UPDATE_TOAST
+    };
+}
+
+export const updatePageSubmit= ( URL, pageInfo ) => {
     return dispatch => {
         dispatch(updatePageStart());
-        if (pageInfo.title === ''){
+        if (!pageInfo){
             const error = { message: "INVALID_TITLE"}
             dispatch(updatePageFail(error))}
         else {
             console.log('update page initial')
-            axios.post(url, pageInfo)
-            .then(response => {
-                console.log('update page resopnse',response)
-                // dispatch(authSuccess(response.data));
-                // dispatch(checkAuthTimeout(response.data.expiresIn))
+            axios.put(URL, pageInfo)
+            .then( response => {
+                console.log(response)
+                dispatch(updatePageSuccess(response.data));
+                dispatch(removeStateBackup());
+                setTimeout(() => { 
+                    dispatch(resetToast());
+                }, 7000 );
             })
             .catch(err => {
                 console.log(err);
+                // this.setState({loading: false, error: err})
                 dispatch(updatePageFail(err.response.data.error));
             })
+
         }
     };
 }

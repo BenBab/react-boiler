@@ -3,10 +3,9 @@ import { updateObject } from '../utility'
 
 
 const initialState = {
-    topImage: '',
-    mainText: '',
     loading: false,
-    error: null
+    error: null,
+    pageUpdateToast: null
 
 }
 
@@ -20,7 +19,8 @@ const updatePageStart = ( state, action ) => {
 const updatePageSuccess = ( state, action ) => {
     return updateObject( state, {
         loading: false,
-        error: null
+        error: null,
+        pageUpdateToast: 'Your page was succefully updated'
     })
 }
 
@@ -29,6 +29,12 @@ const updatePageFail = ( state, action ) => {
         loading: false,
         error: action.error
          
+    })
+}
+
+const resetToast = (state, action ) => {
+    return updateObject( state, {
+        pageUpdateToast: null  
     })
 }
 
@@ -41,8 +47,8 @@ const reducer = (state = initialState, action) => {
             return updatePageSuccess( state, action )
         case actionTypes.UPDATE_PAGE_FAIL:
             return updatePageFail( state, action )
-        // case actionTypes.UPDATE_PAGE_SUCCESS:
-        //     return authLogout( state, action)
+        case actionTypes.RESET_UPDATE_TOAST:
+            return resetToast( state, action)
         // case actionTypes.UPDATE_PAGE_FAIL:
         //     return authLogout( state, action)
         default:

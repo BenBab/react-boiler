@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
-import { siteName } from '../../App_config';
+import { siteName, URL_PREFIX } from '../../App_config';
 import axios from 'axios';
 
 import Accordian from '../../components/UI/Accordian';
@@ -56,7 +56,7 @@ class Admin extends Component {
       middleText: ''
        
     }
-    let url = `https://react-boiler-5ecbd.firebaseio.com/${siteName}/navigationItems.json`
+    let url = `${URL_PREFIX}/${siteName}/navigationItems.json`
     
     let newPageObj = {
       title,
@@ -74,7 +74,7 @@ class Admin extends Component {
         }
       }
 
-      url = `https://react-boiler-5ecbd.firebaseio.com/${siteName}/navigationItems/${subpageIndex}/dropdownPages.json`
+      url = `${URL_PREFIX}/${siteName}/navigationItems/${subpageIndex}/dropdownPages.json`
 
       newPageObj = {
         title,
@@ -111,8 +111,25 @@ class Admin extends Component {
     this.props.onChangePageState(eventTarget, key, parent)
   }
 
-  updatePageSubmit(eventTarget, key, parent){
+  updatePageSubmit(pageInfo, key, parentKey){
+    console.log(pageInfo, key, parentKey)
+    
+    const URL = !parentKey
+      ? `${URL_PREFIX}/${siteName}/navigationItems/${key}/content.json`
+      : `${URL_PREFIX}/${siteName}/navigationItems/${parentKey}/dropdownPages/${key}/content.json`
 
+    this.props.onUpdatePageSubmit(URL, pageInfo)
+
+    // axios.put(URL, pageInfo)
+    //   .then( response => {
+    //     console.log(response)
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //     // this.setState({loading: false, error: err})
+    //   })
+
+      
   }
 
   // this.props.addPage(url, newPageObj)
@@ -146,8 +163,11 @@ class Admin extends Component {
               <br/><br/>
               <Tabs 
                 navigationItems={this.props.navigationItems} 
-                updatePageSubmit={this.updatePageSubmit} 
-                onChange={this.updatePage.bind(this)} />
+                updatePageSubmit={this.updatePageSubmit.bind(this)} 
+                onChange={this.updatePage.bind(this)}
+                isUpdating={this.props.isUpdating}
+                cancelUpdate={this.props.onRevertChanges}
+                />
               <br/>
             </div>
             
@@ -155,6 +175,9 @@ class Admin extends Component {
           </div>
           { this.state.newPageToast !== null &&
             <Toast message={this.state.newPageToast} />
+          }
+          { this.props.updatePageToast !== null &&
+            <Toast message={this.props.updatePageToast} />
           }
 
       </div>
@@ -165,8 +188,10 @@ class Admin extends Component {
 const mapStateToProps = (state) => {
   return {
     isAuthenticated: state.auth.token !== null,
-    home: state.dashboard.home,
-    navigationItems: state.dashboard.navigationItems,
+    home: state.mainState.home,
+    navigationItems: state.mainState.navigationItems,
+    updatePageToast : state.admin.pageUpdateToast,
+    isUpdating : state.admin.loading
   }
 }
 
@@ -175,7 +200,8 @@ const mapDispatchToProps = dispatch => {
     onInitWebsiteState: () => dispatch(actions.initWebsiteState()),
     onLogoutClick: () => dispatch(actions.logout()),
     onChangePageState: (eventTarget, key, parent) => dispatch(actions.changePageState(eventTarget, key, parent)),
-    onUpdatePageSubmit: (pageInfo, url) => dispatch(actions.updatePage( pageInfo, url )),
+    onUpdatePageSubmit: (pageInfo, url) => dispatch(actions.updatePageSubmit( pageInfo, url )),
+    onRevertChanges: () => dispatch(actions.revertStateChange()),
   }
 }
 
