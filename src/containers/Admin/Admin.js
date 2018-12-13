@@ -11,6 +11,7 @@ import Button from '../../components/UI/Buttons/Button';
 import Toast from '../../components/UI/Toast';
 
 import NewPageForm from '../../components/Forms/NewPageForm';
+import Media from './media/Media'
 class Admin extends Component {
 
   state = {
@@ -143,7 +144,7 @@ class Admin extends Component {
         </div>
         <button onClick={this.logoutHandler}>logout</button>
           <div>
-            <Accordian title={'Media'}><div>hello</div></Accordian>
+            <Accordian title={'Media'}><Media /></Accordian>
             <br/>
             <Accordian title={'Homepage'}><div>hello</div></Accordian>
             <br/>

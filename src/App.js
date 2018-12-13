@@ -13,13 +13,14 @@ import { ThemeProvider } from 'styled-components';
 import { mainTheme } from './styles/theme';
 import * as actions from './store/actions/index';
 
+import axios from 'axios'
+
 class App extends Component {
 
   componentDidMount(){
-    // axios.get('https://react-boiler-5ecbd.firebaseio.com/siteInfo.json')
+    // axios.get('gs://react-boiler-5ecbd.appspot.com/djhire.json')
     // .then(response => {
     //   console.log('initial response', response)
-    //   this.setState({ data: response.data})
     // })
     this.props.onInitWebsiteState();
   }
