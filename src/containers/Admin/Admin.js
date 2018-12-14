@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
 import { siteName, URL_PREFIX } from '../../App_config';
 import axios from 'axios';
+import firebase from'firebase';
 
 import Accordian from '../../components/UI/Accordian';
 import Tabs from '../../components/UI/Tabs/Tabs';
@@ -22,11 +23,29 @@ class Admin extends Component {
 
   }
   
-  // componentDidMount() {
-  //   if (!this.props.isAuthenticated){
-  //     this.props.history.push('/authenticate-admin')
-  //   }
-  // }
+  componentDidMount() {
+    // if (!this.props.isAuthenticated){
+    //   this.props.history.push('/authenticate-admin')
+    // }
+
+    // const uid = this.props.userId || null;
+
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+          // User is signed in.
+          console.log('user is signed in')
+      } else {
+          // No user is signed in.
+          console.log(' No user is signed in.')
+              // firebase.auth().signInWithCustomToken(token).catch(function(error) {
+              //     // Handle Errors here.
+              //     var errorCode = error.code;
+              //     var errorMessage = error.message;
+              //     // ...
+              // });
+     }
+  })
+  }
 
   // componentDidUpdate(prevProps){
   //   if (prevProps.isAuthenticated && !this.props.isAuthenticated ){
@@ -190,8 +209,8 @@ class Admin extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    isAuthenticated: state.auth.token !== null,
-    token: state.auth.token,
+    isAuthenticated: state.auth.userId !== null,
+    userId: state.auth.userId,
     home: state.mainState.home,
     navigationItems: state.mainState.navigationItems,
     updatePageToast : state.admin.pageUpdateToast,

@@ -9,7 +9,7 @@ import classNames from 'classnames'
 
 import styled from 'styled-components';
 
-
+import Button from '../../../components/UI/Buttons/Button'
 
 class Media extends Component {
     constructor(props) {
@@ -19,21 +19,29 @@ class Media extends Component {
 
 
     componentDidMount(){
-        firebase.auth().onAuthStateChanged(function(user) {
-            if (user) {
-              // User is signed in.
-              console.log('user is signed in')
-            } else {
-              // No user is signed in.
-              console.log(' No user is signed in.')
-              firebase.auth().signInWithEmailAndPassword('test@test.com', 'qwerty').catch(function(error) {
-                // Handle Errors here.
-                var errorCode = error.code;
-                var errorMessage = error.message;
-                // ...
-              });
-            }
-          });
+        // firebase.auth().onAuthStateChanged(function(user) {
+        //     if (user) {
+        //       // User is signed in.
+        //       console.log('user is signed in')
+        //     } else {
+        //       // No user is signed in.
+        //       console.log(' No user is signed in.')
+        //       firebase.auth().signInWithEmailAndPassword('test@test.com', 'qwerty')
+        //       .then(res => {
+        //           console.log(res)
+        //       })
+        //       .catch(function(error) {
+        //         // Handle Errors here.
+        //         var errorCode = error.code;
+        //         var errorMessage = error.message;
+        //         // ...
+        //       });
+        //     }
+        //   });
+
+
+        
+
     }
 
     handleFiles = () => {
@@ -79,6 +87,13 @@ class Media extends Component {
 
       }
 
+      signout = () => {
+        firebase.auth().signOut().then(function() {
+            console.log('Signed Out');
+          }, function(error) {
+            console.error('Sign Out Error', error);
+          });
+      }
 
     render() {
         console.log('media props', this.props)
@@ -87,7 +102,7 @@ class Media extends Component {
             <div>
                 <input type="file" ref={this.fileInput} onChange={this.handleFiles}></input>
                 <UploadButton upload={true}>Upload</UploadButton>
-
+                <Button onClick ={this.signout}>signout</Button>
                 <Dropzone 
                     onDrop={this.onDrop}
                     multiple={false}

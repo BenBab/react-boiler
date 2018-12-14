@@ -39,14 +39,15 @@ class Auth extends Component {
     let errorMessage = null;
 
     if (this.props.error) {
-      const errorCode={
-        EMAIL_NOT_FOUND: 'There is no user record corresponding to this email address',
-        INVALID_PASSWORD: 'The password entered was invalid - please try again',
-        USER_DISABLED: 'The user account has been disabled by an administrator.',
-        INVALID_EMAIL: 'The email address entered is invalid'
-      }
+      // const errorCode={
+      //   EMAIL_NOT_FOUND: 'There is no user record corresponding to this email address',
+      //   INVALID_PASSWORD: 'The password entered was invalid - please try again',
+      //   USER_DISABLED: 'The user account has been disabled by an administrator.',
+      //   INVALID_EMAIL: 'The email address entered is invalid'
+      // }
       errorMessage = (
-        <p>{ errorCode[this.props.error.message] }</p>
+        // <p>{ errorCode[this.props.error.message] }</p>
+        <p>{ this.props.error }</p>
       );
     }
 
@@ -76,7 +77,7 @@ const mapStateToProps = state => {
     loading: state.auth.loading,
     error: state.auth.error,
     admin: state.mainState.admin,
-    isAuthenticated: state.auth.token !== null
+    isAuthenticated: state.auth.userId !== null
   }
 }
 
