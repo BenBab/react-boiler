@@ -144,7 +144,7 @@ class Admin extends Component {
         </div>
         <button onClick={this.logoutHandler}>logout</button>
           <div>
-            <Accordian title={'Media'}><Media /></Accordian>
+            <Accordian title={'Media'}><Media authToken={this.props.token} isAuthenticated={this.props.isAuthenticated} /></Accordian>
             <br/>
             <Accordian title={'Homepage'}><div>hello</div></Accordian>
             <br/>
@@ -191,6 +191,7 @@ class Admin extends Component {
 const mapStateToProps = (state) => {
   return {
     isAuthenticated: state.auth.token !== null,
+    token: state.auth.token,
     home: state.mainState.home,
     navigationItems: state.mainState.navigationItems,
     updatePageToast : state.admin.pageUpdateToast,
