@@ -5,6 +5,7 @@ const initialState = {
     home: null,
     navigationItems: null,
     admin: null,
+    images: null,
     state_copy: null,
     
 };
@@ -13,6 +14,7 @@ const setData = (state, action) => {
     return updateObject( state, {
         home: action.data.home,
         navigationItems: action.data.navigationItems || null,
+        images: action.data.images,
         admin: action.data.administrator
     } );
 };

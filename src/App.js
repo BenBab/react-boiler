@@ -13,8 +13,6 @@ import { ThemeProvider } from 'styled-components';
 import { mainTheme } from './styles/theme';
 import * as actions from './store/actions/index';
 
-import axios from 'axios'
-
 class App extends Component {
 
   componentDidMount(){

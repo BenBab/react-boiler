@@ -13,13 +13,16 @@ import Toast from '../../components/UI/Toast';
 
 import NewPageForm from '../../components/Forms/NewPageForm';
 import Media from './media/Media'
+import AuthModal from '../Auth/AuthModal'
 class Admin extends Component {
 
   state = {
+    showSignIn : false,
     newPageOpen : false,
     newPageToast: null,
     loading: false,
     error: null,
+    
 
   }
   
@@ -28,9 +31,9 @@ class Admin extends Component {
     //   this.props.history.push('/authenticate-admin')
     // }
 
-    // const uid = this.props.userId || null;
+    const user = firebase.auth().currentUser;
 
-    firebase.auth().onAuthStateChanged(function(user) {
+    
       if (user) {
           // User is signed in.
           console.log('user is signed in')
@@ -44,7 +47,7 @@ class Admin extends Component {
               //     // ...
               // });
      }
-  })
+  
   }
 
   // componentDidUpdate(prevProps){
@@ -54,9 +57,14 @@ class Admin extends Component {
   // }
 
   logoutHandler = () => {
+    firebase.auth().signOut().then(function() {
+        console.log('Signed Out');
+      }, function(error) {
+        console.error('Sign Out Error', error);
+    });
     this.props.onLogoutClick()
   }
-
+      
   handleNewPageButton = (event) => {
     event.preventDefault();
     this.setState({newPageOpen : !this.state.newPageOpen})
@@ -148,8 +156,11 @@ class Admin extends Component {
     //     console.log(err);
     //     // this.setState({loading: false, error: err})
     //   })
+  }
 
-      
+  timedOutUser = (value) => {
+  this.setState({ showSignIn : value })
+
   }
 
   // this.props.addPage(url, newPageObj)
@@ -161,9 +172,21 @@ class Admin extends Component {
         <div>
           Admin Page
         </div>
-        <button onClick={this.logoutHandler}>logout</button>
+        <Modal
+           open={this.state.showSignIn}
+           title="You have been logged out"
+           description="Your administrator session has expired you will need to log back in to continue"
+           >
+            <AuthModal history={this.props.history} isTimedOut={this.timedOutUser}/>
+        </Modal>
+        <Button onClick={this.logoutHandler}>logout</Button>
           <div>
-            <Accordian title={'Media'}><Media authToken={this.props.token} isAuthenticated={this.props.isAuthenticated} /></Accordian>
+            <Accordian title={'Media'}>
+            <Media 
+              isTimedOut={this.timedOutUser} 
+              currentImages={this.props.images}
+              refreshState={this.props.onInitWebsiteState}/>
+            </Accordian>
             <br/>
             <Accordian title={'Homepage'}><div>hello</div></Accordian>
             <br/>
@@ -213,6 +236,7 @@ const mapStateToProps = (state) => {
     userId: state.auth.userId,
     home: state.mainState.home,
     navigationItems: state.mainState.navigationItems,
+    images: state.mainState.images,
     updatePageToast : state.admin.pageUpdateToast,
     isUpdating : state.admin.loading
   }

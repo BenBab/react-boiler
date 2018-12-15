@@ -1,11 +1,8 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux';
 import Input from '../UI/Input'
 import Flex from '../UI/Wrappers/Flex'
 import Button from '../UI/Buttons/Button'
 import Spinner from '../UI/Spinner'
-
-import * as actions from '../../store/actions/index';
 
 export class NewPageForm extends Component {
   state = {

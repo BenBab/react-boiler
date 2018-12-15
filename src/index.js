@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux'
 import thunk from 'redux-thunk';
-import {siteName, fireBaseConfig } from './App_config'
+import { fireBaseConfig } from './App_config'
 import firebase from "firebase";
 
 import './styles/index.css';
@@ -16,12 +16,9 @@ import * as serviceWorker from './serviceWorker';
 
 
 firebase.initializeApp(fireBaseConfig);
-var storage = firebase.storage();
-var storageRef = storage.ref();
-export var imagesRef = storageRef.child(siteName);
-var dogeRef = imagesRef.child('doge.png')
-console.log(imagesRef)
-console.log(dogeRef)
+export var storageRef = firebase.storage().ref();
+
+
 
 
 const composeEnhancers = process.env.NODE_ENV === 'development'  ?  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null || compose;

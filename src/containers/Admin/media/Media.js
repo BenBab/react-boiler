@@ -1,109 +1,129 @@
 import React, { Component } from 'react';
 import Dropzone from 'react-dropzone'
-import axios from 'axios'
 import firebase from "firebase";
-import UploadButton from '../../../components/UI/Buttons/UploadButton'
 
-import { imagesRef }from '../../../index'
+import { siteName } from '../../../App_config'
+import { storageRef } from '../../../index'
 import classNames from 'classnames'
 
 import styled from 'styled-components';
-
 import Button from '../../../components/UI/Buttons/Button'
+import Paper from '@material-ui/core/Paper';
+
+import ImgGridList from '../../../components/UI/ImgGridList'
+
+
 
 class Media extends Component {
-    constructor(props) {
-        super(props);
-        this.fileInput = React.createRef();
-      }
 
-
-    componentDidMount(){
-        // firebase.auth().onAuthStateChanged(function(user) {
-        //     if (user) {
-        //       // User is signed in.
-        //       console.log('user is signed in')
-        //     } else {
-        //       // No user is signed in.
-        //       console.log(' No user is signed in.')
-        //       firebase.auth().signInWithEmailAndPassword('test@test.com', 'qwerty')
-        //       .then(res => {
-        //           console.log(res)
-        //       })
-        //       .catch(function(error) {
-        //         // Handle Errors here.
-        //         var errorCode = error.code;
-        //         var errorMessage = error.message;
-        //         // ...
-        //       });
-        //     }
-        //   });
-
-
-        
-
+    state ={ 
+        uploadOpen: false,
+        error : null,
+        imageURLs: []
     }
 
-    handleFiles = () => {
-        console.log(this.fileInput)
-        alert(
-            `Selected file - ${
-              this.fileInput.current.files[0].name
-            }`
-        );
-
-        let file = this.fileInput
+    componentDidUpdate(prevProps){
+        if(this.props.currentImages === null) return;
+        if(this.props.currentImages !== prevProps.currentImages){
+            const that = this
+            Object.keys(this.props.currentImages).map((key, i) => {
+                const img = this.props.currentImages[key]
+                storageRef.child(`${siteName}/${img}`).getDownloadURL()
+                .then(url => {
+                    that.setState(prevState => ({
+                        imageURLs: [...prevState.imageURLs, {title: img  , img: url}]
+                    }))
+                })
+                .catch(error => {
+                    // Handle any errors
+                    console.log(error)
+                });   
+            })
+        }
+         
         
-        imagesRef.put(file).then(function(snapshot) {
-            console.log('Uploaded a blob or file!');
-        });
+
+        
+
     }
 
     onDrop = (acceptedFiles, rejectedFiles) => {
         // Do something with files
-
         console.log('accepted', acceptedFiles)
         console.log('rejected',rejectedFiles)
-
-        const file = acceptedFiles[0]
-        const url = 'https://firebasestorage.googleapis.com/v0/b/react-boiler-5ecbd.appspot.com/o'
-        const uploadInfo  = {
-            name: 'djHire',
-            auth: this.props.isAuthenticated,
-             
+        if (rejectedFiles.length !== 0){
+            this.setState({ error: 'Rejected upload, incompatable file detected' })
+            return;
         }
-        
 
+        const user = firebase.auth().currentUser;
+        if (user) {
+            console.log('user is signed in')
+            const file = acceptedFiles[0]
+            if (this.checkFileAlreadyExists(file)){
+                this.setState({ error : `${file.name} already exists, please remove the old image first`})
+                return;
+            }
 
-        imagesRef.put(file)
-        .then(snapshot => {
-            console.log('Uploaded a blob or file!');
-            console.log(snapshot);
+            storageRef.child(`${siteName}/${file.name}`).put(file)
+            .then(snapshot => {
+                console.log('Uploaded a blob or file!');
+                console.log(snapshot);
+                this.addImageRefToDb(file)
+            })
+            .catch(err => {
+                console.log(err);
+            })
+
+        } else {
+            // No user is signed in.
+            console.log(' No user is signed in.')
+            this.props.isTimedOut(true)
+        } 
+    }
+
+    checkFileAlreadyExists = (file) => {
+        if (this.props.currentImages === null) return;
+
+        const findImageRef = Object.keys(this.props.currentImages).filter((key, i) => {
+            const img = this.props.currentImages[key]
+            return img === file.name           
         })
-        .catch(err => {
-            console.log(err);
-        })
 
+         return !findImageRef.length ? false : true
 
-      }
+    }
 
-      signout = () => {
-        firebase.auth().signOut().then(function() {
-            console.log('Signed Out');
-          }, function(error) {
-            console.error('Sign Out Error', error);
-          });
-      }
+    addImageRefToDb = (file) => {
+        var newPostKey = firebase.database().ref().child(`${siteName}/images`).push().key;
+        var updates = {[newPostKey]: file.name};
+        const that = this
+
+        return firebase.database().ref().child(`${siteName}/images`).update(updates , function(error) {
+            if (error) {
+              // The write failed...
+              console.log('image ref in db write failed...', error)
+            } else {
+              // Data saved successfully!
+              console.log('image ref in db saved successfully')
+              that.props.refreshState()
+            }
+          })
+    }
+
+    handleUploadOpen = () => {
+        this.setState({ uploadOpen: !this.state.uploadOpen})
+    }
+
 
     render() {
         console.log('media props', this.props)
-        console.log(imagesRef)
-        return (
-            <div>
-                <input type="file" ref={this.fileInput} onChange={this.handleFiles}></input>
-                <UploadButton upload={true}>Upload</UploadButton>
-                <Button onClick ={this.signout}>signout</Button>
-                <Dropzone 
+        const { error, uploadOpen } = this.state
+
+        let dropZone = null
+
+        if (uploadOpen){
+            dropZone = <Dropzone 
                     onDrop={this.onDrop}
                     multiple={false}
                     accept="image/*">
@@ -123,6 +143,19 @@ class Media extends Component {
                     )
                     }}
                 </Dropzone>
+        }
+
+        return (
+            <div>
+                <Button onClick={this.handleUploadOpen}>
+                    {uploadOpen ? 'Close DropZone' : 'Upload Media'}
+                </Button>
+                {dropZone}
+                {error && <div>{error}</div> }
+                <Paper>
+                  <ImgGridList tileData={this.state.imageURLs}/> 
+                </Paper>
+
 
             </div>
         );
@@ -132,6 +165,7 @@ class Media extends Component {
 const StyledDropArea = styled.div`
     border-style: dotted;
     padding: 5px 20px;
+    margin: 20px 5px;
     cursor:pointer;
 
     /* desktop */

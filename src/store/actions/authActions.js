@@ -1,5 +1,4 @@
 import * as actionTypes from './actionTypes'
-import axios from 'axios'
 import firebase from'firebase';
 
 export const authStart = () => {
@@ -31,11 +30,15 @@ export const logout = () => {
     }
 }
 
-export const checkAuthTimeout = (expirationTime) => {
+export const checkAuthTimeout = (signInTime) => {
+
     return dispatch => {
         setTimeout(() => {
-            dispatch(logout())
-        }, expirationTime * 1000);
+            const user = firebase.auth().currentUser
+            if(user.metadata.b === signInTime){
+                dispatch(logout())
+            }
+        }, 20000);
     };
 }
 //could use the firebase.auth() to authenticate which would have been easier, but this gives flexibility to not be locked into firebase
@@ -70,11 +73,12 @@ export const auth = ( email, password, admin ) => {
                 
               }).then(user => {
                 dispatch(authSuccess(user));
+                //dispatch(checkAuthTimeout(user.metadata.b))
               })
               .catch(function(err) {
                 // Handle Errors here.
                 var errorCode = err.code;
-                var errorMessage = err.message;
+                // var errorMessage = err.message;
                 dispatch(authFail(errorCode ));
                 });
             }
