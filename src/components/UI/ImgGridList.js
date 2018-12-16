@@ -31,14 +31,11 @@ function TitlebarGridList(props) {
   return (
     <StyledGrid>
       <GridList cellHeight={180} className='gridList'>
-        <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
-        </GridListTile>
         {tileData.map(tile => (
-          <GridListTile key={tile.img}>
+          <GridListTile key={tile.title}>
             <img src={tile.img} alt={tile.title} />
             <GridListTileBar
               title={tile.title}
-              subtitle={<span>by: author</span>}
               actionIcon={
                 <IconButton className='gridIcon'>
                   <InfoIcon />
