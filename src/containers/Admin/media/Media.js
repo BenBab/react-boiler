@@ -152,7 +152,7 @@ class Media extends Component {
                 </Button>
                 {dropZone}
                 {error && <div>{error}</div> }
-                <Paper>
+                <Paper elevation={7}>
                   <ImgGridList tileData={this.state.imageURLs}/> 
                 </Paper>
 
