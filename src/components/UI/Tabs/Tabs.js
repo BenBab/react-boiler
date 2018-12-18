@@ -40,7 +40,8 @@ export default class TabMenu extends Component {
                         pageId={key} 
                         parentId={parentId || null} 
                         itemProps={navigationItems[key]} 
-                        onChange={this.props.onChange} 
+                        onChange={this.props.onChange}
+                        openMediaModal={this.props.openMediaModal}
                         updatePageSubmit={this.props.updatePageSubmit}
                         isUpdating={this.props.isUpdating}
                         cancelUpdate={this.props.cancelUpdate}

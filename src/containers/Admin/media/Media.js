@@ -10,7 +10,7 @@ import styled from 'styled-components';
 import Button from '../../../components/UI/Buttons/Button'
 import Paper from '@material-ui/core/Paper';
 
-import ImgGridList from '../../../components/UI/ImgGridList'
+import ImgGridList from './ImgGridList'
 
 
 
@@ -19,32 +19,34 @@ class Media extends Component {
     state ={ 
         uploadOpen: false,
         error : null,
-        imageURLs: []
     }
 
     componentDidUpdate(prevProps){
         if(this.props.currentImages === null) return;
-        if(this.props.currentImages !== prevProps.currentImages){
-            const that = this
-            Object.keys(this.props.currentImages).map((key, i) => {
-                const img = this.props.currentImages[key]
-                storageRef.child(`${siteName}/${img}`).getDownloadURL()
-                .then(url => {
-                    that.setState(prevState => ({
-                        imageURLs: [...prevState.imageURLs, {title: img  , img: url}]
-                    }))
-                })
-                .catch(error => {
-                    // Handle any errors
-                    console.log(error)
-                });   
-            })
+
+        
+        
+        if(this.props.currentImages !== prevProps.currentImages ){
+            this.getImageUrls()
         }
-         
-        
+    }
 
-        
-
+    getImageUrls = () =>{
+        const that = this
+        Object.keys(this.props.currentImages).map((key, i) => {
+            const img = this.props.currentImages[key]
+            storageRef.child(`${siteName}/${img}`).getDownloadURL()
+            .then(url => {
+                // that.setState(prevState => ({
+                //     imageURLs: [...prevState.imageURLs, {title: img  , img: url}]
+                // }))
+                that.props.setMediaImages(img, url)
+            })
+            .catch(error => {
+                // Handle any errors
+                console.log(error)
+            });   
+        })
     }
 
     onDrop = (acceptedFiles, rejectedFiles) => {
@@ -121,8 +123,9 @@ class Media extends Component {
         const { error, uploadOpen } = this.state
 
         let dropZone = null
+        let mediaTemplate = null
 
-        if (uploadOpen){
+        if (uploadOpen && !this.props.isModal){
             dropZone = <Dropzone 
                     onDrop={this.onDrop}
                     multiple={false}
@@ -145,19 +148,34 @@ class Media extends Component {
                 </Dropzone>
         }
 
-        return (
-            <div>
+
+        if (!this.props.isModal){
+            mediaTemplate =
+              <div>
                 <Button onClick={this.handleUploadOpen}>
                     {uploadOpen ? 'Close DropZone' : 'Upload Media'}
                 </Button>
-                {dropZone}
-                {error && <div>{error}</div> }
+                    {dropZone}
+                    {error && <div>{error}</div> }
                 <Paper elevation={7}>
-                  <ImgGridList tileData={this.state.imageURLs}/> 
+                    <ImgGridList tileData={this.props.imageURLs}/>
                 </Paper>
-
+              </div>
+        } else {
+          mediaTemplate =
+            <div>
+              <Paper elevation={5}>
+                  <ImgGridList tileData={this.props.imageURLs}/>
+              </Paper>
+              <Button onClick={this.props.handleClose}>Cancel</Button>
 
             </div>
+        }
+
+        return (
+            <>
+            {mediaTemplate}
+            </>
         );
     }
 }

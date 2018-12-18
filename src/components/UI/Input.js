@@ -13,6 +13,9 @@ console.log('inputProps', props)
     case ( 'input' ):
         inputElement = <input name={props.name} value={props.value} onChange={props.onChange}/>
     break;
+    case ( 'inputSelector' ):
+        inputElement = <input name={props.name} value={props.value} onChange={props.onChange} onClick={props.onClick}/>
+    break;
     case ( 'textarea' ):
         inputElement = <textarea name={props.name} value={props.value} onChange={props.onChange}/>
     break;

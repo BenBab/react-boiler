@@ -22,8 +22,8 @@ const accordian = ( props ) => (
 );
 
 const StyledAccordian = styled.div`
-    margin: 15px;
-    
+    margin: 15px 5px;
+  
     /* > div {
         height: 20px !important;
         width: 20px !important;

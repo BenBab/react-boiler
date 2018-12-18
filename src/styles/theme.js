@@ -1,7 +1,7 @@
 export const mainTheme = {
 
     //main colours
-    primaryBackGroundColour:        '#703B09',
+    primaryBackGroundColour:        '#455A64',
     primaryTxtColour:               'white',
     hoverPrimary:                   "#222",
 

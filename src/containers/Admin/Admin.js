@@ -4,12 +4,14 @@ import * as actions from '../../store/actions/index';
 import { siteName, URL_PREFIX } from '../../App_config';
 import axios from 'axios';
 import firebase from'firebase';
+import styled from 'styled-components'
 
 import Accordian from '../../components/UI/Accordian';
 import Tabs from '../../components/UI/Tabs/Tabs';
 import Modal from '../../components/UI/Modal';
 import Button from '../../components/UI/Buttons/Button';
 import Toast from '../../components/UI/Toast';
+import Flex from '../../components/UI/Wrappers/Flex'
 
 import NewPageForm from '../../components/Forms/NewPageForm';
 import Media from './media/Media'
@@ -19,9 +21,12 @@ class Admin extends Component {
   state = {
     showSignIn : false,
     newPageOpen : false,
+    openMediaModal: false,
+    mediaModalReference: [],
     newPageToast: null,
     loading: false,
     error: null,
+    mediaImages: []
     
 
   }
@@ -64,7 +69,20 @@ class Admin extends Component {
     });
     this.props.onLogoutClick()
   }
-      
+
+  openMediaModal = (pageInfo, key, parentKey) => {
+    console.log(pageInfo, key, parentKey)
+    this.setState({openMediaModal : true, mediaModalReference: [pageInfo, key, parentKey] })
+  }
+  
+  closeMediaModal = () => {this.setState({openMediaModal : false })}
+
+  setMediaImages = (img, url) => {
+    this.setState(prevState => ({
+      mediaImages: [...prevState.mediaImages, {title: img  , img: url}]
+    }))
+  }
+
   handleNewPageButton = (event) => {
     event.preventDefault();
     this.setState({newPageOpen : !this.state.newPageOpen})
@@ -147,15 +165,6 @@ class Admin extends Component {
       : `${URL_PREFIX}/${siteName}/navigationItems/${parentKey}/dropdownPages/${key}/content.json`
 
     this.props.onUpdatePageSubmit(URL, pageInfo)
-
-    // axios.put(URL, pageInfo)
-    //   .then( response => {
-    //     console.log(response)
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-    //     // this.setState({loading: false, error: err})
-    //   })
   }
 
   timedOutUser = (value) => {
@@ -166,12 +175,16 @@ class Admin extends Component {
   // this.props.addPage(url, newPageObj)
   
   render() {
+
     console.log('Admin Page props', this.props)
     return (
-      <div>
-        <div>
-          Admin Page
-        </div>
+      <StyledAdminPage>
+        <Flex justifyContent='space-between'>
+          <h1>
+            Admin Page
+          </h1>
+          <Button onClick={this.logoutHandler}>logout</Button>
+        </Flex>
         <Modal
            open={this.state.showSignIn}
            title="You have been logged out"
@@ -179,13 +192,16 @@ class Admin extends Component {
            >
             <AuthModal history={this.props.history} isTimedOut={this.timedOutUser}/>
         </Modal>
-        <Button onClick={this.logoutHandler}>logout</Button>
           <div>
             <Accordian title={'Media'}>
             <Media 
               isTimedOut={this.timedOutUser} 
               currentImages={this.props.images}
-              refreshState={this.props.onInitWebsiteState}/>
+              refreshState={this.props.onInitWebsiteState}
+              isModal={false}
+              imageURLs={this.state.mediaImages}
+              setMediaImages={this.setMediaImages}
+              />
             </Accordian>
             <br/>
             <Accordian title={'Homepage'}><div>hello</div></Accordian>
@@ -205,11 +221,26 @@ class Admin extends Component {
                   handleClose={this.handleNewPageButton} 
                   handleSubmit={this.submitNewPage} />
               </Modal>
+              <Modal
+                open={this.state.openMediaModal}
+                title="Choose an image"
+                description="Select an image to use "
+                handleClose={this.closeMediaModal}
+              >
+                <Media
+                 isModal={true} 
+                 handleClose={this.closeMediaModal}
+                 currentImages={this.props.images} 
+                 imageURLs={this.state.mediaImages}
+                 setMediaImages={this.setMediaImages} />
+              </Modal>
+
               <br/><br/>
               <Tabs 
                 navigationItems={this.props.navigationItems} 
                 updatePageSubmit={this.updatePageSubmit.bind(this)} 
                 onChange={this.updatePage.bind(this)}
+                openMediaModal={this.openMediaModal}
                 isUpdating={this.props.isUpdating}
                 cancelUpdate={this.props.onRevertChanges}
                 />
@@ -225,10 +256,22 @@ class Admin extends Component {
             <Toast message={this.props.updatePageToast} />
           }
 
-      </div>
+      </StyledAdminPage>
     )
   }
 }
+
+const StyledAdminPage = styled.div `
+  background-color : #424242;
+  height: -webkit-fill-available;
+  padding: 50px;
+
+  >div h1 {
+    color: #F5F5F5;
+  }
+
+`;
+
 
 const mapStateToProps = (state) => {
   return {

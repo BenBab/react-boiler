@@ -17,6 +17,7 @@ const TabItems = (props) => {
             parentId={props.pageId} 
             parent={props.children} 
             onChange={props.onChange}
+            openMediaModal={props.openMediaModal}
             updatePageSubmit={props.updatePageSubmit}
             isUpdating={props.isUpdating}
             cancelUpdate={props.cancelUpdate}
@@ -28,10 +29,17 @@ const TabItems = (props) => {
         props.onChange(event.target, props.pageId, props.parentId )
     }
 
+    const handleSelect = (event) => {
+        event.preventDefault();
+        props.openMediaModal(event.target, props.pageId, props.parentId)
+    }
+
     const handlesubmit = (event) => {
         event.preventDefault();
         props.updatePageSubmit(props.itemProps.content, props.pageId, props.parentId )
     }
+
+
 
     const { topPageImg, mainText } = props.itemProps.content
 
@@ -40,7 +48,7 @@ const TabItems = (props) => {
             <StyledTabItems>
               <div>
                 {props.children}
-                <Input inputtype="input" label='Top Image' name="topPageImg" value={topPageImg} onChange={handleChange}/>
+                <Input inputtype="inputSelector" label='Top Image' name="topPageImg" value={topPageImg} onChange={handleChange} onClick={handleSelect}/>
                 <Input inputtype="textarea" label='Main Body Text' name='mainText' value={mainText} onChange={handleChange}/>
               </div>
               <div>
