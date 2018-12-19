@@ -16,6 +16,9 @@ const Modal = (props) => {
           open={props.open}
           onClose={props.handleClose}
           aria-labelledby="form-dialog-title"
+          fullWidth={true}
+          maxWidth='lg'
+
         >
           <DialogTitle id="form-dialog-title">{props.title}</DialogTitle>
           <DialogContent>

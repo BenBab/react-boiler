@@ -8,8 +8,10 @@ import classNames from 'classnames'
 
 import styled from 'styled-components';
 import Button from '../../../components/UI/Buttons/Button'
-import Paper from '@material-ui/core/Paper';
+import Input from '../../../components/UI/Input' 
 
+import Paper from '@material-ui/core/Paper';
+import Divider from '@material-ui/core/Divider';
 import ImgGridList from './ImgGridList'
 
 
@@ -19,6 +21,7 @@ class Media extends Component {
     state ={ 
         uploadOpen: false,
         error : null,
+        customURL: false
     }
 
     componentDidUpdate(prevProps){
@@ -33,14 +36,21 @@ class Media extends Component {
 
     getImageUrls = () =>{
         const that = this
+        let imageContainer = [];
+        let imageCount = Object.keys(this.props.currentImages).length
+        let returnedCount = 0;
+
         Object.keys(this.props.currentImages).map((key, i) => {
             const img = this.props.currentImages[key]
             storageRef.child(`${siteName}/${img}`).getDownloadURL()
             .then(url => {
-                // that.setState(prevState => ({
-                //     imageURLs: [...prevState.imageURLs, {title: img  , img: url}]
-                // }))
-                that.props.setMediaImages(img, url)
+                imageContainer = [...imageContainer, {title: img  , img: url}]
+                returnedCount++
+
+                if (imageCount === returnedCount){
+                    that.props.setMediaImages(imageContainer)
+                }
+
             })
             .catch(error => {
                 // Handle any errors
@@ -113,6 +123,13 @@ class Media extends Component {
           })
     }
 
+    deleteImage = (imgUrl, name) => {
+        console.log(imgUrl, name)
+
+
+
+    }
+
     handleUploadOpen = () => {
         this.setState({ uploadOpen: !this.state.uploadOpen})
     }
@@ -120,7 +137,7 @@ class Media extends Component {
 
     render() {
         console.log('media props', this.props)
-        const { error, uploadOpen } = this.state
+        const { error, uploadOpen, customURL } = this.state
 
         let dropZone = null
         let mediaTemplate = null
@@ -158,16 +175,31 @@ class Media extends Component {
                     {dropZone}
                     {error && <div>{error}</div> }
                 <Paper elevation={7}>
-                    <ImgGridList tileData={this.props.imageURLs}/>
+                    <ImgGridList 
+                        tileData={this.props.imageURLs} 
+                        isModal={false}
+                        deleteImage={this.deleteImage}/>
                 </Paper>
               </div>
         } else {
           mediaTemplate =
             <div>
               <Paper elevation={5}>
-                  <ImgGridList tileData={this.props.imageURLs}/>
+                  <ImgGridList 
+                    tileData={this.props.imageURLs} 
+                    isModal={true}
+                    />
               </Paper>
+              <Input inputElement='input' disabled />
+              <Divider/>
+              <Button onClick={() => {this.setState({customURL: !customURL })}}> {!customURL ? 'Use' : 'Close'} custom URL location?</Button>
+                {customURL &&
+                    <Input inputElement='input' label='If you want to use an image stored elsewhere, enter the Url address bellow' ></Input>
+                }
+              <Divider/>
+              
               <Button onClick={this.props.handleClose}>Cancel</Button>
+              <Button >Confirm Image</Button>
 
             </div>
         }

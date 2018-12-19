@@ -77,10 +77,8 @@ class Admin extends Component {
   
   closeMediaModal = () => {this.setState({openMediaModal : false })}
 
-  setMediaImages = (img, url) => {
-    this.setState(prevState => ({
-      mediaImages: [...prevState.mediaImages, {title: img  , img: url}]
-    }))
+  setMediaImages = (mediaImages) => {
+    this.setState({ mediaImages });
   }
 
   handleNewPageButton = (event) => {
@@ -263,7 +261,7 @@ class Admin extends Component {
 
 const StyledAdminPage = styled.div `
   background-color : #424242;
-  height: -webkit-fill-available;
+  min-height: 100vh;
   padding: 50px;
 
   >div h1 {
