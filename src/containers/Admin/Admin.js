@@ -22,7 +22,7 @@ class Admin extends Component {
     showSignIn : false,
     newPageOpen : false,
     openMediaModal: false,
-    mediaModalReference: [],
+    mediaModalTabItemRef: [],
     newPageToast: null,
     loading: false,
     error: null,
@@ -71,8 +71,8 @@ class Admin extends Component {
   }
 
   openMediaModal = (pageInfo, key, parentKey) => {
-    console.log(pageInfo, key, parentKey)
-    this.setState({openMediaModal : true, mediaModalReference: [pageInfo, key, parentKey] })
+    console.log('opneMedia Modal', pageInfo, key, parentKey)
+    this.setState({openMediaModal : true, mediaModalTabItemRef: [pageInfo, key, parentKey] })
   }
   
   closeMediaModal = () => {this.setState({openMediaModal : false })}
@@ -230,7 +230,10 @@ class Admin extends Component {
                  handleClose={this.closeMediaModal}
                  currentImages={this.props.images} 
                  imageURLs={this.state.mediaImages}
-                 setMediaImages={this.setMediaImages} />
+                 setMediaImages={this.setMediaImages} 
+                 tabItemReference={this.state.mediaModalTabItemRef}
+                 onChangePageState={this.props.onChangePageState}
+                 />
               </Modal>
 
               <br/><br/>

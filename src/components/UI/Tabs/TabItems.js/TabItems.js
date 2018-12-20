@@ -48,7 +48,7 @@ const TabItems = (props) => {
             <StyledTabItems>
               <div>
                 {props.children}
-                <Input inputtype="inputSelector" label='Top Image' name="topPageImg" value={topPageImg} onChange={handleChange} onClick={handleSelect}/>
+                <Input inputtype="inputSelector" label='Top Image' name="topPageImg" value={topPageImg} onChange={handleChange} onClick={handleSelect} />
                 <Input inputtype="textarea" label='Main Body Text' name='mainText' value={mainText} onChange={handleChange}/>
               </div>
               <div>

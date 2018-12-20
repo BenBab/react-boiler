@@ -9,6 +9,7 @@ import classNames from 'classnames'
 import styled from 'styled-components';
 import Button from '../../../components/UI/Buttons/Button'
 import Input from '../../../components/UI/Input' 
+import Flex from '../../../components/UI/Wrappers/Flex' 
 
 import Paper from '@material-ui/core/Paper';
 import Divider from '@material-ui/core/Divider';
@@ -21,7 +22,15 @@ class Media extends Component {
     state ={ 
         uploadOpen: false,
         error : null,
-        customURL: false
+        customURL: false,
+        customURLtext: '',
+        activeIndex: null,
+        selectedValue: '',
+        selectedName: ''
+    }
+
+    componentDidMount(){
+        console.log('mounted')
     }
 
     componentDidUpdate(prevProps){
@@ -123,27 +132,45 @@ class Media extends Component {
           })
     }
 
+    selectedImage = (index, tile) => { 
+        this.setState({ customURLtext: '', activeIndex: index, selectedValue: tile.img, selectedName: tile.title }) 
+    }
+
+    handleCustomURL = (event) => {
+        this.setState({ customURLtext: event.target.value, activeIndex: null, selectedValue: '', selectedName: '' })
+    }
+
+    confirmImage = () => {
+        const { customURLtext, selectedValue } = this.state
+        const { tabItemReference } = this.props
+        let image = customURLtext ? customURLtext : selectedValue
+
+        this.props.onChangePageState({name: tabItemReference[0].name, value: image }, tabItemReference[1], tabItemReference[2]);
+        this.props.handleClose();
+
+    }
+
     deleteImage = (imgUrl, name) => {
         console.log(imgUrl, name)
-
-
-
     }
 
     handleUploadOpen = () => {
         this.setState({ uploadOpen: !this.state.uploadOpen})
+        
+
     }
 
 
     render() {
         console.log('media props', this.props)
-        const { error, uploadOpen, customURL } = this.state
+        const { error, uploadOpen, customURL, activeIndex, customURLtext, selectedName, selectedValue } = this.state
 
         let dropZone = null
         let mediaTemplate = null
 
         if (uploadOpen && !this.props.isModal){
-            dropZone = <Dropzone 
+            dropZone = 
+                <Dropzone 
                     onDrop={this.onDrop}
                     multiple={false}
                     accept="image/*">
@@ -178,28 +205,46 @@ class Media extends Component {
                     <ImgGridList 
                         tileData={this.props.imageURLs} 
                         isModal={false}
+                        selectedIndex={activeIndex}
+                        selectedImage={this.selectedImage}
                         deleteImage={this.deleteImage}/>
                 </Paper>
               </div>
         } else {
+          const selectedLabel = `Current Selection:  ${selectedName}`
           mediaTemplate =
             <div>
               <Paper elevation={5}>
                   <ImgGridList 
                     tileData={this.props.imageURLs} 
                     isModal={true}
+                    selectedIndex={activeIndex}
+                    selectedImage={this.selectedImage}
                     />
               </Paper>
-              <Input inputElement='input' disabled />
+              <Input 
+                inputtype='input' 
+                label={`${selectedValue ? selectedLabel : 'Select Media Image URL' }`}
+                value={selectedValue} 
+                disabled={true} 
+                placeholderText='No Media image selected'
+              />
               <Divider/>
               <Button onClick={() => {this.setState({customURL: !customURL })}}> {!customURL ? 'Use' : 'Close'} custom URL location?</Button>
                 {customURL &&
-                    <Input inputElement='input' label='If you want to use an image stored elsewhere, enter the Url address bellow' ></Input>
+                    <Input 
+                        inputtype='input' 
+                        label='If you want to use an image stored elsewhere, enter the Url address below' 
+                        value={customURLtext} 
+                        onChange={ this.handleCustomURL }
+                    />
                 }
               <Divider/>
+              <Flex>
+                <Button onClick={this.props.handleClose}>Cancel</Button>
+                <Button onClick={this.confirmImage}>Confirm Image</Button>
+              </Flex>
               
-              <Button onClick={this.props.handleClose}>Cancel</Button>
-              <Button >Confirm Image</Button>
 
             </div>
         }

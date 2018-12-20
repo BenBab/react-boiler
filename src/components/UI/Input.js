@@ -11,10 +11,21 @@ console.log('inputProps', props)
   
   switch ( props.inputtype ){
     case ( 'input' ):
-        inputElement = <input name={props.name} value={props.value} onChange={props.onChange}/>
+        inputElement = 
+        <input 
+            name={props.name} 
+            value={props.value} 
+            onChange={props.onChange} 
+            disabled={props.disabled || false} 
+            placeholder={props.placeholderText}/>
     break;
     case ( 'inputSelector' ):
-        inputElement = <input name={props.name} value={props.value} onChange={props.onChange} onClick={props.onClick}/>
+        inputElement = 
+            <input
+                name={props.name} 
+                value={props.value} 
+                onClick={props.onClick} 
+                readOnly/>
     break;
     case ( 'textarea' ):
         inputElement = <textarea name={props.name} value={props.value} onChange={props.onChange}/>
@@ -64,6 +75,7 @@ const StyledElement = styled.div`
     > textarea{
         height: 230px;
     }
+
 
     > input,
     textarea,

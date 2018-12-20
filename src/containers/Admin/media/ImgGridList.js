@@ -42,10 +42,8 @@ class TitlebarGridList extends Component {
 
 
   handleSelect = (event, index, tile) => {
-    this.setState({ activeIndex: index, selectedValue: tile.img, selectedName: tile.title })
+    this.props.selectedImage(index, tile) 
   }
-
-  
 
   render(){
   const { tileData } = this.props;
@@ -55,12 +53,12 @@ class TitlebarGridList extends Component {
     return (
       <StyledGrid>
         <GridList cellHeight={180} className='gridList' cols={this.state.columns} spacing={this.state.spacing}>
-        <GridListTile key="Subheader" cols={this.state.columns} style={{ height: 'auto' }}>
+         <GridListTile key="Subheader" cols={this.state.columns} style={{ height: 'auto' }}>
             <ListSubheader component="div">This is where your current websites images located.</ListSubheader>
-          </GridListTile>
+         </GridListTile> 
           {
             tileData.map( (tile, index) => {
-            const gridTileClass = this.state.activeIndex === index ? 'media active' : 'media';
+            const gridTileClass = this.props.selectedIndex === index ? 'media active' : 'media';
 
             return (
             <GridListTile key={tile.title} className={gridTileClass} onClick={(e) => this.handleSelect(e, index, tile)}>
