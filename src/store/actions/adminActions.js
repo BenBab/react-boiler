@@ -1,5 +1,5 @@
 import * as actionTypes from './actionTypes'
-import axios from 'axios'
+import firebase from 'firebase';
 
 
 export const updatePageStart = () => {
@@ -8,10 +8,9 @@ export const updatePageStart = () => {
     };
 }
 
-export const updatePageSuccess = (pageData) => {
+export const updatePageSuccess = () => {
     return {
         type: actionTypes.UPDATE_PAGE_SUCCESS,
-        pageData
     };
 }
 
@@ -42,22 +41,24 @@ export const updatePageSubmit= ( URL, pageInfo ) => {
             dispatch(updatePageFail(error))}
         else {
             console.log('update page initial')
-            axios.put(URL, pageInfo)
-            .then( response => {
-                console.log(response)
-                dispatch(updatePageSuccess(response.data));
-                dispatch(removeStateBackup());
-                setTimeout(() => { 
+            firebase.database().ref().child(URL).update(pageInfo , function(err) {
+                if (err) {
+                  // The write failed...
+                  dispatch(updatePageFail(err.response.data.error));
+                } else {
+                  // Data saved successfully!
+                  console.log('Data saved successfully!')
+                  dispatch(updatePageSuccess());
+
+                  dispatch(removeStateBackup());
+                  setTimeout(() => { 
                     dispatch(resetToast());
-                }, 7000 );
+                  }, 7000 );
+
+                }
             })
-            .catch(err => {
-                console.log(err);
-                // this.setState({loading: false, error: err})
-                dispatch(updatePageFail(err.response.data.error));
-            })
+            
 
         }
     };
 }
-

@@ -36,9 +36,7 @@ class Media extends Component {
     componentDidUpdate(prevProps){
         if(this.props.currentImages === null) return;
 
-        
-        
-        if(this.props.currentImages !== prevProps.currentImages ){
+        if(this.props.currentImages !== prevProps.currentImages || this.props.isAuthenticated !== prevProps.isAuthenticated){
             this.getImageUrls()
         }
     }
@@ -51,7 +49,7 @@ class Media extends Component {
 
         Object.keys(this.props.currentImages).map((key, i) => {
             const img = this.props.currentImages[key]
-            storageRef.child(`${siteName}/${img}`).getDownloadURL()
+            return storageRef.child(`${siteName}/${img}`).getDownloadURL()
             .then(url => {
                 imageContainer = [...imageContainer, {title: img  , img: url}]
                 returnedCount++
@@ -99,7 +97,7 @@ class Media extends Component {
         } else {
             // No user is signed in.
             console.log(' No user is signed in.')
-            this.props.isTimedOut(true)
+            this.props.isTimedOut()
         } 
     }
 
@@ -156,8 +154,6 @@ class Media extends Component {
 
     handleUploadOpen = () => {
         this.setState({ uploadOpen: !this.state.uploadOpen})
-        
-
     }
 
 
@@ -224,12 +220,12 @@ class Media extends Component {
               </Paper>
               <Input 
                 inputtype='input' 
-                label={`${selectedValue ? selectedLabel : 'Select Media Image URL' }`}
+                label={`${selectedValue ? selectedLabel : 'Select Media Image URL above' }`}
                 value={selectedValue} 
                 disabled={true} 
-                placeholderText='No Media image selected'
+                placeholder='No Media image selected'
               />
-              <Divider/>
+              <h2>OR ..</h2>
               <Button onClick={() => {this.setState({customURL: !customURL })}}> {!customURL ? 'Use' : 'Close'} custom URL location?</Button>
                 {customURL &&
                     <Input 
@@ -239,13 +235,14 @@ class Media extends Component {
                         onChange={ this.handleCustomURL }
                     />
                 }
+              <br/>
               <Divider/>
+              <br/>
               <Flex>
                 <Button onClick={this.props.handleClose}>Cancel</Button>
                 <Button onClick={this.confirmImage}>Confirm Image</Button>
               </Flex>
-              
-
+            
             </div>
         }
 

@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 
+import BannerFullwidth from '../../components/UI/Banners/Banner_fullWidth'
+
 class Dashboard extends Component {
   
   render() {
@@ -10,6 +12,8 @@ class Dashboard extends Component {
     return (
       <div>
         {pageInfo.title}
+        <BannerFullwidth/>
+
       </div>
     )
   }

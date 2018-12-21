@@ -7,7 +7,7 @@ import firebase from'firebase';
 import styled from 'styled-components'
 
 import Accordian from '../../components/UI/Accordian';
-import Tabs from '../../components/UI/Tabs/Tabs';
+import TabMenu from '../../components/UI/Tabs/TabsMenu';
 import Modal from '../../components/UI/Modal';
 import Button from '../../components/UI/Buttons/Button';
 import Toast from '../../components/UI/Toast';
@@ -144,7 +144,7 @@ class Admin extends Component {
         })
         .catch(err => {
           console.log(err);
-          this.setState({loading: false, error: err})
+          this.setState({loading: false, error: err.response.data.error, newPageOpen: false, showSignIn: true})
         })
       }
     )
@@ -159,14 +159,37 @@ class Admin extends Component {
     console.log(pageInfo, key, parentKey)
     
     const URL = !parentKey
-      ? `${URL_PREFIX}/${siteName}/navigationItems/${key}/content.json`
-      : `${URL_PREFIX}/${siteName}/navigationItems/${parentKey}/dropdownPages/${key}/content.json`
+      ? `/${siteName}/navigationItems/${key}/content`
+      : `/${siteName}/navigationItems/${parentKey}/dropdownPages/${key}/content`
 
-    this.props.onUpdatePageSubmit(URL, pageInfo)
+    const user = firebase.auth().currentUser;
+
+    if (user) {
+      // User is signed in.
+      console.log('user is signed in')
+      this.props.onUpdatePageSubmit(URL, pageInfo)
+    } else {
+      // No user is signed in.
+      console.log(' No user is signed in.')
+      this.setState({ showSignIn : true, error: 'Permission denied. Please sign in again to Re-authenticate' })
+ }
+
+
   }
 
-  timedOutUser = (value) => {
-  this.setState({ showSignIn : value })
+  timedOutUser = () => {
+    const user = firebase.auth().currentUser;
+    if (user) {
+      // User is signed in
+      this.setState({ showSignIn : false })
+    } else {
+      // No user is signed in.
+      console.log(' No user is signed in.')
+      this.setState({ showSignIn : true })
+ }
+
+
+
 
   }
 
@@ -192,7 +215,8 @@ class Admin extends Component {
         </Modal>
           <div>
             <Accordian title={'Media'}>
-            <Media 
+            <Media
+              isAuthenticated={this.props.isAuthenticated} 
               isTimedOut={this.timedOutUser} 
               currentImages={this.props.images}
               refreshState={this.props.onInitWebsiteState}
@@ -226,7 +250,8 @@ class Admin extends Component {
                 handleClose={this.closeMediaModal}
               >
                 <Media
-                 isModal={true} 
+                 isModal={true}
+                 isAuthenticated={this.props.isAuthenticated}  
                  handleClose={this.closeMediaModal}
                  currentImages={this.props.images} 
                  imageURLs={this.state.mediaImages}
@@ -237,13 +262,14 @@ class Admin extends Component {
               </Modal>
 
               <br/><br/>
-              <Tabs 
+              <TabMenu 
                 navigationItems={this.props.navigationItems} 
                 updatePageSubmit={this.updatePageSubmit.bind(this)} 
                 onChange={this.updatePage.bind(this)}
                 openMediaModal={this.openMediaModal}
                 isUpdating={this.props.isUpdating}
                 cancelUpdate={this.props.onRevertChanges}
+                isError={this.props.isError}
                 />
               <br/>
             </div>
@@ -255,6 +281,9 @@ class Admin extends Component {
           }
           { this.props.updatePageToast !== null &&
             <Toast message={this.props.updatePageToast} />
+          }
+          { this.state.error &&
+            <Toast message={this.state.error} error={true} />
           }
 
       </StyledAdminPage>
@@ -282,7 +311,8 @@ const mapStateToProps = (state) => {
     navigationItems: state.mainState.navigationItems,
     images: state.mainState.images,
     updatePageToast : state.admin.pageUpdateToast,
-    isUpdating : state.admin.loading
+    isUpdating : state.admin.loading,
+    isError: state.admin.error
   }
 }
 

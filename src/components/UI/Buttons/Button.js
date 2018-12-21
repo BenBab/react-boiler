@@ -21,6 +21,17 @@ const button = (props) => {
 
 const StyledButton = styled.div`
     margin: ${props => props.margin || '5px'};
+    
+    >label button {
+        background-color: ${props => props.theme.primaryBackGroundColour};
+        color: ${props => props.theme.primaryTxtColour};  
+    }
+
+    >label button:hover {
+        background-color: ${props => props.theme.buttonHoverBackground};
+        color: ${props => props.theme.buttonhovertext};  
+    }
+    
 `;
 
 export default button;

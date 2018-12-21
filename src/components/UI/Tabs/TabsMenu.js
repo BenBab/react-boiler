@@ -6,6 +6,8 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import styled from 'styled-components';
 
+import Toast from '../Toast'
+
 import TabItems from './TabItems.js/TabItems'
 
 
@@ -21,7 +23,7 @@ export default class TabMenu extends Component {
     render() {
         const { value } = this.state;
         const { navigationItems, parent, parentId } = this.props;
-        console.log('tabs props', this.props)
+        console.log('tabMenu props', this.props)
         let tabLabels = null
         let tabitems = null
 
@@ -69,6 +71,9 @@ export default class TabMenu extends Component {
                 </Tabs>
                 </AppBar>
                 {tabitems}
+                {this.props.isError &&
+                    <Toast message={this.props.isError} error={true}/>
+                }
             </StyledTabs>
     )
   }

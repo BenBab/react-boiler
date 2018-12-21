@@ -17,7 +17,7 @@ console.log('inputProps', props)
             value={props.value} 
             onChange={props.onChange} 
             disabled={props.disabled || false} 
-            placeholder={props.placeholderText}/>
+            placeholder={props.placeholder}/>
     break;
     case ( 'inputSelector' ):
         inputElement = 

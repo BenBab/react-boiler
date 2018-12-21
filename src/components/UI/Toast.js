@@ -3,6 +3,8 @@ import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 
+import styled from 'styled-components';
+
 class Toast extends Component {
   state = {
     open: false,
@@ -27,7 +29,7 @@ class Toast extends Component {
   
   render() {
     return (
-      <div>
+      <StyledSnackBar error={this.props.error}>
           <Snackbar
           anchorOrigin={{
             vertical: 'bottom',
@@ -48,12 +50,20 @@ class Toast extends Component {
               onClick={this.handleClose}
             >
               <CloseIcon />
-            </IconButton>,
+            </IconButton>, 
           ]}
         />
-      </div>
+      </StyledSnackBar>
     )
   }
 }
+
+const StyledSnackBar = styled.div`
+    >div div{
+      background-color: ${props => props.error ? 'rgb(220, 52, 54)' : 'rgb(49, 49, 49)' };
+      font-weight: ${props => props.error ? 'bold' : 'initial' };
+    }
+`;
+
 
 export default Toast

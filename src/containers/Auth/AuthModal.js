@@ -3,6 +3,9 @@ import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index'
 
 import Spinner from '../../components/UI/Spinner'
+import Button from '../../components/UI/Buttons/Button'
+import Input from '../../components/UI/Input'
+import Flex from '../../components/UI/Wrappers/Flex'
 
 class AuthModal extends Component {
 
@@ -11,16 +14,23 @@ class AuthModal extends Component {
     password: ''
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.isAuthenticated !== prevProps.isAuthenticated){
+      this.props.isTimedOut()
+    }
+  }
+
   onFormChange = (event) => {
     const { name, value } = event.target
     this.setState({[name] : value })
   }
   
-  submitHandler = (event) => {
+   submitHandler = (event) => {
     event.preventDefault();
     this.props.onAuth(this.state.email, this.state.password, this.props.admin )
-    this.props.isTimedOut(false)
+
   }
+  
 
   backToHome = () => {
       this.props.history.push('/')
@@ -49,11 +59,16 @@ class AuthModal extends Component {
         <div>
           Administrator Login
         </div>
-          <input placeholder="email" name='email' value={this.state.email} onChange={this.onFormChange}/>
-          <input placeholder="password" name='password' value={this.state.password} onChange={this.onFormChange}/>
+        <br/>
+          <Input inputtype='input' placeholder="email" name='email' value={this.state.email} onChange={this.onFormChange}/>
+          <Input inputtype='input' placeholder="password" name='password' value={this.state.password} onChange={this.onFormChange}/>
           {errorMessage}
-          <button onClick={this.backToHome}>Cancel</button>
-          <button onClick={this.submitHandler}>Submit</button>
+          <br/>
+          <Flex>
+            <Button onClick={this.backToHome}>Cancel</Button>
+            <Button onClick={this.submitHandler}>Submit</Button> 
+          </Flex>
+
         {this.props.loading &&
           <Spinner/>
         }

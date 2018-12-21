@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Paper from '@material-ui/core/Paper';
 
 import Input from '../../Input'
-import Tabs from '../Tabs'
+import TabMenu from '../TabsMenu'
 import Button from '../../Buttons/Button'
 import Flex from '../../Wrappers/Flex'
 import Spinner from '../../Spinner'
@@ -12,7 +12,7 @@ const TabItems = (props) => {
     console.log('tabItems props', props)
     if (props.itemProps.dropdownPages){
         return( 
-        <Tabs 
+        <TabMenu 
             navigationItems={props.itemProps.dropdownPages} 
             parentId={props.pageId} 
             parent={props.children} 
