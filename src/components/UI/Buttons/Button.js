@@ -25,11 +25,11 @@ const StyledButton = styled.div`
     >label button {
         background-color: ${props => props.theme.primaryBackGroundColour};
         color: ${props => props.theme.primaryTxtColour};  
-    }
 
-    >label button:hover {
-        background-color: ${props => props.theme.buttonHoverBackground};
-        color: ${props => props.theme.buttonhovertext};  
+        &:hover{
+            background-color: ${props => props.theme.buttonHoverBackground};
+            color: ${props => props.theme.buttonhovertext};  
+        }
     }
     
 `;

@@ -4,6 +4,7 @@ import React, { Component } from 'react'
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import Tooltip from '@material-ui/core/Tooltip';
 import styled from 'styled-components';
 
 import Toast from '../Toast'
@@ -14,10 +15,24 @@ import TabItems from './TabItems.js/TabItems'
 export default class TabMenu extends Component {
     state = {
         value: 0,
+        disableTabText: ''
     };
 
+    componentDidUpdate(prevProps){
+        if(this.props.stateBackup !== prevProps.stateBackup){
+            if(this.props.stateBackup){
+                this.setState({ disableTabText: 'You have made updates to this page, please save or undo your changes before selecting a new page' });
+            }else{
+                this.setState({ disableTabText: '' });
+            }
+        }
+    }
+
     handleChange = (event, value) => {
-        this.setState({ value });
+        if(!this.props.stateBackup){
+            this.setState({ value });
+        }
+
     };
 
     render() {
@@ -47,6 +62,7 @@ export default class TabMenu extends Component {
                         updatePageSubmit={this.props.updatePageSubmit}
                         isUpdating={this.props.isUpdating}
                         cancelUpdate={this.props.cancelUpdate}
+                        stateBackup={this.props.stateBackup}
                         >
                         <h2>{ navigationItems[key].title }</h2>
                     </TabItems> )
@@ -65,11 +81,13 @@ export default class TabMenu extends Component {
         if (tabitems === null && tabLabels === null) return <div></div>
         return (
             <StyledTabs>
+                <Tooltip title={this.state.disableTabText}>
                 <AppBar position="static">
                 <Tabs value={value} onChange={this.handleChange} scrollable scrollButtons="auto">
                     {tabLabels}
                 </Tabs>
                 </AppBar>
+                </Tooltip>
                 {tabitems}
                 {this.props.isError &&
                     <Toast message={this.props.isError} error={true}/>
@@ -81,7 +99,8 @@ export default class TabMenu extends Component {
 
 const StyledTabs = styled.div`
     > header {
-        background-color: ${props => props.theme.primaryBackGroundColour}
+        background-color: ${props => props.theme.primaryBackGroundColour};  
+
     }
 `;
 

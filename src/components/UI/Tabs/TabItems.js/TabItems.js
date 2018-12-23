@@ -21,6 +21,7 @@ const TabItems = (props) => {
             updatePageSubmit={props.updatePageSubmit}
             isUpdating={props.isUpdating}
             cancelUpdate={props.cancelUpdate}
+            stateBackup={props.stateBackup}
             />  )
     }
 
@@ -60,7 +61,9 @@ const TabItems = (props) => {
                 {props.isUpdating &&
                     <Spinner/>
                 }
-                <Button margin="2px 20px 15px 20px" onClick={props.cancelUpdate} >Cancel</Button>
+                {props.stateBackup &&
+                    <Button margin="2px 20px 15px 20px" onClick={props.cancelUpdate} >Undo Changes</Button>
+                }
             </Flex>
         </Paper>
     );

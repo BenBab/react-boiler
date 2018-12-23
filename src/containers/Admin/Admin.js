@@ -270,6 +270,7 @@ class Admin extends Component {
                 isUpdating={this.props.isUpdating}
                 cancelUpdate={this.props.onRevertChanges}
                 isError={this.props.isError}
+                stateBackup={this.props.stateBackup}
                 />
               <br/>
             </div>
@@ -310,9 +311,10 @@ const mapStateToProps = (state) => {
     home: state.mainState.home,
     navigationItems: state.mainState.navigationItems,
     images: state.mainState.images,
+    stateBackup: state.mainState.state_copy,
     updatePageToast : state.admin.pageUpdateToast,
     isUpdating : state.admin.loading,
-    isError: state.admin.error
+    isError: state.admin.error,
   }
 }
 
