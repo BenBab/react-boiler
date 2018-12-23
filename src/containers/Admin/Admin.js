@@ -98,9 +98,8 @@ class Admin extends Component {
       bottomPageImg: '',
       mainText: `This is your newly added ${title} page`,
       middleText: ''
-       
     }
-    let url = `${URL_PREFIX}/${siteName}/navigationItems.json`
+    let url = `/${siteName}/navigationItems.json`
     
     let newPageObj = {
       title,
@@ -111,6 +110,7 @@ class Admin extends Component {
     
     if (checked){
       // const subpageIndex = this.props.navigationItems.findIndex(page => page.title === selectVal);
+      const that = this;
       let subpageIndex = null
       for ( let key in navigationItems){
         if (navigationItems[key].title === selectVal ){
@@ -118,7 +118,7 @@ class Admin extends Component {
         }
       }
 
-      url = `${URL_PREFIX}/${siteName}/navigationItems/${subpageIndex}/dropdownPages.json`
+      url = `/${siteName}/navigationItems/${subpageIndex}/dropdownPages.json`
 
       newPageObj = {
         title,
@@ -129,6 +129,15 @@ class Admin extends Component {
     }
     
     this.setState({ loading: true, error: null}, () => {
+      // firebase.database().ref().child(url).update(newPageObj , function(err) {
+      //   if (err) {
+      //     // The write failed...
+
+      //   } else {
+      //     // Data saved successfully!
+      //     console.log('Data saved successfully!')
+      //   }
+
       axios.post(url, newPageObj)
         .then(response => {
           console.log(response)

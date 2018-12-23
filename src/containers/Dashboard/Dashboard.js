@@ -11,8 +11,8 @@ class Dashboard extends Component {
 
     return (
       <div>
-        {pageInfo.title}
-        <BannerFullwidth/>
+        {/* {pageInfo.title} */}
+        <BannerFullwidth {...this.props}/>
 
       </div>
     )

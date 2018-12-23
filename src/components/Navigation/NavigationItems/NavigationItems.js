@@ -4,20 +4,41 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import NavigationItem from './NavigationItem/NavigationItem';
 import { withRouter } from 'react-router-dom';
+
+import Button from '../../UI/Buttons/Button'
+import DropdownMenu from '../../UI/Menu/DropdownMenu'
 class NavigationItems extends Component {
-    
+
+    state = {
+        navigationItems: null
+    }
+
+    componentDidUpdate(prevProps){
+        if(this.props.navigationItems !== prevProps.navigationItems && this.props.navigationItems !== null){
+            const currentRoute = this.props.location.pathname.replace('/','')
+            const navigationItems = Object.keys(this.props.navigationItems).map(key => {
+                const item = this.props.navigationItems[key]
+                if(item.route === currentRoute){
+                    item.selected = true
+                }else{
+                    item.selected = false
+                }
+                return item;
+            })
+
+            this.setState({ navigationItems })
+        }
+    }
+
     handleNavSelection = (event) => {
         const selected = event.target.innerText
-        //const selectedIndex = this.state.navigationItems.find( item => { item.title === selected})
-        //const stateCopy = { ...this.state.navigationItems }
 
-        const navigationItems = Object.keys(this.props.navigationItems).map(key => {
-            const item = this.props.navigationItems[key]
-            if (item.title === selected){
-                item.selected = !item.selected;
+        const navigationItems = Object.keys(this.state.navigationItems).map(key => {
+            const item = this.state.navigationItems[key]
+            if (item.title.toUpperCase() === selected){
+                item.selected = true;
                 if (!item.dropdownPages){
                     const route = '/'+ item.route
-                    console.log('Navigation Items props', this.props)
                     this.props.history.push(route)
                 }
             }else {
@@ -25,28 +46,44 @@ class NavigationItems extends Component {
             }
             return item
         })
-        this.setState({ navigationItems })
+       this.setState({ navigationItems })
+       //this.forceUpdate()
     }
 
     render(){
 
         let navigationItems = null;
+        console.log('this is the state of the nav items',this.state)
+        console.log('navigation items props', this.props)
         
-        if (this.props.navigationItems !== null){
-            navigationItems = Object.keys(this.props.navigationItems).map((key, index) => {
-                const navItem = this.props.navigationItems[key]
+        if (this.state.navigationItems !== null){
+            navigationItems = Object.keys(this.state.navigationItems).map((key, index) => {
+                const navItem = this.state.navigationItems[key];
+                let navButton = null;
+                
+                navButton = !navItem.dropdownPages
+                    ? <Button key={index} onClick={this.handleNavSelection} active={navItem.selected}>
+                        {navItem.title}
+                      </Button>
+                    : <DropdownMenu key={index} title={navItem.title} menuItems={navItem.dropdownPages} history={this.props.history}/>
+
                 return (
-                 <div key={index} onClick={this.handleNavSelection}>
-                     <NavigationItem selected={navItem.selected} dropdownMenu={navItem.dropdownPages}>{navItem.title}</NavigationItem>
-                 </div>   
+                //  <Button key={index} onClick={this.handleNavSelection} >
+                //      <NavigationItem selected={navItem.selected} dropdownMenu={navItem.dropdownPages}>{navItem.title}</NavigationItem>
+                //  </Button>   
+                navButton
+
+
+
                 )
             })
         }
         
         return(
             <StyledNavItems>
+                <NavigationItem link="/">Home</NavigationItem>
                 {navigationItems}
-                <NavigationItem link="/">Contact Us</NavigationItem>
+
             </StyledNavItems>
         )
     }
@@ -56,16 +93,16 @@ class NavigationItems extends Component {
 
 
 const StyledNavItems = styled.div`
-    margin: 0;
+    /* margin: 0;
     padding: 0;
-    list-style: none;
+    list-style: none; */
     display: flex;
-    flex-flow: column;
+    /* flex-flow: column;
     align-items: center;
-    height: 100%;
+    height: 100%; */
 
     @media (min-width: 500px) {
-        flex-flow: row;
+        /* flex-flow: row; */
 }
     
 `;

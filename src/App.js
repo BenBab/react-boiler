@@ -37,12 +37,12 @@ class App extends Component {
         dynamicRoutes = Object.keys(navigationItems).map((key, i) => {
           const item = this.props.navigationItems[key]
           if (!item.dropdownPages){
-            return <Route key={i} path={'/' + item.route } render={(props) => (<Dashboard pageInfo={item} {...props} />)}/>
+            return <Route key={i} path={'/' + item.route } render={(props) => (<Dashboard pageInfo={item} {...props} template={this.props.template} />)}/>
           }
           else {
             return Object.keys(item.dropdownPages).map((key, i) => {
               const dropDownItem = item.dropdownPages[key]
-              return <Route key={i} path={'/pages/' + dropDownItem.route } render={(props) => (<Dashboard pageInfo={dropDownItem} {...props} />)} />
+              return <Route key={i} path={'/pages/' + dropDownItem.route } render={(props) => (<Dashboard pageInfo={dropDownItem} {...props} template={this.props.template} />)} />
             })
           }
         })
@@ -51,8 +51,8 @@ class App extends Component {
 
     return (
       <ThemeProvider theme={mainTheme}>
-        <Layout>
-          <Route path='/' exact render={(props) => (<Dashboard pageInfo={homePage} {...props} />)} />
+        <Layout template={this.props.template}>
+          <Route path='/' exact render={(props) => (<Dashboard pageInfo={homePage} {...props} template={this.props.template} />)} />
           <Route path='/admin' component={Admin} />
           <Route path='/authenticate-admin' component={Auth} />
           <Route path='/ContactUs' component={ContactUs} />
@@ -67,7 +67,8 @@ class App extends Component {
 const mapStateToProps = state => {
   return {
       home: state.mainState.home,
-      navigationItems: state.mainState.navigationItems
+      navigationItems: state.mainState.navigationItems,
+      template: state.mainState.template
   };
 }
 

@@ -6,7 +6,8 @@ import NavigationItems from '../NavigationItems/NavigationItems'
 import DrawerToggle from '../SideDrawer/DrawerToggle/Drawertoggle';
 
  const toolbar = ( props ) => (
-      <Header>
+     
+      <Header {...props.template}>
         <Logo/>
         <DrawerToggle clicked={props.drawerToggleClicked} />
         <div className="DesktopOnly">
@@ -17,7 +18,7 @@ import DrawerToggle from '../SideDrawer/DrawerToggle/Drawertoggle';
 );
 
 const Header = styled.header`
-    background-color: ${props => props.theme.primaryBackGroundColour};
+    background-color: ${props => props.transparentHeader ? 'transparent' : props.theme.primaryBackGroundColour};
     height: 56px;
     width: 100%;
     position: fixed;

@@ -1,37 +1,43 @@
 import React from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
+import Button from '../../../UI/Buttons/Button'
 
 const navigationItem = ( props ) => {
+    console.log('navItem props', props)
+
     let menuItem = null
     if (props.dropdownMenu){
         menuItem = Object.keys(props.dropdownMenu).map((key, i) => {
             const menuItem = props.dropdownMenu[key]
             return (
-                <li key={i}>
+                <DropMenu key={i}>
                     <NavLink to={'/pages/' + menuItem.route}>{menuItem.title}</NavLink>
-                </li>
+                </DropMenu>
             )
         })
     }
 
     return(
-        <NavItem>
-            <button >
-                {props.children}
-            </button>
+        <div>
+            {props.children}
+            
             {props.selected &&
             <div>
                 {menuItem}
             </div>
             }
-        </NavItem>
+        </div>
     )
 }
 
-const NavItem = styled.ul`
+const DropMenu = styled.div`
+    display: block;
+`;
+
+const NavItem = styled.div`
    
-    margin: 10px 0;
+    /* margin: 10px 0;
     box-sizing: border-box;
     display: block;
     width: 100%;
@@ -52,17 +58,17 @@ const NavItem = styled.ul`
     button:active,
     button.active {
         color: #40A4C8;
-    }
+    } */
 
     /* Desktop */
     @media (min-width: 500px) {
-        margin: 0;
+        /* margin: 0;
         display: flex;
         height: 100%;
         width: auto;
-        align-items: center;
+        align-items: center; */
         
-        > button {
+        /* > button {
             background-color: ${props => props.theme.primaryBackGroundColour};
             color: ${props => props.theme.primaryTxtColour};
             height: 100%;
@@ -71,9 +77,9 @@ const NavItem = styled.ul`
             border-bottom: 4px solid transparent;
             border-radius: 10px;
             cursor: pointer;
-        }
+        } */
 
-        > div {
+        /* > div {
             position: fixed;
             top: 60px;
         }
@@ -84,7 +90,7 @@ const NavItem = styled.ul`
             background-color: ${props => props.theme.primaryBackGroundColour};
             border-bottom: 4px solid #40A4C8;
             color: ${props => props.theme.primaryTxtColour};
-        }
+        } */
     }
 `;
 

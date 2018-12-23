@@ -6,6 +6,7 @@ const initialState = {
     navigationItems: null,
     admin: null,
     images: null,
+    template: null,
     state_copy: null,
     
 };
@@ -15,6 +16,7 @@ const setData = (state, action) => {
         home: action.data.home,
         navigationItems: action.data.navigationItems || null,
         images: action.data.images,
+        template: action.data.template,
         admin: action.data.administrator
     } );
 };

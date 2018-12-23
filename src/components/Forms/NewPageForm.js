@@ -37,7 +37,7 @@ export class NewPageForm extends Component {
     const {value, name} = event.target
     const scrubbedVal = value.replace(/[^\w\s]/gi, '')
 
-    this.setState({ [name]: scrubbedVal })
+    this.setState({ [name]: scrubbedVal.trim() })
   }
 
   render() {
