@@ -6,10 +6,11 @@ import Button from '../../UI/Buttons/Button'
 const BannerFullWidth = (props) => {
     const banner_image_url = 'https://i.imgur.com/jCi5m2s.png'
     console.log('full_bannerProps', props )
+    const { title } = props.pageInfo
     return (
         <StyledBanner style={{ backgroundImage : `url(${banner_image_url})`}} {...props}>
             <div className='banner-content'>
-              <h2 className=''> Title </h2>
+              <h2 className=''> {title} </h2>
               <h4> Subtitle stuff that should explain more </h4>
               <Button>Get Started</Button>
             </div>

@@ -3,10 +3,20 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '../Buttons/Button'
 
+import styled from 'styled-components';
+
 class SimpleMenu extends React.Component {
   state = {
     anchorEl: null,
+    buttonHeight: 0
   };
+
+  // componentDidMount(prevProps){
+  //   if (this.props.id !== null){
+  //     const height = document.getElementById(this.props.id)
+  //     this.setState({ height });
+  //   }
+  // }
 
   handleClick = event => {
     this.setState({ anchorEl: event.currentTarget });
@@ -38,6 +48,8 @@ class SimpleMenu extends React.Component {
     return (
       <div>
         <Button
+          id={this.props.id}
+          variant={this.props.variant}
           onClick={this.handleClick}
         >
           {this.props.title}
@@ -54,5 +66,10 @@ class SimpleMenu extends React.Component {
     );
   }
 }
+
+const StyledMenu = styled.div`
+
+`;
+
 
 export default SimpleMenu;

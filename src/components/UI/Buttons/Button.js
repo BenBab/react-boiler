@@ -6,10 +6,10 @@ const button = (props) => {
     const { disabled = false } = props
    
     return (
-        <StyledButton margin={props.margin}>
+        <StyledButton margin={props.margin} variant={props.variant || "contained"} >
             <label htmlFor="contained-button-file">
             <Button 
-            variant={props.varient || "contained"} 
+            variant={props.variant || "contained"} 
             onClick={props.onClick} 
             disabled={disabled}>
                 {props.children}
@@ -22,10 +22,10 @@ const button = (props) => {
 const StyledButton = styled.div`
     margin: ${props => props.margin || '5px'};
     
-    >label button {
-        background-color: ${props => props.theme.primaryBackGroundColour};
-        color: ${props => props.theme.primaryTxtColour};  
-
+    > label button {
+        background-color: ${props => props.variant === 'contained' ? props.theme.primaryBackGroundColour : 'transparent'};
+        color: ${props => props.variant = 'contained' ? props.theme.primaryTxtColour : props.theme.primaryBackGroundColour};  
+        
         &:hover{
             background-color: ${props => props.theme.buttonHoverBackground};
             color: ${props => props.theme.buttonhovertext};  

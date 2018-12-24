@@ -10,7 +10,8 @@ import DropdownMenu from '../../UI/Menu/DropdownMenu'
 class NavigationItems extends Component {
 
     state = {
-        navigationItems: null
+        navigationItems: null,
+        homeActive: false
     }
 
     componentDidUpdate(prevProps){
@@ -26,16 +27,21 @@ class NavigationItems extends Component {
                 return item;
             })
 
-            this.setState({ navigationItems })
+            if(this.props.location.pathname === '/'){
+                this.setState({ navigationItems, homeActive: true })
+            }else{
+                this.setState({ navigationItems })
+            }
         }
     }
 
     handleNavSelection = (event) => {
-        const selected = event.target.innerText
+        let selected = event.target.innerText.trim();
+        if (selected.toUpperCase() === 'HOME'){selected = '/'}
 
         const navigationItems = Object.keys(this.state.navigationItems).map(key => {
             const item = this.state.navigationItems[key]
-            if (item.title.toUpperCase() === selected){
+            if (item.title.toUpperCase() === selected.toUpperCase() ){
                 item.selected = true;
                 if (!item.dropdownPages){
                     const route = '/'+ item.route
@@ -46,8 +52,13 @@ class NavigationItems extends Component {
             }
             return item
         })
-       this.setState({ navigationItems })
-       //this.forceUpdate()
+       
+        if(selected === '/'){
+            this.props.history.push('/')
+            this.setState({ navigationItems, homeActive: true })
+        }else{
+            this.setState({ navigationItems, homeActive: false })
+        }
     }
 
     render(){
@@ -62,10 +73,10 @@ class NavigationItems extends Component {
                 let navButton = null;
                 
                 navButton = !navItem.dropdownPages
-                    ? <Button key={index} onClick={this.handleNavSelection} active={navItem.selected}>
+                    ? <Button key={index} variant='outlined' onClick={this.handleNavSelection} active={navItem.selected}>
                         {navItem.title}
                       </Button>
-                    : <DropdownMenu key={index} title={navItem.title} menuItems={navItem.dropdownPages} history={this.props.history}/>
+                    : <DropdownMenu key={'navDropdown_'+index} id={'navDropdown_pos'+index} title={navItem.title} menuItems={navItem.dropdownPages} history={this.props.history} variant='outlined'/>
 
                 return (
                 //  <Button key={index} onClick={this.handleNavSelection} >
@@ -81,7 +92,9 @@ class NavigationItems extends Component {
         
         return(
             <StyledNavItems>
-                <NavigationItem link="/">Home</NavigationItem>
+                <Button variant='outlined' onClick={this.handleNavSelection}>
+                    Home
+                </Button>
                 {navigationItems}
 
             </StyledNavItems>
