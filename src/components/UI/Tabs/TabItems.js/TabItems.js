@@ -42,14 +42,24 @@ const TabItems = (props) => {
 
 
 
-    const { topPageImg, mainText } = props.itemProps.content
+    const {
+        topPageImg, topBannerTitle, topBannerSubtitle, topBannerDescription, topBannerName, topBannerLink,
+        mainText
+    } = props.itemProps.content
 
     return (
         <Paper elevation={20}>
             <StyledTabItems>
               <div>
                 {props.children}
-                <Input inputtype="inputSelector" label='Top Image' name="topPageImg" value={topPageImg} onChange={handleChange} onClick={handleSelect} />
+                <Input inputtype="inputSelector" label='Top Banner Image' name="topPageImg" value={topPageImg} onChange={handleChange} onClick={handleSelect} />
+                    <Input inputtype="input" label='Top Banner Title' name='topBannerTitle' value={topBannerTitle} onChange={handleChange}/> 
+                    <Input inputtype="input" label='Top Banner Subtitle' name='topBannerSubtitle' value={topBannerSubtitle} onChange={handleChange}/>
+                    <Input inputtype="input" label='Top Banner Description' name='topBannerDescription' value={topBannerDescription} onChange={handleChange}/>
+                    <Flex>
+                        <Input inputtype="input" label='Top Banner Button Text' name='topBannerName' value={topBannerName} onChange={handleChange}/>
+                        <Input inputtype="input" label='Top Banner Link (eg. /contact)' name='topBannerLink' value={topBannerLink} onChange={handleChange}/>
+                    </Flex>
                 <Input inputtype="textarea" label='Main Body Text' name='mainText' value={mainText} onChange={handleChange}/>
               </div>
               <div>

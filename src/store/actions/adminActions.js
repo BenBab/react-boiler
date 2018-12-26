@@ -2,6 +2,13 @@ import * as actionTypes from './actionTypes'
 import firebase from 'firebase';
 
 
+export const storeRoutes = (routes) => {
+    return {
+        type: actionTypes.STORE_PAGE_ROUTES,
+        routes
+    };
+}
+
 export const updatePageStart = () => {
     return {
         type: actionTypes.UPDATE_PAGE_START
@@ -62,3 +69,5 @@ export const updatePageSubmit= ( URL, pageInfo ) => {
         }
     };
 }
+
+

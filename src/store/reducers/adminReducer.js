@@ -5,8 +5,8 @@ import { updateObject } from '../utility'
 const initialState = {
     loading: false,
     error: null,
-    pageUpdateToast: null
-
+    pageUpdateToast: null,
+    routes: null
 }
 
 const updatePageStart = ( state, action ) => {
@@ -38,6 +38,11 @@ const resetToast = (state, action ) => {
     })
 }
 
+const storeRoutes = ( state, action ) => {
+    return updateObject( state, {
+        routes: action.routes  
+    })
+}
 
 const reducer = (state = initialState, action) => {
     switch (action.type){
@@ -49,8 +54,8 @@ const reducer = (state = initialState, action) => {
             return updatePageFail( state, action )
         case actionTypes.RESET_UPDATE_TOAST:
             return resetToast( state, action)
-        // case actionTypes.UPDATE_PAGE_FAIL:
-        //     return authLogout( state, action)
+        case actionTypes.STORE_PAGE_ROUTES:
+            return storeRoutes( state, action)
         default:
             return state;
     }

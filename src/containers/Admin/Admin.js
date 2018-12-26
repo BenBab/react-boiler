@@ -94,8 +94,20 @@ class Admin extends Component {
     const route = title.replace(/ /g,'-').toLowerCase();
     const defaultContent = {
       topPageImg: '',
+      topBannerTitle:'',
+      topBannerSubtitle:'',
+      topBannerDescription:'',
+      topBannerButton:{ name: '', link:'' },
       middlePageImg: '',
+      middleBannerTitle:'',
+      middleBannerSubtitle:'',
+      middleBannerDescription:'',
+      middleBannerButton:{ name: '', link:'' },
       bottomPageImg: '',
+      bottomBannerTitle:'',
+      bottomBannerSubtitle:'',
+      bottomBannerDescription:'',
+      bottomBannerButton:{ name: '', link:'' },
       mainText: `This is your newly added ${title} page`,
       middleText: ''
     }
@@ -329,6 +341,7 @@ const mapStateToProps = (state) => {
     updatePageToast : state.admin.pageUpdateToast,
     isUpdating : state.admin.loading,
     isError: state.admin.error,
+    availableRoutes: state.admin.routes
   }
 }
 

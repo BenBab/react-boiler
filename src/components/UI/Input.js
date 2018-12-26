@@ -31,10 +31,17 @@ console.log('inputProps', props)
         inputElement = <textarea name={props.name} value={props.value} onChange={props.onChange}/>
     break;
     case ( 'select' ):
-        selectItems = Object.keys(props.items).map(key => { 
-            const item = props.items[key]
-            return <option key={item.route} value={item.title}>{item.title}</option>       
-        })
+        if (typeof props.items === 'object'){
+            selectItems = Object.keys(props.items).map(key => { 
+                const item = props.items[key]
+                return <option key={item.route} value={item.title}>{item.title}</option>       
+            })
+        }else {
+            selectItems = props.items.map(item => { 
+                return <option key={item.route} value={item.title}>{item.title}</option>       
+            })
+        }
+
         inputElement =
             <select value={props.value || props.items[0]} onChange={props.onSelectChange} >
                 {selectItems}
@@ -65,11 +72,13 @@ console.log('inputProps', props)
 }
 
 const StyledElement = styled.div`
+    margin: 0 10px 15px 0;
 
     > label {
         font-weight: bold;
         display: block;
         margin-bottom: 8px;
+
     }
 
     > textarea{
@@ -81,7 +90,6 @@ const StyledElement = styled.div`
     textarea,
     select {
         width: 100%;
-        padding: 10px;
         box-sizing: border-box;
         outline: none;
         border: 1px solid #ccc;
@@ -89,8 +97,8 @@ const StyledElement = styled.div`
         font: inherit;
         padding: 6px 10px;
         display: block;
-        width: 100%;
         box-sizing: border-box;
+
 
         :focus {
         outline: none;

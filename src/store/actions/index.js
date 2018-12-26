@@ -10,5 +10,6 @@ export {
 } from './authActions'
 
 export {
-    updatePageSubmit
+    updatePageSubmit,
+    storeRoutes
 } from './adminActions'
