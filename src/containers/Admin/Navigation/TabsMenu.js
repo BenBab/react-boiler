@@ -7,7 +7,7 @@ import Tab from '@material-ui/core/Tab';
 import Tooltip from '@material-ui/core/Tooltip';
 import styled from 'styled-components';
 
-import Toast from '../Toast'
+import Toast from '../../../components/UI/Toast'
 
 import TabItems from './TabItems.js/TabItems'
 
@@ -63,6 +63,7 @@ export default class TabMenu extends Component {
                         isUpdating={this.props.isUpdating}
                         cancelUpdate={this.props.cancelUpdate}
                         stateBackup={this.props.stateBackup}
+                        availableRoutes={this.props.availableRoutes}
                         >
                         <h2>{ navigationItems[key].title }</h2>
                     </TabItems> )

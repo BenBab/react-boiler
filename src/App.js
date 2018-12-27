@@ -33,18 +33,18 @@ class App extends Component {
       homePage = this.props.home
       if (this.props.navigationItems !== null ){
         const { navigationItems } = this.props
-        let routesState=['/']
+        let routesState=[{value: '/'}]
         
         dynamicRoutes = Object.keys(navigationItems).map((key, i) => {
           const item = this.props.navigationItems[key]
           if (!item.dropdownPages){
-            routesState=[...routesState,'/' + item.route]
+            routesState=[...routesState, {value: '/' + item.route}]
             return <Route key={i} path={'/' + item.route } render={(props) => (<Dashboard pageInfo={item} {...props} template={this.props.template} />)}/>
           }
           else {
             return Object.keys(item.dropdownPages).map((key, i) => {
               const dropDownItem = item.dropdownPages[key]
-              routesState=[...routesState,'/pages/' + dropDownItem.route]
+              routesState=[...routesState, {value: '/pages/' + dropDownItem.route}]
               return <Route key={i} path={'/pages/' + dropDownItem.route } render={(props) => (<Dashboard pageInfo={dropDownItem} {...props} template={this.props.template} />)} />
             })
           }

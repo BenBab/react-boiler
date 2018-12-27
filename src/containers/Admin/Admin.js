@@ -7,7 +7,7 @@ import firebase from'firebase';
 import styled from 'styled-components'
 
 import Accordian from '../../components/UI/Accordian';
-import TabMenu from '../../components/UI/Tabs/TabsMenu';
+import TabsMenu from './Navigation/TabsMenu';
 import Modal from '../../components/UI/Modal';
 import Button from '../../components/UI/Buttons/Button';
 import Toast from '../../components/UI/Toast';
@@ -288,7 +288,7 @@ class Admin extends Component {
               </Modal>
 
               <br/><br/>
-              <TabMenu 
+              <TabsMenu 
                 navigationItems={this.props.navigationItems} 
                 updatePageSubmit={this.updatePageSubmit.bind(this)} 
                 onChange={this.updatePage.bind(this)}
@@ -297,6 +297,7 @@ class Admin extends Component {
                 cancelUpdate={this.props.onRevertChanges}
                 isError={this.props.isError}
                 stateBackup={this.props.stateBackup}
+                availableRoutes={this.props.availableRoutes}
                 />
               <br/>
             </div>

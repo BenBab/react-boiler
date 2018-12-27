@@ -32,18 +32,18 @@ console.log('inputProps', props)
     break;
     case ( 'select' ):
         if (typeof props.items === 'object'){
-            selectItems = Object.keys(props.items).map(key => { 
+            selectItems = Object.keys(props.items).map((key, i) => { 
                 const item = props.items[key]
-                return <option key={item.route} value={item.title}>{item.title}</option>       
+                return <option key={i} value={item.title || item.value}>{item.title || item.value}</option>       
             })
         }else {
-            selectItems = props.items.map(item => { 
-                return <option key={item.route} value={item.title}>{item.title}</option>       
+            selectItems = props.items.map((item, i) => { 
+                return <option key={i} value={item.title || item.value}>{item.title || item.value}</option>              
             })
         }
 
         inputElement =
-            <select value={props.value || props.items[0]} onChange={props.onSelectChange} >
+            <select value={props.value || props.items[0]} onChange={props.onSelectChange} name={props.name}>
                 {selectItems}
             </select>
     break;
@@ -51,6 +51,7 @@ console.log('inputProps', props)
         inputElement = 
         <Flex>
             <Checkbox
+                name={props.name}
                 checked={props.checked}
                 onChange={props.handleChange('checked')}
                 color="primary"
