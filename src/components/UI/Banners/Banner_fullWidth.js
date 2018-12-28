@@ -1,18 +1,26 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import Logo from '../../../components/Logo/Logo'
 import Button from '../../UI/Buttons/Button'
 
 const BannerFullWidth = (props) => {
     const banner_image_url = 'https://i.imgur.com/jCi5m2s.png'
     console.log('full_bannerProps', props )
-    const { title } = props.pageInfo
+    const { history } = props
+    const { img, halfwidth, textRightSide, isLogo, title, subTitle, description, btnText, btnLink } = props.bannerData
     return (
-        <StyledBanner style={{ backgroundImage : `url(${banner_image_url})`}} {...props}>
+        <StyledBanner style={{ backgroundImage: `url(${banner_image_url})`}} {...props}>
             <div className='banner-content'>
-              <h2 className=''> {title} </h2>
-              <h4> Subtitle stuff that should explain more </h4>
-              <Button>Get Started</Button>
+             {isLogo &&
+                  <Logo siteLogo={props.template.siteLogo} width='50%'/>
+             }
+              <h2>{title}</h2>
+              <h4>{subTitle}</h4>
+              <p>{description}</p>
+              {btnText &&
+                <Button onClick={() => { history.push(btnLink) }}>{btnText}</Button>
+              }
             </div>
         </StyledBanner>
     );
@@ -30,6 +38,10 @@ const StyledBanner = styled.div`
 
     > div {
         padding: 80px 0 0 10vw;
+
+        .banner_logo{
+
+        }
     }
 `;
 

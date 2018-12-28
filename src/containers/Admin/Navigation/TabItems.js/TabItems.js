@@ -52,7 +52,7 @@ const TabItems = (props) => {
     }
 
     const {
-        topPageImg, topBannerSize,topBannerTxtRightSide, topBannerTitle, topBannerSubtitle, topBannerDescription, topBannerName, topBannerLink,
+        topPageImg, topBannerHalfwidth, topBannerTxtRightSide, topBannerLogo, topBannerTitle, topBannerSubtitle, topBannerDescription, topBannerBtnText, topBannerLink,
         mainText
     } = props.itemProps.content
 
@@ -66,14 +66,15 @@ const TabItems = (props) => {
                     {topPageImg &&
                       <Box>
                         <Flex>
-                            <Input inputtype="checkbox" sideLabel="Banner Image Halfwidth" name='topBannerSize' checked={topBannerSize} handleChange={handleCheckbox}/>
+                            <Input inputtype="checkbox" sideLabel="Banner Image Halfwidth" name='topBannerHalfwidth' checked={topBannerHalfwidth} handleChange={handleCheckbox}/>
                             <Input inputtype="checkbox" sideLabel="Banner Text Right Side" name='topBannerTxtRightSide' checked={topBannerTxtRightSide} handleChange={handleCheckbox}/>
+                            <Input inputtype="checkbox" sideLabel="Use Logo in banner" name='topBannerLogo' checked={topBannerLogo} handleChange={handleCheckbox}/>
                         </Flex>
                         <Input inputtype="input" label='Top Banner Title' name='topBannerTitle' value={topBannerTitle} onChange={handleChange}/> 
                         <Input inputtype="input" label='Top Banner Subtitle' name='topBannerSubtitle' value={topBannerSubtitle} onChange={handleChange}/>
                         <Input inputtype="input" label='Top Banner Description' name='topBannerDescription' value={topBannerDescription} onChange={handleChange}/>
                         <Flex>
-                            <Input inputtype="input" label='Top Banner Button Text' name='topBannerName' value={topBannerName} onChange={handleChange}/>
+                            <Input inputtype="input" label='Top Banner Button Text' name='topBannerBtnText' value={topBannerBtnText} onChange={handleChange}/>
                             <Input inputtype="select" label='Top Banner Link (eg. /contact)' name='topBannerLink' value={topBannerLink} items={props.availableRoutes} onSelectChange={handleChange}/>
                         </Flex>
                       </Box>

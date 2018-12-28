@@ -27,7 +27,7 @@ const updatePageSuccess = ( state, action ) => {
 const updatePageFail = ( state, action ) => {
     return updateObject( state, {
         loading: false,
-        error: action.error
+        error: action.error.message
          
     })
 }

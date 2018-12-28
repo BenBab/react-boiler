@@ -6,9 +6,8 @@ const initialState = {
     navigationItems: null,
     admin: null,
     images: null,
-    template: null,
     state_copy: null,
-    
+    template: null
 };
 
 const setData = (state, action) => {
@@ -16,7 +15,7 @@ const setData = (state, action) => {
         home: action.data.home,
         navigationItems: action.data.navigationItems || null,
         images: action.data.images,
-        template: action.data.template,
+        template:action.data.template,
         admin: action.data.administrator
     } );
 };
@@ -36,10 +35,17 @@ const removeStateBackup = ( state, action ) => {
     });
 }
 
-const updatePageState = ( state, action ) => {
+const updateState = ( state, action ) => {
     const { name, value } = action.eventTarget
 
-    if ( action.parentId === null ){
+    
+    if(action.id === 'template' || action.id === 'home'){
+        const newStateObj = Object.assign({}, state[action.id],{[name] : value})
+        return updateObject( state, {
+            [action.id] : newStateObj
+        });
+    }
+    else if ( action.parentId === null ){
         return updatePageUtil(state, action, name, value )
     }else {
         return updateSubPageUtil(state, action, name, value )
@@ -51,17 +57,19 @@ const revertState = (state, action) => {
         return updateObject( state, {
             home : state.state_copy.home,
             navigationItems: state.state_copy.navigationItems,
+            template: state.state_copy.template,
             state_copy: null
         });
     }else { return state }
 }
+
 
 const reducer = ( state = initialState, action ) => {
     switch ( action.type ) {
         case actionTypes.SETDATA: 
             return setData(state, action);
         case actionTypes.CHANGE_PAGE_DATA:
-            return updatePageState( state, action )
+            return updateState( state, action )
         case actionTypes.CHECK_STATE_BACKUP:
             return createStateBackup( state, action ) 
         case actionTypes.REMOVE_STATE_BACKUP:

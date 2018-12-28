@@ -7,6 +7,7 @@ import { withRouter } from 'react-router-dom';
 
 import Button from '../../UI/Buttons/Button'
 import DropdownMenu from '../../UI/Menu/DropdownMenu'
+import Template from '../../../containers/Admin/template/Template';
 class NavigationItems extends Component {
 
     state = {
@@ -64,6 +65,7 @@ class NavigationItems extends Component {
     render(){
 
         let navigationItems = null;
+        const { navButtons } = this.props
         console.log('this is the state of the nav items',this.state)
         console.log('navigation items props', this.props)
         
@@ -73,10 +75,10 @@ class NavigationItems extends Component {
                 let navButton = null;
                 
                 navButton = !navItem.dropdownPages
-                    ? <Button key={index} variant='outlined' onClick={this.handleNavSelection} active={navItem.selected}>
+                    ? <Button key={index} variant={navButtons} onClick={this.handleNavSelection} active={navItem.selected}>
                         {navItem.title}
                       </Button>
-                    : <DropdownMenu key={'navDropdown_'+index} id={'navDropdown_pos'+index} title={navItem.title} menuItems={navItem.dropdownPages} history={this.props.history} variant='outlined'/>
+                    : <DropdownMenu key={'navDropdown_'+index} id={'navDropdown_pos'+index} title={navItem.title} menuItems={navItem.dropdownPages} history={this.props.history} variant={navButtons}/>
 
                 return (
                 //  <Button key={index} onClick={this.handleNavSelection} >
@@ -92,7 +94,7 @@ class NavigationItems extends Component {
         
         return(
             <StyledNavItems>
-                <Button variant='outlined' onClick={this.handleNavSelection}>
+                <Button variant={navButtons} onClick={this.handleNavSelection}>
                     Home
                 </Button>
                 {navigationItems}
@@ -122,7 +124,8 @@ const StyledNavItems = styled.div`
 
 const mapStateToProps = state => {
     return {
-        navigationItems: state.mainState.navigationItems
+        navigationItems: state.mainState.navigationItems,
+        template: state.mainState.template
     };
 }
 

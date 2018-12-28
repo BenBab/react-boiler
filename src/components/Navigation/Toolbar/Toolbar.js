@@ -8,10 +8,10 @@ import DrawerToggle from '../SideDrawer/DrawerToggle/Drawertoggle';
  const toolbar = ( props ) => (
      
       <Header {...props.template}>
-        <Logo/>
+        <Logo {...props.template}/>
         <DrawerToggle clicked={props.drawerToggleClicked} />
         <div className="DesktopOnly">
-            <NavigationItems/>  
+            <NavigationItems />  
         </div>
              
       </Header>

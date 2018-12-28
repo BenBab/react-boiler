@@ -8,4 +8,8 @@ export const mainTheme = {
     buttonHoverBackground:          '#303e46',
     buttonhovertext:                '#fff',
 
+
+    logoBackground:                 'transparent',
+    logoFill:                       'blue'
+
 }

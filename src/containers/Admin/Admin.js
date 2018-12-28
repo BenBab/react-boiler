@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
 import { siteName, URL_PREFIX } from '../../App_config';
-import axios from 'axios';
 import firebase from'firebase';
 import styled from 'styled-components'
 
@@ -14,8 +13,10 @@ import Toast from '../../components/UI/Toast';
 import Flex from '../../components/UI/Wrappers/Flex'
 
 import NewPageForm from '../../components/Forms/NewPageForm';
-import Media from './media/Media'
-import AuthModal from '../Auth/AuthModal'
+import Media from './media/Media';
+import Template from './template/Template';
+import Homepage from './homepage/Homepage';
+import AuthModal from '../Auth/AuthModal';
 class Admin extends Component {
 
   state = {
@@ -252,7 +253,20 @@ class Admin extends Component {
               />
             </Accordian>
             <br/>
-            <Accordian title={'Homepage'}><div>hello</div></Accordian>
+            <Accordian title={'Template'}>
+              <Template
+               template={this.props.template} 
+               changeTemplateState={this.props.onChangePageState} 
+               templateChangeSubmit={this.props.onUpdatePageSubmit}
+               isUpdating={this.props.isUpdating}
+               isError={this.props.isError}
+               stateBackup={this.props.stateBackup}
+               cancelUpdate={this.props.onRevertChanges}
+               openMediaModal={this.openMediaModal}
+              />
+            </Accordian>
+            <br/>
+            <Accordian title={'Homepage'}><Homepage /></Accordian>
             <br/>
             <Accordian title='Header Navigation'>
             <div className="fullwidth">
@@ -342,7 +356,8 @@ const mapStateToProps = (state) => {
     updatePageToast : state.admin.pageUpdateToast,
     isUpdating : state.admin.loading,
     isError: state.admin.error,
-    availableRoutes: state.admin.routes
+    availableRoutes: state.admin.routes,
+    template: state.mainState.template,
   }
 }
 
