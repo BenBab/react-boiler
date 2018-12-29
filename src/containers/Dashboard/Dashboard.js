@@ -9,11 +9,11 @@ class Dashboard extends Component {
     const { pageInfo } = this.props
     if ( !pageInfo ) {return <div> loading...</div>}
     const {
-      topPageImg, topBannerHalfwidth, topBannerTxtRightSide, topBannerLogo, topBannerTitle, topBannerSubtitle, topBannerDescription, topBannerBtnText, topBannerLink,
+      topPageImg, topBannerHalfwidth, topBannerTxtRightSide, topBannerTxtLightTheme, topBannerLogo, topBannerTitle, topBannerSubtitle, topBannerDescription, topBannerBtnText, topBannerLink,
       mainText
   } = this.props.pageInfo.content
 
-    const topBannerObj = { img: topPageImg, halfwidth: topBannerHalfwidth, textRightSide: topBannerTxtRightSide, isLogo: topBannerLogo, title: topBannerTitle, subTitle: topBannerSubtitle, description: topBannerDescription, btnText: topBannerBtnText, btnLink: topBannerLink }
+    const topBannerObj = { img: topPageImg, halfwidth: topBannerHalfwidth, textRightSide: topBannerTxtRightSide, lightTheme: topBannerTxtLightTheme, isLogo: topBannerLogo, title: topBannerTitle, subTitle: topBannerSubtitle, description: topBannerDescription, btnText: topBannerBtnText, btnLink: topBannerLink }
 
     return (
       <div>

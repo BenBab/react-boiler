@@ -8,19 +8,20 @@ const BannerFullWidth = (props) => {
     const banner_image_url = 'https://i.imgur.com/jCi5m2s.png'
     console.log('full_bannerProps', props )
     const { history } = props
-    const { img, halfwidth, textRightSide, isLogo, title, subTitle, description, btnText, btnLink } = props.bannerData
+    const { img, halfwidth, isLogo, title, subTitle, description, btnText, btnLink } = props.bannerData
     return (
         <StyledBanner style={{ backgroundImage: `url(${banner_image_url})`}} {...props}>
-            <div className='banner-content'>
+            <div>
              {isLogo &&
                   <Logo siteLogo={props.template.siteLogo} width='50%'/>
-             }
-              <h2>{title}</h2>
-              <h4>{subTitle}</h4>
+             }<div className='banner-content'>
+              <h1>{title}</h1>
+              <h3>{subTitle}</h3>
               <p>{description}</p>
               {btnText &&
                 <Button onClick={() => { history.push(btnLink) }}>{btnText}</Button>
               }
+             </div>
             </div>
         </StyledBanner>
     );
@@ -37,10 +38,13 @@ const StyledBanner = styled.div`
 	position: relative;
 
     > div {
-        padding: 80px 0 0 10vw;
+        padding: 80px 80px 0 10vw;
+        text-align: ${props => props.bannerData.textRightSide ? 'right' : 'left'};
+        color: ${props => props.bannerData.lightTheme ? props.theme.bannerLightColour : props.theme.bannerDarkColour};
+        
 
-        .banner_logo{
-
+        .banner-content {
+            margin: 0 20px;
         }
     }
 `;

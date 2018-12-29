@@ -28,7 +28,7 @@ const StyledLogo = styled.div`
         height: 100%;
         width: ${props => props.width || 'auto'};
         min-width: ${props => props.width ? '100px' : 'auto' };
-        max-width: ${props => props.width ? '220px' : 'auto' };
+        max-width: ${props => props.width ? '200px' : 'auto' };
     }
 `;
 

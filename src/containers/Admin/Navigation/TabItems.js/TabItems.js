@@ -52,7 +52,7 @@ const TabItems = (props) => {
     }
 
     const {
-        topPageImg, topBannerHalfwidth, topBannerTxtRightSide, topBannerLogo, topBannerTitle, topBannerSubtitle, topBannerDescription, topBannerBtnText, topBannerLink,
+        topPageImg, topBannerHalfwidth, topBannerTxtRightSide, topBannerTxtLightTheme, topBannerLogo, topBannerTitle, topBannerSubtitle, topBannerDescription, topBannerBtnText, topBannerLink,
         mainText
     } = props.itemProps.content
 
@@ -68,6 +68,7 @@ const TabItems = (props) => {
                         <Flex>
                             <Input inputtype="checkbox" sideLabel="Banner Image Halfwidth" name='topBannerHalfwidth' checked={topBannerHalfwidth} handleChange={handleCheckbox}/>
                             <Input inputtype="checkbox" sideLabel="Banner Text Right Side" name='topBannerTxtRightSide' checked={topBannerTxtRightSide} handleChange={handleCheckbox}/>
+                            <Input inputtype="checkbox" sideLabel="Banner Light Text Color" name='topBannerTxtLightTheme' checked={topBannerTxtLightTheme} handleChange={handleCheckbox}/>
                             <Input inputtype="checkbox" sideLabel="Use Logo in banner" name='topBannerLogo' checked={topBannerLogo} handleChange={handleCheckbox}/>
                         </Flex>
                         <Input inputtype="input" label='Top Banner Title' name='topBannerTitle' value={topBannerTitle} onChange={handleChange}/> 
