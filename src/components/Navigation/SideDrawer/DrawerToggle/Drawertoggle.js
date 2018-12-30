@@ -23,7 +23,7 @@ const HamburgerMenu = styled.div`
     > div {
         width: 90%;
         height: 3px;
-        background-color: white;
+        background-color: ${props => props.theme.toolbarHamburger};
     }
 
     @media (min-width: 500px) {

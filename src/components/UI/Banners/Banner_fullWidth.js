@@ -35,8 +35,9 @@ class BannerFullWidth extends Component {
     }
 
     render(){
-    const { img, halfwidth, title, subTitle, description, btnText, btnLink } = this.props.bannerData
-    const banner_image_url = 'https://i.imgur.com/jCi5m2s.png'
+    const { img, halfwidth, fadeContent, title, subTitle, description, btnText, btnLink } = this.props.bannerData
+    const banner_image_url = img
+    //'https://i.imgur.com/jCi5m2s.png'
     const { history, template } = this.props
     const logo = template.siteLogo;
     
@@ -45,7 +46,7 @@ class BannerFullWidth extends Component {
             <StyledBanner style={{ backgroundImage: `url(${banner_image_url})`}} {...this.props}>
                 <div>
                 {this.state.showLogo &&
-                <BannerLogo>
+                <BannerLogo fadeContent={fadeContent}>
                     <Logo siteLogo={logo} onLoad={this.handleLogoLoaded} width='50%'/>
                 </BannerLogo>
                 }
@@ -81,13 +82,18 @@ const fadeIn = keyframes`
   }
 `;
 
+const animation = props =>
+  css`
+    1s ${fadeIn} ease-out
+  `
+
 const BannerLogo = styled.div`
-    animation: 1s ${fadeIn} ease-out;
+    animation: ${props => props.fadeContent ? animation : 'none'};
 `;
 
 const StyledBanner = styled.div`
 	height: 460px;
-    margin-top: ${props => props.template.transparentHeader ? '-56px' : 0};
+    margin-top: ${props => props.template.transparentHeader && props.position === 'top' ? '-56px' : 0};
     
 	/* Position and center the image to scale nicely on all screens */
 	background-position: center;
@@ -96,13 +102,13 @@ const StyledBanner = styled.div`
 	position: relative;
 
     > div {
-        padding: 80px 80px 0 10vw;
+        padding: 80px 10vw 0 10vw;
         text-align: ${props => props.bannerData.textRightSide ? 'right' : 'left'};
         color: ${props => props.bannerData.lightTheme ? props.theme.bannerLightColour : props.theme.bannerDarkColour};
         
         .banner-content {
             margin: 0 20px;
-            animation: 1s ${fadeIn} ease-out;
+            animation: ${props => props.bannerData.fadeContent ? animation : 'none'};
         }
     }
 `;

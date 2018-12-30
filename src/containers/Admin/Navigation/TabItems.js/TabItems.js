@@ -52,10 +52,11 @@ const TabItems = (props) => {
     }
 
     const {
-        topPageImg, topBannerHalfwidth, topBannerTxtRightSide, topBannerTxtLightTheme, topBannerLogo, topBannerTitle, topBannerSubtitle, topBannerDescription, topBannerBtnText, topBannerLink,
+        topPageImg, topBannerHalfwidth, topBannerTxtRightSide, topBannerTxtLightTheme, topBannerLogo, topBannerfade, topBannerTitle, topBannerSubtitle, topBannerDescription, topBannerBtnText, topBannerLink,
+        midPageImg, midBannerHalfwidth, midBannerTxtRightSide, midBannerTxtLightTheme, midBannerLogo, midBannerfade, midBannerTitle, midBannerSubtitle, midBannerDescription, midBannerBtnText, midBannerLink,
+        bottomPageImg,
         mainText
     } = props.itemProps.content
-
 
     return (
         <Paper elevation={20}>
@@ -69,7 +70,10 @@ const TabItems = (props) => {
                             <Input inputtype="checkbox" sideLabel="Banner Image Halfwidth" name='topBannerHalfwidth' checked={topBannerHalfwidth} handleChange={handleCheckbox}/>
                             <Input inputtype="checkbox" sideLabel="Banner Text Right Side" name='topBannerTxtRightSide' checked={topBannerTxtRightSide} handleChange={handleCheckbox}/>
                             <Input inputtype="checkbox" sideLabel="Banner Light Text Color" name='topBannerTxtLightTheme' checked={topBannerTxtLightTheme} handleChange={handleCheckbox}/>
+                        </Flex>
+                        <Flex>
                             <Input inputtype="checkbox" sideLabel="Use Logo in banner" name='topBannerLogo' checked={topBannerLogo} handleChange={handleCheckbox}/>
+                            <Input inputtype="checkbox" sideLabel="Banner content fade in effect" name='topBannerfade' checked={topBannerfade} handleChange={handleCheckbox}/>
                         </Flex>
                         <Input inputtype="input" label='Top Banner Title' name='topBannerTitle' value={topBannerTitle} onChange={handleChange}/> 
                         <Input inputtype="input" label='Top Banner Subtitle' name='topBannerSubtitle' value={topBannerSubtitle} onChange={handleChange}/>
@@ -77,6 +81,25 @@ const TabItems = (props) => {
                         <Flex>
                             <Input inputtype="input" label='Top Banner Button Text' name='topBannerBtnText' value={topBannerBtnText} onChange={handleChange}/>
                             <Input inputtype="select" label='Top Banner Link (eg. /contact)' name='topBannerLink' value={topBannerLink} items={props.availableRoutes} onSelectChange={handleChange}/>
+                        </Flex>
+                      </Box>
+                    }
+                <Input inputtype="inputSelector" label='Middle Banner Image' name="midPageImg" value={midPageImg} onChange={handleChange} onClick={handleMediaModal} />
+                {midPageImg &&
+                      <Box>
+                        <Flex>
+                            <Input inputtype="checkbox" sideLabel="Banner Image Halfwidth" name='midBannerHalfwidth' checked={midBannerHalfwidth} handleChange={handleCheckbox}/>
+                            <Input inputtype="checkbox" sideLabel="Banner Text Right Side" name='midBannerTxtRightSide' checked={midBannerTxtRightSide} handleChange={handleCheckbox}/>
+                            <Input inputtype="checkbox" sideLabel="Banner Light Text Color" name='midBannerTxtLightTheme' checked={midBannerTxtLightTheme} handleChange={handleCheckbox}/>
+                        </Flex>
+                            <Input inputtype="checkbox" sideLabel="Use Logo in banner" name='midBannerLogo' checked={midBannerLogo} handleChange={handleCheckbox}/>
+                            <Input inputtype="checkbox" sideLabel="Banner content fade in effect" name='midBannerfade' checked={midBannerfade} handleChange={handleCheckbox}/>
+                        <Input inputtype="input" label='Middle Banner Title' name='midBannerTitle' value={midBannerTitle} onChange={handleChange}/> 
+                        <Input inputtype="input" label='Middle Banner Subtitle' name='midBannerSubtitle' value={midBannerSubtitle} onChange={handleChange}/>
+                        <Input inputtype="input" label='Middle Banner Description' name='midBannerDescription' value={midBannerDescription} onChange={handleChange}/>
+                        <Flex>
+                            <Input inputtype="input" label='Middle Banner Button Text' name='midBannerBtnText' value={midBannerBtnText} onChange={handleChange}/>
+                            <Input inputtype="select" label='Middle Banner Link (eg. /contact)' name='midBannerLink' value={midBannerLink} items={props.availableRoutes} onSelectChange={handleChange}/>
                         </Flex>
                       </Box>
                     }

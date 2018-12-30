@@ -14,22 +14,24 @@ import styled from 'styled-components';
 
 class SimpleMenu extends React.Component {
   state = {
-    open: false
+    open: false,
+    anchorEl: null
   };
 
-  handleToggle = () => {
-    this.setState(state => ({ open: !state.open }));
+  handleToggle = (event) => {
+    const { currentTarget } = event;
+    this.setState(state => ({ open: !state.open, anchorEl: state.anchorEl ? null : currentTarget }));
   };
 
   handleClose = (event, route) => {
     if (event.target && event.target.nodeName !== 'DIV') {
       if (route !== null && typeof route === 'string'){
-        this.setState({ open: false });
+        this.setState({ open: false, anchorEl: null });
         this.redirect(route)
       }
       return;
     }
-    this.setState({ open: false });
+    this.setState({ open: false, anchorEl: null });
    
   };
 
@@ -38,7 +40,7 @@ class SimpleMenu extends React.Component {
   };
 
   render() {
-    const { open } = this.state;
+    const { open, anchorEl } = this.state;
     let menuItems = null
     console.log(this.props)
 
@@ -49,23 +51,27 @@ class SimpleMenu extends React.Component {
         })
     }
 
+    let placement = this.props.placement || 'bottom'
+
     return (
       <div>
         <Button
           id={this.props.id}
+          nav={true}
           aria-owns={open ? 'menu-list-grow' : undefined}
           aria-haspopup="true"
           variant={this.props.variant}
           onClick={this.handleToggle}
+          margin={this.props.margin}
         >
           {this.props.title}
         </Button>
-        <Popper open={open} anchorEl={this.anchorEl} transition disablePortal>
+        <Popper open={open} anchorEl={anchorEl} transition disablePortal placement={placement}>
             {({ TransitionProps, placement }) => (
               <Grow
                 {...TransitionProps}
                 id="menu-list-grow"
-                style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
+                style={{ transformOrigin: placement === 'top' ? 'center top' : 'center bottom' }}
               >
                 <StyledMenu>
                   <ClickAwayListener onClickAway={this.handleClose}>

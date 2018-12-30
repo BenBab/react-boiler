@@ -65,7 +65,8 @@ class NavigationItems extends Component {
     render(){
 
         let navigationItems = null;
-        const { navButtons } = this.props
+        const { template } = this.props
+        const navButtons = template ? template.navButtons : null
         console.log('this is the state of the nav items',this.state)
         console.log('navigation items props', this.props)
         
@@ -75,10 +76,20 @@ class NavigationItems extends Component {
                 let navButton = null;
                 
                 navButton = !navItem.dropdownPages
-                    ? <Button key={index} variant={navButtons} onClick={this.handleNavSelection} active={navItem.selected}>
+                    ? <Button key={index} variant={navButtons} onClick={this.handleNavSelection} active={navItem.selected} nav={true} margin={this.props.margin}>
                         {navItem.title}
                       </Button>
-                    : <DropdownMenu key={'navDropdown_'+index} id={'navDropdown_pos'+index} title={navItem.title} menuItems={navItem.dropdownPages} history={this.props.history} variant={navButtons}/>
+                    : <DropdownMenu 
+                        key={'navDropdown_'+index} 
+                        id={'navDropdown_pos'+index} 
+                        title={navItem.title} 
+                        menuItems={navItem.dropdownPages} 
+                        history={this.props.history} 
+                        variant={navButtons}
+                        nav={true}
+                        margin={this.props.margin}
+                        placement={this.props.placement}
+                        />
 
                 return (
                 //  <Button key={index} onClick={this.handleNavSelection} >
@@ -94,10 +105,14 @@ class NavigationItems extends Component {
         
         return(
             <StyledNavItems>
-                <Button variant={navButtons} onClick={this.handleNavSelection}>
-                    Home
-                </Button>
-                {navigationItems}
+                {navButtons &&
+                    <>
+                    <Button variant={navButtons} onClick={this.handleNavSelection} nav={true} margin={this.props.margin}>
+                        Home
+                    </Button>
+                    {navigationItems}
+                    </>
+                }
 
             </StyledNavItems>
         )
@@ -111,13 +126,14 @@ const StyledNavItems = styled.div`
     /* margin: 0;
     padding: 0;
     list-style: none; */
-    display: flex;
+    display: block;
     /* flex-flow: column;
     align-items: center;
     height: 100%; */
 
     @media (min-width: 500px) {
         /* flex-flow: row; */
+        display: flex;
 }
     
 `;

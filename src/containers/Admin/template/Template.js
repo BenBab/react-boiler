@@ -40,11 +40,12 @@ class Template extends Component {
         if (!this.props.template)return <div></div>;
         console.log('templateProps', this.props)
         const buttonStyle= [ {value: 'contained'}, {value: 'outlined'} ];
-        const { navButtons, siteButtons, transparentHeader, siteLogo, version } = this.props.template
+        const { navButtons, siteButtons, transparentHeader, navLightTheme, siteLogo, version } = this.props.template
 
         return (
             <StyledTemplate>
                 <Input inputtype="checkbox" sideLabel="Is the header toolbar transparent" name='transparentHeader' checked={transparentHeader} handleChange={this.handleCheckbox}/>
+                <Input inputtype="checkbox" sideLabel="Use Light theme for navigation Bar" name='navLightTheme' checked={navLightTheme} handleChange={this.handleCheckbox}/>
                 <Input inputtype="inputSelector" label='Website Logo' name="siteLogo" value={siteLogo} onChange={this.handleChange} onClick={this.handleMediaModal} />
                 <br/>
                 <Grid cols='16% 16%'>

@@ -21,6 +21,7 @@ const StyledLogo = styled.div`
     background-color: ${props => props.theme.logoBackground};
     padding: 8px;
     height: 100%;
+    max-height:135px;
     box-sizing: border-box;
     border-radius: 5px;
 

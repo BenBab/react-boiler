@@ -5,7 +5,7 @@ import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import IconButton from '@material-ui/core/IconButton';
-import InfoIcon from '@material-ui/icons/Info';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 import styled from 'styled-components';
 
@@ -67,7 +67,7 @@ class TitlebarGridList extends Component {
                 title={tile.title}
                 actionIcon={!this.props.isModal
                   ? <IconButton className='gridIcon' onClick={() => this.props.deleteImage(tile.img, tile.title)} >
-                      <InfoIcon />
+                      <DeleteIcon />
                     </IconButton>
                   : false
                 }

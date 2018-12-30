@@ -6,15 +6,21 @@ import NavigationItems from '../NavigationItems/NavigationItems';
 import Backdrop from '../../UI/BackDrop';
 
 const sideDrawer = ( props ) => {
+    let siteLogo = null
+
+    if (props.template){
+        siteLogo= props.template.siteLogo
+    }
+
     return (
         <>
             <Backdrop show={props.open} clicked={props.closed}/>
             <StyledSideDrawer isOpen={props.open}>
                 <div className="mobile-logo">
-                    <Logo />
+                    <Logo siteLogo={siteLogo}/>
                 </div>
                 <nav>
-                    <NavigationItems />
+                    <NavigationItems margin='0 2px 10px 10px' placement='right-start'/>
                 </nav>
             </StyledSideDrawer>
         </>
@@ -29,7 +35,7 @@ const StyledSideDrawer = styled.div`
     left: 0;
     top: 0;
     z-index: 200;
-    background-color: white;
+    background-color: ${props => props.theme.slideDrawBackground};
     padding: 32px 16px;
     box-sizing: border-box;
     transition: transform 0.3s ease-out;

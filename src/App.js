@@ -21,6 +21,7 @@ class App extends Component {
     //   console.log('initial response', response)
     // })
     this.props.onInitWebsiteState();
+
   }
 
   render() {
@@ -28,6 +29,7 @@ class App extends Component {
     console.log('app file props', this.props)
     let dynamicRoutes = []
     let homePage = null
+    let theme = mainTheme
 
     if (this.props.home !== null){
       homePage = this.props.home
@@ -53,8 +55,12 @@ class App extends Component {
       }
     }
 
+    if (this.props.template){
+      theme = Object.assign({}, mainTheme, {'navLightTheme': this.props.template.navLightTheme } )
+    }
+
     return (
-      <ThemeProvider theme={mainTheme}>
+      <ThemeProvider theme={theme}>
         <Layout template={this.props.template}>
           <Route path='/' exact render={(props) => (<Dashboard pageInfo={homePage} {...props} template={this.props.template} />)} />
           <Route path='/admin' component={Admin} />

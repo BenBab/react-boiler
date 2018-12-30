@@ -7,14 +7,14 @@ import { storageRef } from '../../../index'
 import classNames from 'classnames'
 
 import styled from 'styled-components';
-import Button from '../../../components/UI/Buttons/Button'
-import Input from '../../../components/UI/Input' 
-import Flex from '../../../components/UI/Wrappers/Flex' 
+import Button from '../../../components/UI/Buttons/Button';
+import Input from '../../../components/UI/Input';
+import Flex from '../../../components/UI/Wrappers/Flex';
+import Modal from '../../../components/UI/Modal';
 
 import Paper from '@material-ui/core/Paper';
 import Divider from '@material-ui/core/Divider';
 import ImgGridList from './ImgGridList'
-
 
 
 class Media extends Component {
@@ -26,7 +26,8 @@ class Media extends Component {
         customURLtext: '',
         activeIndex: null,
         selectedValue: '',
-        selectedName: ''
+        selectedName: '',
+        deleteImgOpen: false
     }
 
     componentDidMount(){
@@ -51,7 +52,7 @@ class Media extends Component {
             const img = this.props.currentImages[key]
             return storageRef.child(`${siteName}/${img}`).getDownloadURL()
             .then(url => {
-                imageContainer = [...imageContainer, {title: img  , img: url}]
+                imageContainer = [...imageContainer, {title: img  , img: url, key}]
                 returnedCount++
 
                 if (imageCount === returnedCount){
@@ -149,7 +150,33 @@ class Media extends Component {
     }
 
     deleteImage = (imgUrl, name) => {
-        console.log(imgUrl, name)
+        console.log(imgUrl, name) 
+        this.setState({ deleteImgOpen: true})
+    }
+
+    confirmDelete = () => {
+        console.log(this.state, this.props) 
+        const that = this;
+        const img = this.props.imageURLs.find( img => img.title === this.state.selectedName);
+        console.log('pre delete')
+        firebase.database().ref().child(`${siteName}/images/${img.key}`).remove()
+        .then(() => {
+            console.log('db delete succeeded!');
+            storageRef.child(`${siteName}/${img.title}`).delete().then(function() {
+                // File deleted successfully
+                console.log('storage img deleted')
+                that.setState({ deleteImgOpen: false })
+                that.props.refreshState()
+              }).catch(function(error) {
+                // Uh-oh, an error occurred!
+                console.log('storage error', error)
+              });
+        })
+        .catch(err => {
+            console.log(err)
+        });
+
+
     }
 
     handleUploadOpen = () => {
@@ -249,6 +276,17 @@ class Media extends Component {
         return (
             <>
             {mediaTemplate}
+            <Modal
+                open={this.state.deleteImgOpen}
+                handleClose={() => this.setState({ deleteImgOpen: false})} 
+                title="Delete image"
+                description={`Are you sure you would like to delete the image ${this.state.selectedName}. \n Please note that anywhere this image is used on the website will no longer work once the image is deleted.`}
+                >
+                <Flex>
+                    <Button onClick={this.confirmDelete}>Confirm Delete</Button>
+                    <Button onClick={() => this.setState({ deleteImgOpen: false })}>Cancel</Button>
+                </Flex>
+            </Modal>
             </>
         );
     }

@@ -8,6 +8,10 @@ export const mainTheme = {
     buttonHoverBackground:          '#303e46',
     buttonhovertext:                '#fff',
 
+    //toolbar
+    toolbarBackground:              'rgba(255, 255, 255, 0.8 )',
+    slideDrawBackground:            'white',
+    toolbarHamburger:               '#455A64',
     logoBackground:                 'transparent',
     logoFill:                       'blue',
 
