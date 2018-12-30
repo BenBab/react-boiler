@@ -53,7 +53,6 @@ class SimpleMenu extends React.Component {
       <div>
         <Button
           id={this.props.id}
-          ref='menuDropDown'
           aria-owns={open ? 'menu-list-grow' : undefined}
           aria-haspopup="true"
           variant={this.props.variant}
@@ -89,6 +88,7 @@ const StyledMenu = styled.div`
   border-top-right-radius: 5px;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
+
 
   ul li {
     color: ${props => props.theme.primaryTxtColour };  

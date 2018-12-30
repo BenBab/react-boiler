@@ -12,7 +12,7 @@ const logo = (props) => {
   return (
     <StyledLogo width={props.width}>
         <NavLink to={'/'}>
-            <img src={props.siteLogo} alt="Logo" />
+            <img src={props.siteLogo} onLoad={props.onLoad} alt="Logo" />
         </NavLink>    
     </StyledLogo>
   );
