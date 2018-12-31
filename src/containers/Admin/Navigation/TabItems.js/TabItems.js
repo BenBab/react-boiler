@@ -2,12 +2,13 @@ import React from 'react'
 import styled from 'styled-components';
 import Paper from '@material-ui/core/Paper';
 
-import Input from '../../../../components/UI/Input'
-import TabMenu from '../TabsMenu'
-import Button from '../../../../components/UI/Buttons/Button'
-import Flex from '../../../../components/UI/Wrappers/Flex'
-import Box from '../../../../components/UI/Wrappers/Box'
-import Spinner from '../../../../components/UI/Spinner'
+import Input from '../../../../components/UI/Input';
+import TabMenu from '../TabsMenu';
+import Button from '../../../../components/UI/Buttons/Button';
+import Flex from '../../../../components/UI/Wrappers/Flex';
+import Box from '../../../../components/UI/Wrappers/Box';
+import Spinner from '../../../../components/UI/Spinner';
+import Minimizer from '../../../../components/UI/Wrappers/Minimizer';
  
 const TabItems = (props) => {
     console.log('tabItems props', props)
@@ -64,7 +65,8 @@ const TabItems = (props) => {
               <div>
                 {props.children}
                 <Input inputtype="inputSelector" label='Top Banner Image' name="topPageImg" value={topPageImg} onChange={handleChange} onClick={handleMediaModal} />
-                    {topPageImg &&
+                {topPageImg && 
+                    <Minimizer >
                       <Box>
                         <Flex>
                             <Input inputtype="checkbox" sideLabel="Banner Image Halfwidth" name='topBannerHalfwidth' checked={topBannerHalfwidth} handleChange={handleCheckbox}/>
@@ -83,17 +85,21 @@ const TabItems = (props) => {
                             <Input inputtype="select" label='Top Banner Link (eg. /contact)' name='topBannerLink' value={topBannerLink} items={props.availableRoutes} onSelectChange={handleChange}/>
                         </Flex>
                       </Box>
-                    }
+                    </Minimizer>
+                }
                 <Input inputtype="inputSelector" label='Middle Banner Image' name="midPageImg" value={midPageImg} onChange={handleChange} onClick={handleMediaModal} />
-                {midPageImg &&
+                {midPageImg && 
+                    <Minimizer>
                       <Box>
                         <Flex>
                             <Input inputtype="checkbox" sideLabel="Banner Image Halfwidth" name='midBannerHalfwidth' checked={midBannerHalfwidth} handleChange={handleCheckbox}/>
                             <Input inputtype="checkbox" sideLabel="Banner Text Right Side" name='midBannerTxtRightSide' checked={midBannerTxtRightSide} handleChange={handleCheckbox}/>
                             <Input inputtype="checkbox" sideLabel="Banner Light Text Color" name='midBannerTxtLightTheme' checked={midBannerTxtLightTheme} handleChange={handleCheckbox}/>
                         </Flex>
+                        <Flex>
                             <Input inputtype="checkbox" sideLabel="Use Logo in banner" name='midBannerLogo' checked={midBannerLogo} handleChange={handleCheckbox}/>
                             <Input inputtype="checkbox" sideLabel="Banner content fade in effect" name='midBannerfade' checked={midBannerfade} handleChange={handleCheckbox}/>
+                        </Flex>
                         <Input inputtype="input" label='Middle Banner Title' name='midBannerTitle' value={midBannerTitle} onChange={handleChange}/> 
                         <Input inputtype="input" label='Middle Banner Subtitle' name='midBannerSubtitle' value={midBannerSubtitle} onChange={handleChange}/>
                         <Input inputtype="input" label='Middle Banner Description' name='midBannerDescription' value={midBannerDescription} onChange={handleChange}/>
@@ -102,7 +108,8 @@ const TabItems = (props) => {
                             <Input inputtype="select" label='Middle Banner Link (eg. /contact)' name='midBannerLink' value={midBannerLink} items={props.availableRoutes} onSelectChange={handleChange}/>
                         </Flex>
                       </Box>
-                    }
+                    </Minimizer>
+                }
                 <Input inputtype="textarea" label='Main Body Text' name='mainText' value={mainText} onChange={handleChange}/>
               </div>
               <div>

@@ -6,7 +6,7 @@ import styled from 'styled-components';
  const Input = (props) => {
   let inputElement = null;
   let selectItems = null
-console.log('inputProps', props)
+//console.log('inputProps', props)
 
   
   switch ( props.inputtype ){
@@ -24,7 +24,8 @@ console.log('inputProps', props)
             <input
                 name={props.name} 
                 value={props.value} 
-                onClick={props.onClick} 
+                onClick={props.onClick}
+                onChange={props.onChange} 
                 readOnly/>
     break;
     case ( 'textarea' ):

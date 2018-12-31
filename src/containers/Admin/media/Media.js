@@ -11,6 +11,7 @@ import Button from '../../../components/UI/Buttons/Button';
 import Input from '../../../components/UI/Input';
 import Flex from '../../../components/UI/Wrappers/Flex';
 import Modal from '../../../components/UI/Modal';
+import Spinner from '../../../components/UI/Spinner';
 
 import Paper from '@material-ui/core/Paper';
 import Divider from '@material-ui/core/Divider';
@@ -187,9 +188,17 @@ class Media extends Component {
     render() {
         console.log('media props', this.props)
         const { error, uploadOpen, customURL, activeIndex, customURLtext, selectedName, selectedValue } = this.state
+        const { imageURLs, currentImages } = this.props;
 
-        let dropZone = null
-        let mediaTemplate = null
+        let dropZone = null;
+        let mediaTemplate = null;
+        let noMediaMessage = null;
+
+        if ( imageURLs.length === 0 && currentImages){
+                noMediaMessage = <div><p><i>Loading media, if nothing appears after ten seconds. Please refresh the page </i></p><Spinner/></div>
+        }else if (currentImages === null){
+            noMediaMessage = <div><p><i>Here is where you can add images to your website, Click upload media to create your media library</i></p></div>
+        }
 
         if (uploadOpen && !this.props.isModal){
             dropZone = 
@@ -215,10 +224,10 @@ class Media extends Component {
                 </Dropzone>
         }
 
-
         if (!this.props.isModal){
             mediaTemplate =
               <div>
+                {noMediaMessage}
                 <Button onClick={this.handleUploadOpen}>
                     {uploadOpen ? 'Close DropZone' : 'Upload Media'}
                 </Button>
@@ -237,6 +246,7 @@ class Media extends Component {
           const selectedLabel = `Current Selection:  ${selectedName}`
           mediaTemplate =
             <div>
+              {noMediaMessage}
               <Paper elevation={5}>
                   <ImgGridList 
                     tileData={this.props.imageURLs} 

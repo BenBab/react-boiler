@@ -15,7 +15,10 @@ import TabItems from './TabItems.js/TabItems'
 export default class TabMenu extends Component {
     state = {
         value: 0,
-        disableTabText: ''
+        disableTabText: '',
+        topBannerOptions: true,
+        midBannerOptions: true,
+        bottomBannerOptions: true
     };
 
     componentDidUpdate(prevProps){

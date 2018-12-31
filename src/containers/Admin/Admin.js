@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
-import { siteName, URL_PREFIX } from '../../App_config';
+import { siteName } from '../../App_config';
 import firebase from'firebase';
 import styled from 'styled-components'
 
@@ -241,6 +241,7 @@ class Admin extends Component {
             <AuthModal history={this.props.history} isTimedOut={this.timedOutUser}/>
         </Modal>
           <div>
+            
             <Accordian title={'Media'}>
             <Media
               isAuthenticated={this.props.isAuthenticated} 
@@ -253,6 +254,8 @@ class Admin extends Component {
               />
             </Accordian>
             <br/>
+
+
             <Accordian title={'Template'}>
               <Template
                template={this.props.template} 
@@ -266,9 +269,25 @@ class Admin extends Component {
               />
             </Accordian>
             <br/>
-            <Accordian title={'Homepage'}><Homepage /></Accordian>
+
+
+            <Accordian title={'Homepage'}>
+              <Homepage 
+                homePage={this.props.home}
+                changeHomepageState={this.props.onChangePageState} 
+                homepageChangeSubmit={this.props.onUpdatePageSubmit}
+                isUpdating={this.props.isUpdating}
+                isError={this.props.isError}
+                stateBackup={this.props.stateBackup}
+                cancelUpdate={this.props.onRevertChanges}
+                openMediaModal={this.openMediaModal}
+                availableRoutes={this.props.availableRoutes}
+              />
+            </Accordian>
             <br/>
-            <Accordian title='Header Navigation'>
+
+
+            <Accordian title='Navigation and Pages'>
             <div className="fullwidth">
               <Button onClick={this.handleNewPageButton}>Add a new page</Button>
               <Modal 
@@ -317,6 +336,7 @@ class Admin extends Component {
             </div>
             
             </Accordian>
+
           </div>
           { this.state.newPageToast !== null &&
             <Toast message={this.state.newPageToast} />

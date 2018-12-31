@@ -38,7 +38,7 @@ class Template extends Component {
 
     render() {
         if (!this.props.template)return <div></div>;
-        console.log('templateProps', this.props)
+        //console.log('templateProps', this.props)
         const buttonStyle= [ {value: 'contained'}, {value: 'outlined'} ];
         const { navButtons, siteButtons, transparentHeader, navLightTheme, siteLogo, version } = this.props.template
 

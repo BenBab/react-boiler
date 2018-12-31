@@ -6,6 +6,7 @@ const Flex = (props) => {
     <FlexBox 
       justifyContent={props.justifyContent}
       margin={props.margin}
+      align={props.align || 'center'}
       >
         {props.children}
     </FlexBox>
@@ -14,7 +15,7 @@ const Flex = (props) => {
 
 const FlexBox = styled.div`
     display: flex;
-    align-items: center;
+    align-items: ${props => props.align};
     justify-content: ${props => props.justifyContent || 'initial'};
     margin: ${props => props.margin || 'auto'};
 `

@@ -38,17 +38,34 @@ const removeStateBackup = ( state, action ) => {
 const updateState = ( state, action ) => {
     const { name, value } = action.eventTarget
 
-    
-    if(action.id === 'template' || action.id === 'home'){
+    if(action.id === 'template'){
         const newStateObj = Object.assign({}, state[action.id],{[name] : value})
         return updateObject( state, {
             [action.id] : newStateObj
         });
-    }
-    else if ( action.parentId === null ){
+    } else 
+
+    if( action.id === 'home'){
+        return {
+            ...state,
+                home : {
+                ...state.home,
+                    content: {
+                        ...state.home.content,
+                        [name] : value
+                    }
+            }
+        }    
+    } else
+
+    if ( action.parentId === null ){
         return updatePageUtil(state, action, name, value )
-    }else {
+    } else 
+
+    if (action.parentId && action.id) {
         return updateSubPageUtil(state, action, name, value )
+    } else {
+        console.error('no updateState conditions were met')
     }
 }
 
