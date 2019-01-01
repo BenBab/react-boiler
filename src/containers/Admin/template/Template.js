@@ -36,6 +36,10 @@ class Template extends Component {
         this.props.openMediaModal(event.target, 'template', null)
     }
 
+    clearInput = () => {
+        console.log('need to write this function')
+    }
+
     render() {
         if (!this.props.template)return <div></div>;
         //console.log('templateProps', this.props)
@@ -44,9 +48,11 @@ class Template extends Component {
 
         return (
             <StyledTemplate>
-                <Input inputtype="checkbox" sideLabel="Is the header toolbar transparent" name='transparentHeader' checked={transparentHeader} handleChange={this.handleCheckbox}/>
-                <Input inputtype="checkbox" sideLabel="Use Light theme for navigation Bar" name='navLightTheme' checked={navLightTheme} handleChange={this.handleCheckbox}/>
-                <Input inputtype="inputSelector" label='Website Logo' name="siteLogo" value={siteLogo} onChange={this.handleChange} onClick={this.handleMediaModal} />
+                <Flex>
+                    <Input inputtype="checkbox" sideLabel="Is the header toolbar transparent" name='transparentHeader' checked={transparentHeader} handleChange={this.handleCheckbox}/>
+                    <Input inputtype="checkbox" sideLabel="Use Light theme for navigation Bar" name='navLightTheme' checked={navLightTheme} handleChange={this.handleCheckbox}/>
+                </Flex>
+                <Input inputtype="inputSelector" label='Website Logo' name="siteLogo" value={siteLogo} onChange={this.handleChange} onClick={this.handleMediaModal} clearInput={this.clearInput}/>
                 <br/>
                 <Grid cols='16% 16%'>
                     <Input inputtype="select" label='Header Navigation button style' name='navButtons' value={navButtons} items={buttonStyle} onSelectChange={this.handleChange}/>

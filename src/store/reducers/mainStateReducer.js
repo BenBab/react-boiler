@@ -1,5 +1,5 @@
 import * as actionTypes from '../actions/actionTypes';
-import { updateObject, updatePageUtil, updateSubPageUtil } from '../utility';
+import { updateObject, updatePageUtil, updateSubPageUtil, cleanPageObj } from '../utility';
 
 const initialState = {
     home: null,
@@ -37,7 +37,7 @@ const removeStateBackup = ( state, action ) => {
 
 const updateState = ( state, action ) => {
     const { name, value } = action.eventTarget
-
+    let updatedState = {}
     if(action.id === 'template'){
         const newStateObj = Object.assign({}, state[action.id],{[name] : value})
         return updateObject( state, {
@@ -46,7 +46,7 @@ const updateState = ( state, action ) => {
     } else 
 
     if( action.id === 'home'){
-        return {
+        updatedState = {
             ...state,
                 home : {
                 ...state.home,
@@ -55,11 +55,19 @@ const updateState = ( state, action ) => {
                         [name] : value
                     }
             }
-        }    
+        }
+        return updatedState    
     } else
 
     if ( action.parentId === null ){
-        return updatePageUtil(state, action, name, value )
+        updatedState = updatePageUtil(state, action, name, value )
+        if (value === ""){
+            updatedState = cleanPageObj(
+                updatedState.navigationItems[action.id].content,
+                updatedState, action, updatePageUtil
+            )
+        }
+        return updatedState
     } else 
 
     if (action.parentId && action.id) {

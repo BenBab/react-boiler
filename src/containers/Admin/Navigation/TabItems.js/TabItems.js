@@ -52,10 +52,15 @@ const TabItems = (props) => {
         props.updatePageSubmit(props.itemProps.content, props.pageId, props.parentId )
     }
 
+    const clearInput = (inputName) => {
+        const event = { name: inputName, value: '' }
+        props.onChange(event, props.pageId, props.parentId )
+    }
+
     const {
-        topPageImg, topBannerHalfwidth, topBannerTxtRightSide, topBannerTxtLightTheme, topBannerLogo, topBannerfade, topBannerTitle, topBannerSubtitle, topBannerDescription, topBannerBtnText, topBannerLink,
-        midPageImg, midBannerHalfwidth, midBannerTxtRightSide, midBannerTxtLightTheme, midBannerLogo, midBannerfade, midBannerTitle, midBannerSubtitle, midBannerDescription, midBannerBtnText, midBannerLink,
-        bottomPageImg,
+        topBanner, topBannerHalfwidth, topBannerTxtRightSide, topBannerTxtLightTheme, topBannerLogo, topBannerfade, topBannerTitle, topBannerSubtitle, topBannerDescription, topBannerBtnText, topBannerLink,
+        midBanner, midBannerHalfwidth, midBannerTxtRightSide, midBannerTxtLightTheme, midBannerLogo, midBannerfade, midBannerTitle, midBannerSubtitle, midBannerDescription, midBannerBtnText, midBannerLink,
+        bottomBanner,
         mainText
     } = props.itemProps.content
 
@@ -64,8 +69,8 @@ const TabItems = (props) => {
             <StyledTabItems>
               <div>
                 {props.children}
-                <Input inputtype="inputSelector" label='Top Banner Image' name="topPageImg" value={topPageImg} onChange={handleChange} onClick={handleMediaModal} />
-                {topPageImg && 
+                <Input inputtype="inputSelector" label='Top Banner Image' name="topBanner" value={topBanner} onChange={handleChange} onClick={handleMediaModal} clearInput={clearInput}/>
+                {topBanner && 
                     <Minimizer >
                       <Box>
                         <Flex>
@@ -82,13 +87,13 @@ const TabItems = (props) => {
                         <Input inputtype="input" label='Top Banner Description' name='topBannerDescription' value={topBannerDescription} onChange={handleChange}/>
                         <Flex>
                             <Input inputtype="input" label='Top Banner Button Text' name='topBannerBtnText' value={topBannerBtnText} onChange={handleChange}/>
-                            <Input inputtype="select" label='Top Banner Link (eg. /contact)' name='topBannerLink' value={topBannerLink} items={props.availableRoutes} onSelectChange={handleChange}/>
+                            <Input inputtype="select" label='Top Banner Link' name='topBannerLink' value={topBannerLink} items={props.availableRoutes} onSelectChange={handleChange}/>
                         </Flex>
                       </Box>
                     </Minimizer>
                 }
-                <Input inputtype="inputSelector" label='Middle Banner Image' name="midPageImg" value={midPageImg} onChange={handleChange} onClick={handleMediaModal} />
-                {midPageImg && 
+                <Input inputtype="inputSelector" label='Middle Banner Image' name="midBanner" value={midBanner} onChange={handleChange} onClick={handleMediaModal} clearInput={clearInput}/>
+                {midBanner && 
                     <Minimizer>
                       <Box>
                         <Flex>

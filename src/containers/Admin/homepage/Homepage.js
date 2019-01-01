@@ -44,9 +44,9 @@ class Homepage extends Component {
         if (!this.props.homePage)return <div></div>;
 
         const {
-            topPageImg, topBannerHalfwidth, topBannerTxtRightSide, topBannerTxtLightTheme, topBannerLogo, topBannerfade, topBannerTitle, topBannerSubtitle, topBannerDescription, topBannerBtnText, topBannerLink,
-            midPageImg, midBannerHalfwidth, midBannerTxtRightSide, midBannerTxtLightTheme, midBannerLogo, midBannerfade, midBannerTitle, midBannerSubtitle, midBannerDescription, midBannerBtnText, midBannerLink,
-            bottomPageImg,
+            topBanner, topBannerHalfwidth, topBannerTxtRightSide, topBannerTxtLightTheme, topBannerLogo, topBannerfade, topBannerTitle, topBannerSubtitle, topBannerDescription, topBannerBtnText, topBannerLink,
+            midBanner, midBannerHalfwidth, midBannerTxtRightSide, midBannerTxtLightTheme, midBannerLogo, midBannerfade, midBannerTitle, midBannerSubtitle, midBannerDescription, midBannerBtnText, midBannerLink,
+            bottomBanner,
             mainText
         } = this.props.homePage.content
         console.log('Homepage Props', this.props)
@@ -55,8 +55,8 @@ class Homepage extends Component {
             <div className='fullwidth'>
             <StyledHomePage>
             <div>
-              <Input inputtype="inputSelector" label='Top Banner Image' name="topPageImg" value={topPageImg} onChange={this.handleChange} onClick={this.handleMediaModal} />
-              {topPageImg && 
+              <Input inputtype="inputSelector" label='Top Banner Image' name="topBanner" value={topBanner} onChange={this.handleChange} onClick={this.handleMediaModal} />
+              {topBanner && 
                   <Minimizer >
                     <Box>
                       <Flex>
@@ -78,8 +78,8 @@ class Homepage extends Component {
                     </Box>
                   </Minimizer>
               }
-              <Input inputtype="inputSelector" label='Middle Banner Image' name="midPageImg" value={midPageImg} onChange={this.handleChange} onClick={this.handleMediaModal} />
-              {midPageImg && 
+              <Input inputtype="inputSelector" label='Middle Banner Image' name="midBanner" value={midBanner} onChange={this.handleChange} onClick={this.handleMediaModal} />
+              {midBanner && 
                   <Minimizer>
                     <Box>
                       <Flex>

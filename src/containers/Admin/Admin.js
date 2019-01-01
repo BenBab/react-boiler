@@ -94,17 +94,17 @@ class Admin extends Component {
 
     const route = title.replace(/ /g,'-').toLowerCase();
     const defaultContent = {
-      topPageImg: '',
+      topBanner: '',
       topBannerTitle:'',
       topBannerSubtitle:'',
       topBannerDescription:'',
       topBannerButton:{ name: '', link:'' },
-      middlePageImg: '',
+      middleBanner: '',
       middleBannerTitle:'',
       middleBannerSubtitle:'',
       middleBannerDescription:'',
       middleBannerButton:{ name: '', link:'' },
-      bottomPageImg: '',
+      bottomBanner: '',
       bottomBannerTitle:'',
       bottomBannerSubtitle:'',
       bottomBannerDescription:'',

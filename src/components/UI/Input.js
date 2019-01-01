@@ -2,6 +2,8 @@ import React from 'react'
 import Checkbox from '@material-ui/core/Checkbox';
 import Flex from '../UI/Wrappers/Flex'
 import styled from 'styled-components';
+import IconButton from '@material-ui/core/IconButton';
+import CancelIcon from '@material-ui/icons/Cancel';
 
  const Input = (props) => {
   let inputElement = null;
@@ -21,12 +23,19 @@ import styled from 'styled-components';
     break;
     case ( 'inputSelector' ):
         inputElement = 
+            <>
             <input
                 name={props.name} 
                 value={props.value} 
                 onClick={props.onClick}
                 onChange={props.onChange} 
                 readOnly/>
+            {props.value &&
+            <IconButton aria-label="Add" onClick={() => props.clearInput(props.name)}>
+                <CancelIcon fontSize="small"/>
+            </IconButton> 
+            }
+            </>
     break;
     case ( 'textarea' ):
         inputElement = <textarea name={props.name} value={props.value} onChange={props.onChange}/>
@@ -68,7 +77,9 @@ import styled from 'styled-components';
   return (
     <StyledElement>
         <label>{props.label}</label>
-        {inputElement}
+        <Flex>
+            {inputElement}
+        </Flex>
     </StyledElement>
   )
 }
@@ -88,9 +99,9 @@ const StyledElement = styled.div`
     }
 
 
-    > input,
-    textarea,
-    select {
+    > div input,
+    div textarea,
+    div select {
         width: 100%;
         box-sizing: border-box;
         outline: none;
@@ -101,13 +112,19 @@ const StyledElement = styled.div`
         display: block;
         box-sizing: border-box;
 
-
         :focus {
         outline: none;
         background-color: #ccc;
+        }
     }
 
-}`;
+    > div button {
+        opacity: 0.7;        
+    }
+    
+
+
+`;
 
 
 
