@@ -5,6 +5,19 @@ export const updateObject = (oldObject, updatedProperties) => {
     };
 };
 
+export const updateHomeState = ( state, action, name, value ) => {
+    return { 
+        ...state,
+        home : {
+        ...state.home,
+            content: {
+                ...state.home.content,
+                [name] : value
+            }
+        }
+    }
+}
+
 export const updatePageUtil = ( state, action, name, value ) => {
 
     return {
@@ -48,23 +61,20 @@ export const updateSubPageUtil = ( state, action, name, value ) => {
 
 
 export const cleanPageObj = (obj, state, action, updatefunction) => {
-    let cleanedObj = Object.assign({}, obj)
     let newState = Object.assign({}, state)
-
     const emptyVals = Object.keys(obj).filter((key, i) => {
         let property = obj[key]
         return property === ''
     })
 
-    Object.keys(cleanedObj).map((key, i) => {
+    Object.keys(obj).map((key, i) => {
         let property = obj[key]
         emptyVals.map(val => {
             if ( key.includes(val) ){
                 property = '';
-                return cleanedObj = { ...cleanedObj,  [key] : property }
+                newState = updatefunction( newState, action, key, property );
             }
         })
-        newState = updatefunction( newState, action, key, property );
 
     })
     

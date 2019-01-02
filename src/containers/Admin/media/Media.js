@@ -10,9 +10,11 @@ import styled from 'styled-components';
 import Button from '../../../components/UI/Buttons/Button';
 import Input from '../../../components/UI/Input';
 import Flex from '../../../components/UI/Wrappers/Flex';
+import Box from '../../../components/UI/Wrappers/Box';
 import Modal from '../../../components/UI/Modal';
 import Spinner from '../../../components/UI/Spinner';
 
+import Fade from '@material-ui/core/Fade';
 import Paper from '@material-ui/core/Paper';
 import Divider from '@material-ui/core/Divider';
 import ImgGridList from './ImgGridList'
@@ -245,42 +247,51 @@ class Media extends Component {
         } else {
           const selectedLabel = `Current Selection:  ${selectedName}`
           mediaTemplate =
-            <div>
+            <IsMediaModal>
               {noMediaMessage}
-              <Paper elevation={5}>
-                  <ImgGridList 
-                    tileData={this.props.imageURLs} 
-                    isModal={true}
-                    selectedIndex={activeIndex}
-                    selectedImage={this.selectedImage}
-                    />
-              </Paper>
-              <Input 
-                inputtype='input' 
-                label={`${selectedValue ? selectedLabel : 'Select Media Image URL above' }`}
-                value={selectedValue} 
-                disabled={true} 
-                placeholder='No Media image selected'
-              />
-              <h2>OR ..</h2>
-              <Button onClick={() => {this.setState({customURL: !customURL })}}> {!customURL ? 'Use' : 'Close'} custom URL location?</Button>
-                {customURL &&
-                    <Input 
+              <Flex>
+                    <Box opacity={customURL}><Button onClick={() => {this.setState({customURL: false })}}>Use Media Library</Button></Box>
+                    <h2>OR ..</h2>
+                    <Box opacity={!customURL}><Button onClick={() => {this.setState({customURL: true })}}> {!customURL ? 'Use' : 'Close'} custom URL location?</Button></Box>
+              </Flex>
+              {/* <Fade in={customURL}> */}
+                { customURL 
+                ?
+                <Input 
                         inputtype='input' 
                         label='If you want to use an image stored elsewhere, enter the Url address below' 
                         value={customURLtext} 
                         onChange={ this.handleCustomURL }
+                />
+                :
+                <div>
+                    <Paper elevation={5}>
+                        <ImgGridList 
+                            tileData={this.props.imageURLs} 
+                            isModal={true}
+                            selectedIndex={activeIndex}
+                            selectedImage={this.selectedImage}
+                            />
+                    </Paper>
+                    <Input 
+                        inputtype='input' 
+                        label={`${selectedValue ? selectedLabel : 'Select Media Image URL above' }`}
+                        value={selectedValue} 
+                        disabled={true} 
+                        placeholder='No Media image selected'
                     />
+                </div>
                 }
-              <br/>
+              {/* </Fade> */}
               <Divider/>
               <br/>
               <Flex>
                 <Button onClick={this.props.handleClose}>Cancel</Button>
                 <Button onClick={this.confirmImage}>Confirm Image</Button>
               </Flex>
+              <br/>
             
-            </div>
+            </IsMediaModal>
         }
 
         return (
@@ -313,9 +324,11 @@ const StyledDropArea = styled.div`
         min-width: 455px;
 
     }
-
-
 `
+
+const IsMediaModal = styled.div`
+    margin-top: -40px;
+`;
 
 
 export default Media;

@@ -1,5 +1,5 @@
 import * as actionTypes from '../actions/actionTypes';
-import { updateObject, updatePageUtil, updateSubPageUtil, cleanPageObj } from '../utility';
+import { updateObject, updateHomeState, updatePageUtil, updateSubPageUtil, cleanPageObj } from '../utility';
 
 const initialState = {
     home: null,
@@ -46,17 +46,14 @@ const updateState = ( state, action ) => {
     } else 
 
     if( action.id === 'home'){
-        updatedState = {
-            ...state,
-                home : {
-                ...state.home,
-                    content: {
-                        ...state.home.content,
-                        [name] : value
-                    }
-            }
+        updateState = updateHomeState( state, action, name, value )
+        if(value === ""){
+            updatedState = cleanPageObj(
+                updatedState.home.content,
+                updatedState, action, updateHomeState
+            )
         }
-        return updatedState    
+        return updatedState
     } else
 
     if ( action.parentId === null ){
@@ -71,7 +68,14 @@ const updateState = ( state, action ) => {
     } else 
 
     if (action.parentId && action.id) {
-        return updateSubPageUtil(state, action, name, value )
+        updatedState = updateSubPageUtil(state, action, name, value )
+        if (value === ""){
+            updatedState = cleanPageObj(
+                updatedState.navigationItems[action.parentId].dropdownPages[action.id].content,
+                updatedState, action, updateSubPageUtil
+            )
+        }
+        return updatedState
     } else {
         console.error('no updateState conditions were met')
     }

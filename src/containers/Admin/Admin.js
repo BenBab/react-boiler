@@ -305,7 +305,7 @@ class Admin extends Component {
               <Modal
                 open={this.state.openMediaModal}
                 title="Choose an image"
-                description="Select an image to use "
+                description="Select the media location you would like to use"
                 handleClose={this.closeMediaModal}
               >
                 <Media

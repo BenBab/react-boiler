@@ -40,24 +40,15 @@ export const resetToast = () =>{
     };
 }
 
-const cleanPageObj = (obj) => {
-    console.log(obj)
+const removeEmptyValues = (obj) => {
     let cleanedObj = Object.assign({}, obj)
-    const emptyVals = Object.keys(obj).filter((key, i) => {
+        Object.keys(obj).map((key, i) => {
         let property = obj[key]
-        return property === ''
+        if (property === ''){
+            property = null;
+            return cleanedObj = { ...cleanedObj,  [key] : property }
+        }
     })
-
-    Object.keys(obj).map((key, i) => {
-        let property = obj[key]
-        emptyVals.map(val => {
-            if ( key.includes(val) ){
-                property = null;
-            }
-        })
-        return cleanedObj = { ...cleanedObj,  [key] : property }
-    });
-
     return cleanedObj;
 }
 
@@ -68,7 +59,7 @@ export const updatePageSubmit= ( URL, pageInfo ) => {
             const error = { message: "INVALID_TITLE"}
             dispatch(updatePageFail(error))}
         else {
-            const cleanedPageObj = cleanPageObj(pageInfo)
+            const cleanedPageObj = removeEmptyValues(pageInfo)
             console.log('update page initial')
             firebase.database().ref().child(URL).update(cleanedPageObj , function(err) {
                 if (err) {
