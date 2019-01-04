@@ -20,6 +20,11 @@ import AuthModal from '../Auth/AuthModal';
 class Admin extends Component {
 
   state = {
+    homepage_accordian: false,
+    navigation_accordian: false,
+    template_accordian: false,
+    media_accordian: false,
+
     showSignIn : false,
     newPageOpen : false,
     openMediaModal: false,
@@ -27,9 +32,8 @@ class Admin extends Component {
     newPageToast: null,
     loading: false,
     error: null,
-    mediaImages: []
+    mediaImages: [],
     
-
   }
   
   componentDidMount() {
@@ -94,23 +98,7 @@ class Admin extends Component {
 
     const route = title.replace(/ /g,'-').toLowerCase();
     const defaultContent = {
-      topBanner: '',
-      topBannerTitle:'',
-      topBannerSubtitle:'',
-      topBannerDescription:'',
-      topBannerButton:{ name: '', link:'' },
-      middleBanner: '',
-      middleBannerTitle:'',
-      middleBannerSubtitle:'',
-      middleBannerDescription:'',
-      middleBannerButton:{ name: '', link:'' },
-      bottomBanner: '',
-      bottomBannerTitle:'',
-      bottomBannerSubtitle:'',
-      bottomBannerDescription:'',
-      bottomBannerButton:{ name: '', link:'' },
       mainText: `This is your newly added ${title} page`,
-      middleText: ''
     }
     let url = `/${siteName}/navigationItems`
     
@@ -213,11 +201,11 @@ class Admin extends Component {
       // No user is signed in.
       console.log(' No user is signed in.')
       this.setState({ showSignIn : true })
- }
+    }
+  }
 
-
-
-
+  accordianClick = (name) => {
+    this.setState({ [name]: !this.state[name] })
   }
 
   // this.props.addPage(url, newPageObj)
@@ -225,10 +213,12 @@ class Admin extends Component {
   render() {
 
     console.log('Admin Page props', this.props)
+    const {media_accordian, template_accordian, homepage_accordian, navigation_accordian,  } = this.state
+
     return (
       <StyledAdminPage>
         <Flex justifyContent='space-between'>
-          <h1>
+          <h1 className='admin-title'>
             Admin Page
           </h1>
           <Button onClick={this.logoutHandler}>logout</Button>
@@ -242,36 +232,41 @@ class Admin extends Component {
         </Modal>
           <div>
             
-            <Accordian title={'Media'}>
-            <Media
-              isAuthenticated={this.props.isAuthenticated} 
-              isTimedOut={this.timedOutUser} 
-              currentImages={this.props.images}
-              refreshState={this.props.onInitWebsiteState}
-              isModal={false}
-              imageURLs={this.state.mediaImages}
-              setMediaImages={this.setMediaImages}
+            <Accordian title={'Media'} name={'media_accordian'} onClick={(e) => this.accordianClick(e)}>
+            {media_accordian &&
+              <Media
+                isAuthenticated={this.props.isAuthenticated} 
+                isTimedOut={this.timedOutUser} 
+                currentImages={this.props.images}
+                refreshState={this.props.onInitWebsiteState}
+                isModal={false}
+                imageURLs={this.state.mediaImages}
+                setMediaImages={this.setMediaImages}
               />
+            }
             </Accordian>
             <br/>
 
 
-            <Accordian title={'Template'}>
-              <Template
-               template={this.props.template} 
-               changeTemplateState={this.props.onChangePageState} 
-               templateChangeSubmit={this.props.onUpdatePageSubmit}
-               isUpdating={this.props.isUpdating}
-               isError={this.props.isError}
-               stateBackup={this.props.stateBackup}
-               cancelUpdate={this.props.onRevertChanges}
-               openMediaModal={this.openMediaModal}
-              />
+            <Accordian title={'Template'} name={'template_accordian'} onClick={(e) => this.accordianClick(e)}>
+              {template_accordian &&
+                <Template
+                  template={this.props.template} 
+                  changeTemplateState={this.props.onChangePageState} 
+                  templateChangeSubmit={this.props.onUpdatePageSubmit}
+                  isUpdating={this.props.isUpdating}
+                  isError={this.props.isError}
+                  stateBackup={this.props.stateBackup}
+                  cancelUpdate={this.props.onRevertChanges}
+                  openMediaModal={this.openMediaModal}
+                />
+              }
             </Accordian>
             <br/>
 
 
-            <Accordian title={'Homepage'}>
+            <Accordian title={'Homepage'} name={'homepage_accordian'} onClick={(e) => this.accordianClick(e)}>
+              {homepage_accordian &&
               <Homepage 
                 homePage={this.props.home}
                 changeHomepageState={this.props.onChangePageState} 
@@ -282,12 +277,14 @@ class Admin extends Component {
                 cancelUpdate={this.props.onRevertChanges}
                 openMediaModal={this.openMediaModal}
                 availableRoutes={this.props.availableRoutes}
+                template={this.props.template}
               />
+              }
             </Accordian>
             <br/>
 
-
-            <Accordian title='Navigation and Pages'>
+            <Accordian title='Navigation and Pages' name={'navigation_accordian'} onClick={(e) => this.accordianClick(e)}>
+            {navigation_accordian &&
             <div className="fullwidth">
               <Button onClick={this.handleNewPageButton}>Add a new page</Button>
               <Modal 
@@ -302,7 +299,26 @@ class Admin extends Component {
                   handleClose={this.handleNewPageButton} 
                   handleSubmit={this.submitNewPage} />
               </Modal>
-              <Modal
+
+              <br/><br/>
+              <TabsMenu 
+                navigationItems={this.props.navigationItems} 
+                updatePageSubmit={this.updatePageSubmit.bind(this)} 
+                onChange={this.updatePage.bind(this)}
+                openMediaModal={this.openMediaModal}
+                isUpdating={this.props.isUpdating}
+                cancelUpdate={this.props.onRevertChanges}
+                isError={this.props.isError}
+                stateBackup={this.props.stateBackup}
+                availableRoutes={this.props.availableRoutes}
+                template={this.props.template}
+                />
+              <br/>
+            </div>
+            }
+            </Accordian>
+
+            <Modal
                 open={this.state.openMediaModal}
                 title="Choose an image"
                 description="Select the media location you would like to use"
@@ -318,24 +334,7 @@ class Admin extends Component {
                  tabItemReference={this.state.mediaModalTabItemRef}
                  onChangePageState={this.props.onChangePageState}
                  />
-              </Modal>
-
-              <br/><br/>
-              <TabsMenu 
-                navigationItems={this.props.navigationItems} 
-                updatePageSubmit={this.updatePageSubmit.bind(this)} 
-                onChange={this.updatePage.bind(this)}
-                openMediaModal={this.openMediaModal}
-                isUpdating={this.props.isUpdating}
-                cancelUpdate={this.props.onRevertChanges}
-                isError={this.props.isError}
-                stateBackup={this.props.stateBackup}
-                availableRoutes={this.props.availableRoutes}
-                />
-              <br/>
-            </div>
-            
-            </Accordian>
+            </Modal>
 
           </div>
           { this.state.newPageToast !== null &&
@@ -359,7 +358,7 @@ const StyledAdminPage = styled.div `
   padding: 100px 50px;
   margin-top: -56px;
 
-  >div h1 {
+  .admin-title {
     color: #F5F5F5;
   }
 

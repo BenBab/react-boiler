@@ -27,7 +27,12 @@ class BannerFullWidth extends Component {
         else {
             this.setState({showBannerContent: true}); 
         }
+    }
 
+    componentDidUpdate(prevProps){
+        if(this.props.bannerData && this.props.bannerData.isLogo !== prevProps.bannerData.isLogo){
+            this.setState({showLogo: this.props.bannerData.isLogo}); 
+        }
     }
 
     handleLogoLoaded = () => {
@@ -35,7 +40,7 @@ class BannerFullWidth extends Component {
     }
 
     render(){
-    const { img, halfwidth, fadeContent, title, subTitle, description, btnText, btnLink } = this.props.bannerData
+    const { img, fadeContent, title, subTitle, description, btnText, btnLink } = this.props.bannerData
     const banner_image_url = img
     //'https://i.imgur.com/jCi5m2s.png'
     const { history, template } = this.props
@@ -104,7 +109,7 @@ const StyledBanner = styled.div`
     > div {
         padding: 80px 10vw 0 10vw;
         text-align: ${props => props.bannerData.textRightSide ? 'right' : 'left'};
-        color: ${props => props.bannerData.lightTheme ? props.theme.bannerLightColour : props.theme.bannerDarkColour};
+        color: ${props => props.bannerData.lightTheme ? props.theme.bannerTextLight : props.theme.bannerTextDark};
         
         .banner-content {
             margin: 0 20px;

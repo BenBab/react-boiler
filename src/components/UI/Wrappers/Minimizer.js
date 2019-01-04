@@ -13,7 +13,6 @@ class Minimizer extends Component {
     }
     
     handleMinimizer = () => {
-        console.log(this.state.isOpen)
         this.setState({ isOpen: !this.state.isOpen })
     }
 

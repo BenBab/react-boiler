@@ -9,7 +9,7 @@ import styled from 'styled-components';
 
 const accordian = ( props ) => (
     <StyledAccordian >
-        <ExpansionPanel>
+        <ExpansionPanel onChange={() => props.onClick(props.name)}>
         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
           <div>{props.title}</div>
         </ExpansionPanelSummary>

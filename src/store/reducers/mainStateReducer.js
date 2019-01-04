@@ -46,7 +46,7 @@ const updateState = ( state, action ) => {
     } else 
 
     if( action.id === 'home'){
-        updateState = updateHomeState( state, action, name, value )
+        updatedState = updateHomeState( state, action, name, value )
         if(value === ""){
             updatedState = cleanPageObj(
                 updatedState.home.content,

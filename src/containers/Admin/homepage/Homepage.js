@@ -9,9 +9,14 @@ import Box from '../../../components/UI/Wrappers/Box';
 import Spinner from '../../../components/UI/Spinner';
 import Minimizer from '../../../components/UI/Wrappers/Minimizer';
 
+import Dashboard from '../../Dashboard/Dashboard'
 
 
 class Homepage extends Component {
+
+    state={
+        previewOpen: false
+    }
     
 
     handleChange = (event) =>{
@@ -103,9 +108,10 @@ class Homepage extends Component {
               }
               <Input inputtype="textarea" label='Main Body Text' name='mainText' value={mainText} onChange={this.handleChange}/>
             </div>
-            <div>
-                wireframe image location
-            </div>
+            <Preview>
+                <div className='overlay-blocker'></div>
+                <Dashboard pageInfo={this.props.homePage} {...this.props} template={this.props.template} />
+            </Preview>
           </StyledHomePage>
           <Flex justifyContent='flex-start'>
               <Button margin="2px 5px 15px 20px" onClick={this.handlesubmit}>Update</Button>
@@ -121,6 +127,26 @@ class Homepage extends Component {
     }
 }
 
+
+const Preview = styled.div`
+    display:block;
+    zoom: 30%;
+    padding: 5%;
+    box-shadow: 2px 2px 2px;
+
+    .overlay-blocker{
+        background: transparent;
+        width: 30%;
+        height: 86%;
+        z-index: 100;
+        position: absolute;
+        top: 20px;
+    }
+
+    @media (max-width: 500px) {
+        display:none
+    }
+`;
 
 
 const StyledHomePage = styled.div`

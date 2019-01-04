@@ -67,6 +67,7 @@ export default class TabMenu extends Component {
                         cancelUpdate={this.props.cancelUpdate}
                         stateBackup={this.props.stateBackup}
                         availableRoutes={this.props.availableRoutes}
+                        template={this.props.template}
                         >
                         <h2>{ navigationItems[key].title }</h2>
                     </TabItems> )

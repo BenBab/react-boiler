@@ -16,7 +16,7 @@ export const mainTheme = {
     logoFill:                       'blue',
 
     //banner themes
-    bannerLightColour:              '#fff',
-    bannerDarkTheme:                '#455A64',
+    bannerTextLight:              '#fff',
+    bannerTextDark:                '#000',
 
 }

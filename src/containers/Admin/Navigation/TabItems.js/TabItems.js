@@ -9,6 +9,8 @@ import Flex from '../../../../components/UI/Wrappers/Flex';
 import Box from '../../../../components/UI/Wrappers/Box';
 import Spinner from '../../../../components/UI/Spinner';
 import Minimizer from '../../../../components/UI/Wrappers/Minimizer';
+
+import Dashboard from '../../../Dashboard/Dashboard'
  
 const TabItems = (props) => {
     console.log('tabItems props', props)
@@ -25,6 +27,7 @@ const TabItems = (props) => {
             cancelUpdate={props.cancelUpdate}
             stateBackup={props.stateBackup}
             availableRoutes={props.availableRoutes}
+            template={props.template}
             />  )
     }
 
@@ -117,9 +120,10 @@ const TabItems = (props) => {
                 }
                 <Input inputtype="textarea" label='Main Body Text' name='mainText' value={mainText} onChange={handleChange}/>
               </div>
-              <div>
-                  wireframe image location
-              </div>
+              <Preview>
+                <div className='overlay-blocker'></div>
+                <Dashboard pageInfo={props.itemProps} {...props} template={props.template} />
+              </Preview>
             </StyledTabItems>
             <Flex justifyContent='flex-start'>
                 <Button margin="2px 5px 15px 20px" onClick={handlesubmit}>Update</Button>
@@ -138,6 +142,28 @@ const StyledTabItems = styled.div`
     padding: 3vh;
     display: grid;
     grid-template-columns: 65% 35%;
+`;
+
+
+const Preview = styled.div`
+    display:block;
+    zoom: 30%;
+    padding: 5%;
+    box-shadow: 2px 2px 2px;
+
+    .overlay-blocker{
+        background: transparent;
+        width: 30%;
+        height: 86%;
+        z-index: 100;
+        position: absolute;
+        top: 20px;
+    }
+
+    @media (max-width: 500px) {
+        display:none
+
+    }
 `;
 
 export default TabItems

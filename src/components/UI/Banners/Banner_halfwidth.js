@@ -27,7 +27,12 @@ class BannerHalfWidth extends Component {
         else {
             this.setState({showBannerContent: true}); 
         }
+    }
 
+    componentDidUpdate(prevProps){
+        if(this.props.bannerData && this.props.bannerData.isLogo !== prevProps.bannerData.isLogo){
+            this.setState({showLogo: this.props.bannerData.isLogo}); 
+        }
     }
 
     handleLogoLoaded = () => {
@@ -100,7 +105,7 @@ const BannerLogo = styled.div`
 
 const BannerContent = styled.div`
     text-align: ${props => props.bannerData.textRightSide ? 'right' : 'left'};
-    color: ${props => props.bannerData.lightTheme ? props.theme.bannerLightColour : props.theme.bannerDarkColour};
+    color: ${props => props.bannerData.lightTheme ? props.theme.bannerTextLight : props.theme.bannerTextDark};
     margin: 0 50px;
     animation: ${props => props.bannerData.fadeContent ? animation : 'none'};
     position: relative;

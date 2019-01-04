@@ -35,6 +35,7 @@ class Media extends Component {
 
     componentDidMount(){
         console.log('mounted')
+        this.getImageUrls()
     }
 
     componentDidUpdate(prevProps){
