@@ -4,6 +4,8 @@ import Flex from '../UI/Wrappers/Flex'
 import styled from 'styled-components';
 import IconButton from '@material-ui/core/IconButton';
 import CancelIcon from '@material-ui/icons/Cancel';
+import ColourPicker from './ColourPicker';
+
 
  const Input = (props) => {
   let inputElement = null;
@@ -19,7 +21,9 @@ import CancelIcon from '@material-ui/icons/Cancel';
             value={props.value} 
             onChange={props.onChange} 
             disabled={props.disabled || false} 
-            placeholder={props.placeholder}/>
+            placeholder={props.placeholder}
+            type={props.type || 'text'}
+            />
     break;
     case ( 'inputSelector' ):
         inputElement = 
@@ -36,6 +40,16 @@ import CancelIcon from '@material-ui/icons/Cancel';
             </IconButton> 
             }
             </>
+    break;
+    case ( 'inputColourPicker' ):
+        inputElement = 
+            <ColourPicker
+                name={props.name} 
+                value={props.value} 
+                changeColour={props.changeColour} 
+                pageId={props.pageId}
+                parentId={props.parentId}
+            />  
     break;
     case ( 'textarea' ):
         inputElement = <textarea name={props.name} value={props.value} onChange={props.onChange}/>

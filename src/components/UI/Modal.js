@@ -9,16 +9,17 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 const Modal = (props) => {
   // const childrenWithProps = React.Children.map()
-  
+  const width = props.fullWidth ? props.fullWidth : true;
+  const maxWidth = props.maxWidth ? props.maxWidth : 'lg'
+
   return (
     <div>
       <Dialog
           open={props.open}
           onClose={props.handleClose}
           aria-labelledby="form-dialog-title"
-          fullWidth={true}
-          maxWidth='lg'
-
+          fullWidth={width}
+          maxWidth={maxWidth}
         >
           <DialogTitle id="form-dialog-title">{props.title}</DialogTitle>
           <DialogContent>

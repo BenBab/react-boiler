@@ -14,8 +14,10 @@ const accordian = ( props ) => (
           <div>{props.title}</div>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
-            {props.children}
-
+            {props.children
+                ? props.children
+                : <div></div>
+            }
         </ExpansionPanelDetails>
       </ExpansionPanel>
     </StyledAccordian>

@@ -50,6 +50,10 @@ const TabItems = (props) => {
         props.openMediaModal(event.target, props.pageId, props.parentId)
     }
 
+    const handleColourPicker = (event) => {
+        props.onChange(event.target, props.pageId, props.parentId)
+    }
+
     const handlesubmit = (event) => {
         event.preventDefault();
         props.updatePageSubmit(props.itemProps.content, props.pageId, props.parentId )
@@ -61,8 +65,8 @@ const TabItems = (props) => {
     }
 
     const {
-        topBanner, topBannerHalfwidth, topBannerTxtRightSide, topBannerTxtLightTheme, topBannerLogo, topBannerfade, topBannerTitle, topBannerSubtitle, topBannerDescription, topBannerBtnText, topBannerLink,
-        midBanner, midBannerHalfwidth, midBannerTxtRightSide, midBannerTxtLightTheme, midBannerLogo, midBannerfade, midBannerTitle, midBannerSubtitle, midBannerDescription, midBannerBtnText, midBannerLink,
+        topBanner, topBannerHalfwidth, topBannerImgSize, topBannerHWbackImg, topBannerHWBackColour, topBannerTxtRightSide, topBannerTxtLightTheme, topBannerLogo, topBannerfade, topBannerTitle, topBannerSubtitle, topBannerDescription, topBannerBtnText, topBannerLink,
+        midBanner, midBannerHalfwidth, midBannerImgSize, midBannerHWbackImg, midBannerHWBackColour, midBannerTxtRightSide, midBannerTxtLightTheme, midBannerLogo, midBannerfade, midBannerTitle, midBannerSubtitle, midBannerDescription, midBannerBtnText, midBannerLink,
         bottomBanner,
         mainText
     } = props.itemProps.content
@@ -72,12 +76,23 @@ const TabItems = (props) => {
             <StyledTabItems>
               <div>
                 {props.children}
-                <Input inputtype="inputSelector" label='Top Banner Image' name="topBanner" value={topBanner} onChange={handleChange} onClick={handleMediaModal} clearInput={clearInput}/>
+                <Input inputtype="inputSelector" label={`${topBannerHalfwidth ? 'Top Banner Image (Inside Banner)' : 'Top Banner Image'}`} name="topBanner" value={topBanner} onChange={handleChange} onClick={handleMediaModal} clearInput={clearInput} />
                 {topBanner && 
                     <Minimizer >
-                      <Box>
+                        <Box>
                         <Flex>
-                            <Input inputtype="checkbox" sideLabel="Banner Image Halfwidth" name='topBannerHalfwidth' checked={topBannerHalfwidth} handleChange={handleCheckbox}/>
+                            <Input inputtype="checkbox" sideLabel="Use the Top Banner image inside the Banner " name='topBannerHalfwidth' checked={topBannerHalfwidth} handleChange={handleCheckbox}/>
+                        </Flex>
+                            {topBannerHalfwidth &&
+                            <>
+                                <Input inputtype="inputSelector" label='Banner Background Image' name="topBannerHWbackImg" value={topBannerHWbackImg} onChange={handleChange} onClick={handleMediaModal} clearInput={clearInput} />
+                                <Flex>
+                                    <Input inputtype="input" type='number' label='Banner Image Size' name='topBannerImgSize' value={topBannerImgSize} onChange={handleChange}/>
+                                    <Input inputtype="inputColourPicker" label='Banner Background Colour' name='topBannerHWBackColour' value={topBannerHWBackColour} changeColour={handleColourPicker} pageId={'home'}/>
+                                </Flex>
+                            </>
+                            }
+                        <Flex>
                             <Input inputtype="checkbox" sideLabel="Banner Text Right Side" name='topBannerTxtRightSide' checked={topBannerTxtRightSide} handleChange={handleCheckbox}/>
                             <Input inputtype="checkbox" sideLabel="Banner Light Text Color" name='topBannerTxtLightTheme' checked={topBannerTxtLightTheme} handleChange={handleCheckbox}/>
                         </Flex>
@@ -85,22 +100,33 @@ const TabItems = (props) => {
                             <Input inputtype="checkbox" sideLabel="Use Logo in banner" name='topBannerLogo' checked={topBannerLogo} handleChange={handleCheckbox}/>
                             <Input inputtype="checkbox" sideLabel="Banner content fade in effect" name='topBannerfade' checked={topBannerfade} handleChange={handleCheckbox}/>
                         </Flex>
-                        <Input inputtype="input" label='Top Banner Title' name='topBannerTitle' value={topBannerTitle} onChange={handleChange}/> 
-                        <Input inputtype="input" label='Top Banner Subtitle' name='topBannerSubtitle' value={topBannerSubtitle} onChange={handleChange}/>
-                        <Input inputtype="input" label='Top Banner Description' name='topBannerDescription' value={topBannerDescription} onChange={handleChange}/>
+                        <Input inputtype="input" label='Banner Title' name='topBannerTitle' value={topBannerTitle} onChange={handleChange}/> 
+                        <Input inputtype="input" label='Banner Subtitle' name='topBannerSubtitle' value={topBannerSubtitle} onChange={handleChange}/>
+                        <Input inputtype="input" label='Banner Description' name='topBannerDescription' value={topBannerDescription} onChange={handleChange}/>
                         <Flex>
-                            <Input inputtype="input" label='Top Banner Button Text' name='topBannerBtnText' value={topBannerBtnText} onChange={handleChange}/>
-                            <Input inputtype="select" label='Top Banner Link' name='topBannerLink' value={topBannerLink} items={props.availableRoutes} onSelectChange={handleChange}/>
+                            <Input inputtype="input" label='Banner Button Text' name='topBannerBtnText' value={topBannerBtnText} onChange={handleChange}/>
+                            <Input inputtype="select" label='Banner Link' name='topBannerLink' value={topBannerLink} items={props.availableRoutes} onSelectChange={handleChange}/>
                         </Flex>
-                      </Box>
+                        </Box>
                     </Minimizer>
                 }
-                <Input inputtype="inputSelector" label='Middle Banner Image' name="midBanner" value={midBanner} onChange={handleChange} onClick={handleMediaModal} clearInput={clearInput}/>
+                <Input inputtype="inputSelector" label={`${midBannerHalfwidth ? 'Middle Banner Image (Inside Banner)' : 'Middle Banner Image'}`} name="midBanner" value={midBanner} onChange={handleChange} onClick={handleMediaModal} clearInput={clearInput}/>
                 {midBanner && 
-                    <Minimizer>
-                      <Box>
+                    <Minimizer >
+                        <Box>
                         <Flex>
-                            <Input inputtype="checkbox" sideLabel="Banner Image Halfwidth" name='midBannerHalfwidth' checked={midBannerHalfwidth} handleChange={handleCheckbox}/>
+                            <Input inputtype="checkbox" sideLabel="Use the Middle Banner image inside the Banner" name='midBannerHalfwidth' checked={midBannerHalfwidth} handleChange={handleCheckbox}/>
+                        </Flex>
+                            {midBannerHalfwidth &&
+                            <>
+                                <Input inputtype="inputSelector" label='Banner Background Image' name="midBannerHWbackImg" value={midBannerHWbackImg} onChange={handleChange} onClick={handleMediaModal} clearInput={clearInput} />
+                                <Flex>
+                                    <Input inputtype="input" type='number' label='Banner Image Size' name='midBannerImgSize' value={midBannerImgSize} onChange={handleChange}/>
+                                    <Input inputtype="inputColourPicker" label='Banner Background Colour' name='midBannerHWBackColour' value={midBannerHWBackColour} changeColour={handleColourPicker} pageId={'home'}/>
+                                </Flex>
+                            </>
+                            }
+                        <Flex>
                             <Input inputtype="checkbox" sideLabel="Banner Text Right Side" name='midBannerTxtRightSide' checked={midBannerTxtRightSide} handleChange={handleCheckbox}/>
                             <Input inputtype="checkbox" sideLabel="Banner Light Text Color" name='midBannerTxtLightTheme' checked={midBannerTxtLightTheme} handleChange={handleCheckbox}/>
                         </Flex>
@@ -108,14 +134,14 @@ const TabItems = (props) => {
                             <Input inputtype="checkbox" sideLabel="Use Logo in banner" name='midBannerLogo' checked={midBannerLogo} handleChange={handleCheckbox}/>
                             <Input inputtype="checkbox" sideLabel="Banner content fade in effect" name='midBannerfade' checked={midBannerfade} handleChange={handleCheckbox}/>
                         </Flex>
-                        <Input inputtype="input" label='Middle Banner Title' name='midBannerTitle' value={midBannerTitle} onChange={handleChange}/> 
-                        <Input inputtype="input" label='Middle Banner Subtitle' name='midBannerSubtitle' value={midBannerSubtitle} onChange={handleChange}/>
-                        <Input inputtype="input" label='Middle Banner Description' name='midBannerDescription' value={midBannerDescription} onChange={handleChange}/>
+                        <Input inputtype="input" label='Banner Title' name='midBannerTitle' value={midBannerTitle} onChange={handleChange}/> 
+                        <Input inputtype="input" label='Banner Subtitle' name='midBannerSubtitle' value={midBannerSubtitle} onChange={handleChange}/>
+                        <Input inputtype="input" label='Banner Description' name='midBannerDescription' value={midBannerDescription} onChange={handleChange}/>
                         <Flex>
-                            <Input inputtype="input" label='Middle Banner Button Text' name='midBannerBtnText' value={midBannerBtnText} onChange={handleChange}/>
-                            <Input inputtype="select" label='Middle Banner Link (eg. /contact)' name='midBannerLink' value={midBannerLink} items={props.availableRoutes} onSelectChange={handleChange}/>
+                            <Input inputtype="input" label='Banner Button Text' name='midBannerBtnText' value={midBannerBtnText} onChange={handleChange}/>
+                            <Input inputtype="select" label='Banner Link' name='midBannerLink' value={midBannerLink} items={props.availableRoutes} onSelectChange={handleChange}/>
                         </Flex>
-                      </Box>
+                        </Box>
                     </Minimizer>
                 }
                 <Input inputtype="textarea" label='Main Body Text' name='mainText' value={mainText} onChange={handleChange}/>
@@ -142,13 +168,14 @@ const StyledTabItems = styled.div`
     padding: 3vh;
     display: grid;
     grid-template-columns: 65% 35%;
+    grid-gap:8px;
 `;
 
 
 const Preview = styled.div`
     display:block;
     zoom: 30%;
-    padding: 5%;
+    padding-top: 56px;
     box-shadow: 2px 2px 2px;
 
     .overlay-blocker{

@@ -36,8 +36,9 @@ class Template extends Component {
         this.props.openMediaModal(event.target, 'template', null)
     }
 
-    clearInput = () => {
-        console.log('need to write this function')
+    clearInput = (inputName) => {
+        const event = { name: inputName, value: '' }
+        this.props.changeTemplateState(event, 'template', null, )
     }
 
     render() {
@@ -54,7 +55,7 @@ class Template extends Component {
                 </Flex>
                 <Input inputtype="inputSelector" label='Website Logo' name="siteLogo" value={siteLogo} onChange={this.handleChange} onClick={this.handleMediaModal} clearInput={this.clearInput}/>
                 <br/>
-                <Grid cols='16% 16%'>
+                <Grid cols='25% 25%' colsLarge={'35% 35%'} colsMed={'50% 50%'}>
                     <Input inputtype="select" label='Header Navigation button style' name='navButtons' value={navButtons} items={buttonStyle} onSelectChange={this.handleChange}/>
                     <Input inputtype="select" label='Webpage button style' name='siteButtons' value={siteButtons} items={buttonStyle} onSelectChange={this.handleChange}/>
                     <Button variant={navButtons}>{navButtons === 'contained' ? 'Contained Style' : 'Outlined Style'}</Button>
