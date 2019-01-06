@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import Input from '../../../components/UI/Input';
 import Button from '../../../components/UI/Buttons/Button';
 import Flex from '../../../components/UI/Wrappers/Flex';
+import Grid from '../../../components/UI/Wrappers/Grid';
 import Box from '../../../components/UI/Wrappers/Box';
 import Spinner from '../../../components/UI/Spinner';
 import Minimizer from '../../../components/UI/Wrappers/Minimizer';
@@ -55,12 +56,14 @@ class Homepage extends Component {
     
     render() {
         if (!this.props.homePage)return <div></div>;
+        const positionArray = [{value: 'Top'}, {value: 'Middle'}, {value: 'Bottom'}]
+        const floatArray = [{value: 'left'}, {value: 'right'}]
 
         const {
             topBanner, topBannerHalfwidth, topBannerImgSize, topBannerHWbackImg, topBannerHWBackColour, topBannerTxtRightSide, topBannerTxtLightTheme, topBannerLogo, topBannerfade, topBannerTitle, topBannerSubtitle, topBannerDescription, topBannerBtnText, topBannerLink,
             midBanner, midBannerHalfwidth, midBannerImgSize, midBannerHWbackImg, midBannerHWBackColour, midBannerTxtRightSide, midBannerTxtLightTheme, midBannerLogo, midBannerfade, midBannerTitle, midBannerSubtitle, midBannerDescription, midBannerBtnText, midBannerLink,
             bottomBanner,
-            mainText
+            mainText, mainTextPosition, mainTextCenterTitle, mainTextRightSide, mainTextBackColour, mainTextImg, mainTextImgAlign, mainTextImgWidth, mainTextImgHeight
         } = this.props.homePage.content
         console.log('Homepage Props', this.props)
 
@@ -137,6 +140,22 @@ class Homepage extends Component {
                   </Minimizer>
               }
               <Input inputtype="textarea" label='Main Body Text' name='mainText' value={mainText} onChange={this.handleChange}/>
+              <Minimizer >
+                <Box>
+                    <Flex>
+                        <Input inputtype="checkbox" sideLabel="Center Header text" name='mainTextCenterTitle' checked={mainTextCenterTitle} handleChange={this.handleCheckbox}/>
+                        <Input inputtype="checkbox" sideLabel="Align Text Right Side" name='mainTextRightSide' checked={mainTextRightSide} handleChange={this.handleCheckbox}/>
+                    </Flex>
+                    <Input inputtype="select" label='Main Text Page Position' name='mainTextPosition' value={mainTextPosition} items={positionArray} onSelectChange={this.handleChange}/>
+                    <Input inputtype="inputSelector" label='Add a Small Image' name="mainTextImg" value={mainTextImg} onChange={this.handleChange} onClick={this.handleMediaModal} clearInput={this.clearInput} />
+                    <Grid cols={'33% 33% 33%'} margin={'0 15px 0 0'}>
+                        <Input inputtype="select" label='Image align position' name='mainTextImgAlign' value={mainTextImgAlign} items={floatArray} onSelectChange={this.handleChange}/>
+                        <Input inputtype="input" type='number' label='Banner Image Width' name='mainTextImgWidth' value={mainTextImgWidth || 200} onChange={this.handleChange}/>
+                        <Input inputtype="input" type='number' label='Banner Image Height' name='mainTextImgHeight' value={mainTextImgHeight || 135} onChange={this.handleChange}/>
+                    </Grid>
+                    <Input inputtype="inputColourPicker" label='Banner Background Colour' name='mainTextBackColour' value={mainTextBackColour} changeColour={this.handleColourPicker} pageId={'home'}/>
+                </Box>
+              </Minimizer>
             </div>
             <Preview>
                 {/* <div className='overlay-blocker'></div> */}

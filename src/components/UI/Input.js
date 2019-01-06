@@ -108,7 +108,7 @@ const StyledElement = styled.div`
 
     }
 
-    > textarea{
+    >div textarea{
         height: 230px;
     }
 
