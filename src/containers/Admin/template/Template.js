@@ -18,7 +18,7 @@ class Template extends Component {
 
     handlesubmit = (event) => {
         event.preventDefault();
-        const url = `/${siteName}/template`
+        const url = `/${siteName}/site/template`
         this.props.templateChangeSubmit(url, this.props.template )
     }
 

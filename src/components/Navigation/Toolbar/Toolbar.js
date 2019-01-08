@@ -34,12 +34,13 @@ import DrawerToggle from '../SideDrawer/DrawerToggle/Drawertoggle';
 }
 
 const Header = styled.header`
+    max-width: 1500px;
     background-color: ${props => props.isTop ? props.background : props.theme.toolbarBackground};
     height: ${props => props.isTop ? '75px' : '56px'};
     width: 100%;
     position: fixed;
     top: 0;
-    left: 0;
+    /* left: 0; */
     display: flex;
     justify-content: space-between;
     align-items: center;

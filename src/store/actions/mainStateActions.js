@@ -11,7 +11,7 @@ export const setDataStore = ( data ) => {
 };
 
 export const initWebsiteState = () => {
-    const URL = `https://react-boiler-5ecbd.firebaseio.com/${siteName}.json`;
+    const URL = `https://react-boiler-5ecbd.firebaseio.com/${siteName}/site.json`;
 
     return dispatch => {
         axios.get( URL )

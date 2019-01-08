@@ -112,7 +112,7 @@ class Admin extends Component {
     const defaultContent = {
       mainText: `This is your newly added ${title} page`,
     }
-    let url = `/${siteName}/navigationItems`
+    let url = `/${siteName}/site/navigationItems`
     
     let newPageObj = {
       title,
@@ -131,7 +131,7 @@ class Admin extends Component {
         }
       }
 
-      url = `/${siteName}/navigationItems/${subpageIndex}/dropdownPages`
+      url = `/${siteName}/site/navigationItems/${subpageIndex}/dropdownPages`
 
       newPageObj = {
         title,
@@ -186,8 +186,8 @@ class Admin extends Component {
     console.log(pageInfo, key, parentKey)
     
     const URL = !parentKey
-      ? `/${siteName}/navigationItems/${key}/content`
-      : `/${siteName}/navigationItems/${parentKey}/dropdownPages/${key}/content`
+      ? `/${siteName}/site/navigationItems/${key}/content`
+      : `/${siteName}/site/navigationItems/${parentKey}/dropdownPages/${key}/content`
 
     const user = firebase.auth().currentUser;
 

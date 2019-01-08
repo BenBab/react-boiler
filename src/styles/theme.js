@@ -4,6 +4,7 @@ export const mainTheme = {
     primaryBackGroundColour:        '#455A64',
     primaryTxtColour:               '#fff',
     hoverPrimary:                   "#222",
+    websiteWrapperColour:           "#313131",
 
     buttonHoverBackground:          '#303e46',
     buttonhovertext:                '#fff',
