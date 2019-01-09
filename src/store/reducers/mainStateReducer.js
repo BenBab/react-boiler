@@ -45,6 +45,13 @@ const updateState = ( state, action ) => {
         });
     } else 
 
+    if(action.id === 'plugins'){
+        const newStateObj = Object.assign({}, state[action.id],{[name] : value})
+        return updateObject( state, {
+            [action.id] : newStateObj
+        });
+    } else 
+
     if( action.id === 'home'){
         updatedState = updateHomeState( state, action, name, value )
         if(value === ""){

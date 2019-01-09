@@ -80,6 +80,7 @@ import ColourPicker from './ColourPicker';
                 onChange={props.handleChange('checked')}
                 color="primary"
                 value="checked"
+                parent={props.parent}
             />
             <label>{props.sideLabel}</label>
         </Flex>
