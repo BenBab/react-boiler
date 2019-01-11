@@ -1,32 +1,60 @@
 import React, { Component } from 'react'
-import Accordian from '../../../components/UI/Accordian';
+import styled from 'styled-components'
 
-import Input from '../../../components/UI/Input'
-
+import Spinner from '../../../components/UI/Spinner';
+import ContactUsSettings from './contactUsSettings/ContactUsSettings'
 
 
 class Plugins extends Component {
 
-  handleCheckbox = check => event => {
-    console.log(check , event.target.checked)
+  state = {
+    contactUsPlugin: false,
+
+  }
+
+  accordianClick = (name) => {
+    this.setState({ [name]: !this.state[name] })
+  }
+
+  handleChange = (event, parentObj) =>{
+    //event.preventDefault();
+    this.props.changePluginState(event.target, 'plugins', parentObj, )
+  }
+
+  handleCheckbox = (check, parentObj) => event => {
+    console.log(check ,parentObj, event.target.checked)
     const newevent =  {
         name: event.target.name,
         value: event.target.checked
     }
-    //this.props.changePluginState(newevent, 'home', null, )
+    this.props.changePluginState(newevent, 'plugins', parentObj, )
   };
 
 
   render() {
+    if (!this.props.plugins)return <div><Spinner/></div>;
 
-    const pluginContactUs = false
+    console.log('plugins props', this.props)
 
     return (
-      <div>
-        <Input inputtype="checkbox" sideLabel="Contact Us Plugin" name='pluginContactUs' parent={'contactUs'} checked={pluginContactUs} handleChange={this.handleCheckbox}/>
-      </div>
+      <StyledPlugins>
+        <ContactUsSettings 
+          plugin={this.props.plugins.contactUs} 
+          name={'contactUsPlugin'} 
+          parentObj='contactUs'
+          availableRoutes={this.props.availableRoutes}
+          accordianClick={this.accordianClick}
+          handleCheckbox={this.handleCheckbox} 
+          handleChange={(e) => this.handleChange(e, 'contactUs')}
+        />
+      </StyledPlugins>
     )
   }
 }
 
+
+const StyledPlugins = styled.div`
+    width: 100%;
+
+`;
 export default Plugins;

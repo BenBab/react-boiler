@@ -18,7 +18,7 @@ import Template from './template/Template';
 import Homepage from './homepage/Homepage';
 import Plugins from './plugins/Plugins'
 import AuthModal from '../Auth/AuthModal';
-import ColourPicker from '../../components/UI/ColourPicker'
+
 class Admin extends Component {
 
   state = {
@@ -31,8 +31,6 @@ class Admin extends Component {
     newPageOpen : false,
     openMediaModal: false,
     mediaModalTabItemRef: [],
-    openColourPicker: false,
-    colourPickerInputRef: [],
     newPageToast: null,
     loading: false,
     error: null,
@@ -78,14 +76,6 @@ class Admin extends Component {
     });
     this.props.onLogoutClick()
   }
-
-  openColourPicker = (pageInfo, key, parentKey) => {
-    console.log('open colour picker', pageInfo, key, parentKey)
-    this.setState({openColourPicker : true, colourPickerInputRef: [pageInfo, key, parentKey] })
-  }
-
-  closeColourPicker = () => {this.setState({openColourPicker : false })}
-
 
   openMediaModal = (pageInfo, key, parentKey) => {
     console.log('opneMedia Modal', pageInfo, key, parentKey)
@@ -288,7 +278,6 @@ class Admin extends Component {
                 stateBackup={this.props.stateBackup}
                 cancelUpdate={this.props.onRevertChanges}
                 openMediaModal={this.openMediaModal}
-                openColourPicker={this.openColourPicker}
                 availableRoutes={this.props.availableRoutes}
                 template={this.props.template}
               />
@@ -336,8 +325,10 @@ class Admin extends Component {
             <Accordian title={'Plugins'} name={'plugins_accordian'} onClick={(e) => this.accordianClick(e)}>
             {plugins_accordian &&
               <Plugins
+                plugins={this.props.plugins}
+                changePluginState={this.props.onChangePageState}
+                availableRoutes={this.props.availableRoutes}
                 
-
               />
             }
             </Accordian>
@@ -356,21 +347,6 @@ class Admin extends Component {
                  imageURLs={this.state.mediaImages}
                  setMediaImages={this.setMediaImages} 
                  tabItemReference={this.state.mediaModalTabItemRef}
-                 onChangePageState={this.props.onChangePageState}
-                 />
-            </Modal>
-
-            <Modal
-                open={this.state.openColourPicker}
-                title="Choose a Colour"
-                description="Select the media location you would like to use"
-                handleClose={this.closeColourPicker}
-                fullWidth={false}
-                maxWidth={'xs'}
-              >
-                <ColourPicker
-                 handleClose={this.closeColourPicker}
-                 colourPickerInputRef={this.state.colourPickerInputRef}
                  onChangePageState={this.props.onChangePageState}
                  />
             </Modal>
@@ -416,6 +392,7 @@ const mapStateToProps = (state) => {
     isError: state.admin.error,
     availableRoutes: state.admin.routes,
     template: state.mainState.template,
+    plugins: state.mainState.plugins,
   }
 }
 

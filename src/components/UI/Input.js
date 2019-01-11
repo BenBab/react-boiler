@@ -77,7 +77,7 @@ import ColourPicker from './ColourPicker';
             <Checkbox
                 name={props.name}
                 checked={props.checked}
-                onChange={props.handleChange('checked')}
+                onChange={props.handleChange('checked', props.parentObj)}
                 color="primary"
                 value="checked"
                 parent={props.parent}

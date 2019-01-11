@@ -1,5 +1,5 @@
 import * as actionTypes from '../actions/actionTypes';
-import { updateObject, updateHomeState, updatePageUtil, updateSubPageUtil, cleanPageObj } from '../utility';
+import { updateObject, updateHomeState, updatePluginsState, updatePageUtil, updateSubPageUtil, cleanPageObj } from '../utility';
 
 const initialState = {
     home: null,
@@ -7,7 +7,8 @@ const initialState = {
     admin: null,
     images: null,
     state_copy: null,
-    template: null
+    template: null,
+    plugins: null
 };
 
 const setData = (state, action) => {
@@ -16,6 +17,7 @@ const setData = (state, action) => {
         navigationItems: action.data.navigationItems || null,
         images: action.data.images,
         template:action.data.template,
+        plugins: action.data.plugins,
         admin: action.data.administrator
     } );
 };
@@ -46,10 +48,15 @@ const updateState = ( state, action ) => {
     } else 
 
     if(action.id === 'plugins'){
-        const newStateObj = Object.assign({}, state[action.id],{[name] : value})
-        return updateObject( state, {
-            [action.id] : newStateObj
-        });
+        updatedState = updatePluginsState( state, action, name, value )
+        if(value === ""){
+            updatedState = cleanPageObj(
+                updatedState.plugins[action.parentId],
+                updatedState, action, updatePluginsState
+            )
+        }
+        return updatedState
+
     } else 
 
     if( action.id === 'home'){

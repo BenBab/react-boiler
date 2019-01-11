@@ -18,6 +18,19 @@ export const updateHomeState = ( state, action, name, value ) => {
     }
 }
 
+export const updatePluginsState = ( state, action, name, value ) => {
+    return { 
+        ...state,
+        plugins : {
+        ...state.plugins,
+            [action.parentId]: {
+                ...state.plugins[action.parentId],
+                [name] : value
+            }
+        }
+    }
+}
+
 export const updatePageUtil = ( state, action, name, value ) => {
 
     return {
