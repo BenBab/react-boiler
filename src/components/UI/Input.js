@@ -113,7 +113,6 @@ const StyledElement = styled.div`
         height: 230px;
     }
 
-
     > div input,
     div textarea,
     div select {
@@ -126,10 +125,13 @@ const StyledElement = styled.div`
         padding: 6px 10px;
         display: block;
         box-sizing: border-box;
+        border-radius: 5px;
 
         :focus {
         outline: none;
-        background-color: #ccc;
+        border-color: #9ecaed;
+        box-shadow: 0 0 10px #9ecaed;
+
         }
     }
 

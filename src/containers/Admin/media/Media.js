@@ -14,7 +14,6 @@ import Box from '../../../components/UI/Wrappers/Box';
 import Modal from '../../../components/UI/Modal';
 import Spinner from '../../../components/UI/Spinner';
 
-import Fade from '@material-ui/core/Fade';
 import Paper from '@material-ui/core/Paper';
 import Divider from '@material-ui/core/Divider';
 import ImgGridList from './ImgGridList'

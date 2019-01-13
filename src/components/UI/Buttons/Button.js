@@ -32,6 +32,7 @@ const button = (props) => {
             >
                 <label htmlFor="contained-button-file">
                 <Button 
+                    type={props.type || 'button'}
                     variant={props.variant || "contained"} 
                     onClick={props.onClick} 
                     disabled={disabled}>

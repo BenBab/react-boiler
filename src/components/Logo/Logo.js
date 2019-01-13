@@ -1,6 +1,6 @@
 import React from 'react';
 
-import burgerLogo from '../../assets/images/burger-logo.png';
+// import burgerLogo from '../../assets/images/burger-logo.png';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 

@@ -53,7 +53,7 @@ class Dashboard extends Component {
           <MainBanner bannerData={mainTextBannerObj}/>
         }
         
-        {contactUs &&  <ContactUs/> }
+        {contactUs &&  <ContactUs pluginOptions={plugins.contactUs}/> }
 
 
         {midBanner &&

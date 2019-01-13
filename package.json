@@ -2,11 +2,17 @@
   "name": "react-boilerplate",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:3001",
   "dependencies": {
     "@material-ui/core": "^3.6.0",
     "@material-ui/icons": "^3.0.1",
     "axios": "^0.18.0",
+    "body-parser": "^1.18.3",
+    "concurrently": "^4.1.0",
+    "express": "^4.16.4",
     "firebase": "^5.7.0",
+    "nodemailer": "^5.1.1",
+    "nodemon": "^1.18.9",
     "react": "^16.6.3",
     "react-color": "^2.17.0",
     "react-dom": "^16.6.3",
@@ -24,7 +30,11 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "client": "npm run start",
+    "server": "nodemon index.js",
+    "devServer": "set NODE_ENV=dev&&nodemon --inspect index.js",
+    "dev": "concurrently --kill-others-on-fail \"npm run devServer\" \"npm run client\""
   },
   "eslintConfig": {
     "extends": "react-app"

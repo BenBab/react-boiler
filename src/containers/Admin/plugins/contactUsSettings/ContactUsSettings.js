@@ -8,7 +8,7 @@ import MultiSelect from '../../../../components/UI/MultiSelect';
 const ContactUsSettings = (props) => {
     if (!props.plugin)return <div></div>;
 
-    const { contactUsActive, contactUsPages } = props.plugin
+    const { contactUsActive, contactUsPages, contactUsEmail } = props.plugin
     console.log('contact us settings props', props )
     return (
         <div >
@@ -29,7 +29,7 @@ const ContactUsSettings = (props) => {
             {contactUsActive &&
                 <Minimizer>
                     <div>
-                        hello
+                        <Input inputtype="input" label='Enter Business email where emails ar received' parentObj={props.parentObj} name='contactUsEmail' value={contactUsEmail} onChange={props.handleChange}/>
                     </div>
                 </Minimizer>
 
