@@ -5,6 +5,8 @@ export const mainTheme = {
     primaryTxtColour:               '#fff',
     hoverPrimary:                   "#222",
     websiteWrapperColour:           "#313131",
+    websiteMainColour:              "#FFF",
+    websiteFooterColour:            "#F2F2F2",
 
     buttonHoverBackground:          '#303e46',
     buttonhovertext:                '#fff',

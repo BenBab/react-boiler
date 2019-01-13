@@ -158,8 +158,7 @@ class Homepage extends Component {
               </Minimizer>
             </div>
             <Preview>
-                {/* <div className='overlay-blocker'></div> */}
-                <Dashboard pageInfo={this.props.homePage} {...this.props} template={this.props.template} />
+                <Dashboard pageInfo={this.props.homePage} {...this.props} template={this.props.template} overlayBlocker={true}/>
             </Preview>
           </StyledHomePage>
           <Flex justifyContent='flex-start'>
@@ -182,15 +181,6 @@ const Preview = styled.div`
     zoom: 30%;
     padding-top: 56px;
     box-shadow: 2px 2px 2px;
-
-    .overlay-blocker{
-        background: transparent;
-        width: 30%;
-        height: 86%;
-        z-index: 100;
-        position: absolute;
-        top: 20px;
-    }
 
     @media (max-width: 500px) {
         display:none

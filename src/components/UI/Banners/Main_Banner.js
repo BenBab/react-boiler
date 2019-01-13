@@ -40,21 +40,19 @@ export class Main_Banner extends Component {
         imgWidth={imageWidth}
         imgHeight={imageHeight}
         >
-        <Grid cols={'10% auto 10%'} >
-            <div></div>
-            <div className={'mainText'}>
-                {text}
-
-            </div>
-            <div></div>
-        </Grid>
+        
+        <div className={'mainText'}>
+          {text}
+        </div>
+            
+        
       </StyledMainBanner>
     )
   }
 }
 
 const StyledMainBanner = styled.div`
-    padding: 60px 15px;
+    padding: 40px 10%;
     background-color: ${props => props.backgroundColour || '#FFFFFF'};
 
     .mainText{

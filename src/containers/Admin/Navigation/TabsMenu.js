@@ -103,8 +103,10 @@ export default class TabMenu extends Component {
 }
 
 const StyledTabs = styled.div`
+    
     > header {
         background-color: ${props => props.theme.primaryBackGroundColour};  
+        z-index: 20;
 
     }
 `;

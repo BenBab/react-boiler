@@ -280,6 +280,7 @@ class Admin extends Component {
                 openMediaModal={this.openMediaModal}
                 availableRoutes={this.props.availableRoutes}
                 template={this.props.template}
+                plugins={this.props.plugins}
               />
               }
             </Accordian>
@@ -314,6 +315,7 @@ class Admin extends Component {
                 stateBackup={this.props.stateBackup}
                 availableRoutes={this.props.availableRoutes}
                 template={this.props.template}
+                plugins={this.props.plugins}
                 />
               <br/>
             </div>
@@ -327,8 +329,13 @@ class Admin extends Component {
               <Plugins
                 plugins={this.props.plugins}
                 changePluginState={this.props.onChangePageState}
+                pluginsChangeSubmit={this.props.onUpdatePageSubmit}
                 availableRoutes={this.props.availableRoutes}
-                
+                isUpdating={this.props.isUpdating}
+                isError={this.props.isError}
+                stateBackup={this.props.stateBackup}
+                cancelUpdate={this.props.onRevertChanges}
+      
               />
             }
             </Accordian>

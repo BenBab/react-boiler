@@ -41,13 +41,13 @@ class App extends Component {
           const item = this.props.navigationItems[key]
           if (!item.dropdownPages){
             routesState=[...routesState, {value: '/' + item.route}]
-            return <Route key={i} path={'/' + item.route } render={(props) => (<Dashboard pageInfo={item} {...props} template={this.props.template} />)}/>
+            return <Route key={i} path={'/' + item.route } render={(props) => (<Dashboard pageInfo={item} {...props} template={this.props.template} plugins={this.props.plugins}/>)}/>
           }
           else {
             return Object.keys(item.dropdownPages).map((key, i) => {
               const dropDownItem = item.dropdownPages[key]
               routesState=[...routesState, {value: '/pages/' + dropDownItem.route}]
-              return <Route key={i} path={'/pages/' + dropDownItem.route } render={(props) => (<Dashboard pageInfo={dropDownItem} {...props} template={this.props.template} />)} />
+              return <Route key={i} path={'/pages/' + dropDownItem.route } render={(props) => (<Dashboard pageInfo={dropDownItem} {...props} template={this.props.template} plugins={this.props.plugins}/>)} />
             })
           }
         })
@@ -62,7 +62,7 @@ class App extends Component {
     return (
       <ThemeProvider theme={theme}>
         <Layout template={this.props.template}>
-          <Route path='/' exact render={(props) => (<Dashboard pageInfo={homePage} {...props} template={this.props.template} />)} />
+          <Route path='/' exact render={(props) => (<Dashboard pageInfo={homePage} {...props} template={this.props.template} plugins={this.props.plugins} />)} />
           <Route path='/admin' component={Admin} />
           <Route path='/authenticate-admin' component={Auth} />
           <Route path='/ContactUs' component={ContactUs} />
@@ -79,6 +79,7 @@ const mapStateToProps = state => {
       home: state.mainState.home,
       navigationItems: state.mainState.navigationItems,
       template: state.mainState.template,
+      plugins: state.mainState.plugins,
   };
 }
 

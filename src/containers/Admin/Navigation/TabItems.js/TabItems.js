@@ -147,8 +147,7 @@ const TabItems = (props) => {
                 <Input inputtype="textarea" label='Main Body Text' name='mainText' value={mainText} onChange={handleChange}/>
               </div>
               <Preview>
-                <div className='overlay-blocker'></div>
-                <Dashboard pageInfo={props.itemProps} {...props} template={props.template} />
+                <Dashboard pageInfo={props.itemProps} {...props} template={props.template} overlayBlocker={true}/>
               </Preview>
             </StyledTabItems>
             <Flex justifyContent='flex-start'>
@@ -177,15 +176,6 @@ const Preview = styled.div`
     zoom: 30%;
     padding-top: 56px;
     box-shadow: 2px 2px 2px;
-
-    .overlay-blocker{
-        background: transparent;
-        width: 30%;
-        height: 86%;
-        z-index: 100;
-        position: absolute;
-        top: 20px;
-    }
 
     @media (max-width: 500px) {
         display:none
