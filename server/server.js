@@ -7,11 +7,9 @@ const app = express()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extend: false }))
 
-app.post('/api/form', (req, res) => {
-    // console.log((req.body))
+app.post('*/api/mailer', (req, res) => {
     serverMailer(req, res)
-
-    
 })
+
 
 module.exports = app;

@@ -28,7 +28,7 @@ class Dashboard extends Component {
 
     //PLUGINS
     let contactUs = null;
-    if(plugins.contactUs && plugins.contactUs.contactUsPages){
+    if(plugins && plugins.contactUs && plugins.contactUs.contactUsPages){
       contactUs = plugins.contactUs.contactUsPages.find( page => {
         return pageInfo.route === page      
       })

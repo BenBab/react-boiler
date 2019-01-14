@@ -21,7 +21,7 @@ class Minimizer extends Component {
         const { isOpen }= this.state
 
         return (
-            <StyledMinimizer >
+            <StyledMinimizer padding={this.props.padding}>
               <Flex margin='0'>
                 <IconButton aria-label="Add" color="primary" onClick={this.handleMinimizer}>
                     {isOpen
@@ -37,7 +37,7 @@ class Minimizer extends Component {
             <Collapse in={isOpen} >
               {isOpen
                 ?
-                <div>
+                <div className='minimized_children'>
                     {this.props.children}
                 </div>
                 :
@@ -63,6 +63,10 @@ const StyledMinimizer = styled.div`
 
     > div small{
         cursor:pointer;
+    }
+
+    .minimized_children{
+        padding: ${ props => props.padding ||'auto' };
     }
  
 `

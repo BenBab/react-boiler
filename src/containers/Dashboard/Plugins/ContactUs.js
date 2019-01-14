@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import styled from 'styled-components'
-import { siteName } from '../../../App_config'
 
 import axios from 'axios'
 
@@ -36,7 +35,7 @@ class ContactUs extends Component {
         if( !pluginOptions.contactUsEmail ) return alert('problem with website email configuration');
         this.setState({ spinner: true })
         try {
-            let form = await axios.post('api/form', {
+            let form = await axios.post('/api/mailer', {
                 name,
                 email,
                 message,
@@ -67,7 +66,7 @@ class ContactUs extends Component {
                 <h4></h4>
                 <form onSubmit={ this.handleSubmit.bind(this)}>
                     <Input inputtype='input' label='Name' name='name' onChange={this.handlechange}/>
-                    <Input inputtype='input' label='Email' name='email' onChange={this.handlechange}/>
+                    <Input inputtype='input' type='email' label='Email' name='email' onChange={this.handlechange}/>
                     <Input inputtype='textarea' label='Message' name='message' onChange={this.handlechange}/>
                     <Flex>
                         <Button type={'submit'} disabled={disableButton}>Send</Button>
@@ -77,7 +76,7 @@ class ContactUs extends Component {
                     </Flex>
                 </form>
                 {successEmail && 
-                    <Toast message={successEmail}/>
+                    <Toast message={successEmail} success={true}/>
                 }
                 {errorEmail &&
                     <Toast message={errorEmail} error={true}/>

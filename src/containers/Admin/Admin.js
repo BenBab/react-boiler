@@ -11,6 +11,7 @@ import Modal from '../../components/UI/Modal';
 import Button from '../../components/UI/Buttons/Button';
 import Toast from '../../components/UI/Toast';
 import Flex from '../../components/UI/Wrappers/Flex'
+import DeleteIcon from '@material-ui/icons/Delete';
 
 import NewPageForm from '../../components/Forms/NewPageForm';
 import Media from './media/Media';
@@ -29,6 +30,7 @@ class Admin extends Component {
 
     showSignIn : false,
     newPageOpen : false,
+    deletePageModal: false,
     openMediaModal: false,
     mediaModalTabItemRef: [],
     newPageToast: null,
@@ -99,7 +101,9 @@ class Admin extends Component {
     const { navigationItems } = this.props
 
     const route = title.replace(/ /g,'-').toLowerCase();
+
     const defaultContent = {
+      id: Date.now(),
       mainText: `This is your newly added ${title} page`,
     }
     let url = `/${siteName}/site/navigationItems`
@@ -167,12 +171,21 @@ class Admin extends Component {
     })
   }
 
-  updatePage(eventTarget, key, parent){
+
+  handleDeletePageModal = () => {
+     this.setState({ deletePageModal : !this.state.deletePageModal })
+  }
+
+  submitDeletePage = () => {
+    console.log('delete')
+  }
+
+  updatePage = (eventTarget, key, parent) => {
     console.log(eventTarget.value, key, parent)
     this.props.onChangePageState(eventTarget, key, parent)
   }
 
-  updatePageSubmit(pageInfo, key, parentKey){
+  updatePageSubmit = (pageInfo, key, parentKey) => {
     console.log(pageInfo, key, parentKey)
     
     const URL = !parentKey
@@ -289,7 +302,10 @@ class Admin extends Component {
             <Accordian title='Navigation and Pages' name={'navigation_accordian'} onClick={(e) => this.accordianClick(e)}>
             {navigation_accordian &&
             <div className="fullwidth">
+              <Flex justifyContent={'space-between'}>
               <Button onClick={this.handleNewPageButton}>Add a new page</Button>
+              <Button onClick={this.handleDeletePageModal}>Delete page &nbsp; <DeleteIcon /></Button>
+              </Flex>
               <Modal 
                 open={this.state.newPageOpen}
                 navigationItems={this.props.navigationItems}
@@ -303,11 +319,26 @@ class Admin extends Component {
                   handleSubmit={this.submitNewPage} />
               </Modal>
 
+              <Modal 
+                open={this.state.deletePageModal}
+                navigationItems={this.props.navigationItems}
+                handleClose={this.handleDeletePageModal} 
+                title="Delete Webpage"
+                description="You are about to delete selected page this is a permanent action, would you like to continue with deleting this page" >
+                
+                <Flex>
+                  <Button onClick={this.submitDeletePage}>Delete &nbsp; <DeleteIcon /></Button>
+                  <Button onClick={this.handleDeletePageModal}>Cancel</Button>
+                </Flex>
+                
+              </Modal>
+
+
               <br/><br/>
               <TabsMenu 
                 navigationItems={this.props.navigationItems} 
-                updatePageSubmit={this.updatePageSubmit.bind(this)} 
-                onChange={this.updatePage.bind(this)}
+                updatePageSubmit={this.updatePageSubmit} 
+                onChange={this.updatePage}
                 openMediaModal={this.openMediaModal}
                 isUpdating={this.props.isUpdating}
                 cancelUpdate={this.props.onRevertChanges}

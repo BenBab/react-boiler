@@ -28,8 +28,12 @@ class Toast extends Component {
   };
   
   render() {
+    let toastColour = 'rgb(49, 49, 49)';
+    if (this.props.error) toastColour = 'rgb(220, 52, 54)';
+    if (this.props.success) toastColour = 'rgb(70,154,16)';
+
     return (
-      <StyledSnackBar error={this.props.error}>
+      <StyledSnackBar toastColour={toastColour}>
           <Snackbar
           anchorOrigin={{
             vertical: 'bottom',
@@ -60,7 +64,7 @@ class Toast extends Component {
 
 const StyledSnackBar = styled.div`
     >div div{
-      background-color: ${props => props.error ? 'rgb(220, 52, 54)' : 'rgb(49, 49, 49)' };
+      background-color: ${props => props.toastColour };
       font-weight: ${props => props.error ? 'bold' : 'initial' };
     }
 `;

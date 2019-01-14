@@ -27,9 +27,9 @@ const ContactUsSettings = (props) => {
             </Flex>
 
             {contactUsActive &&
-                <Minimizer>
+                <Minimizer padding={'20px'}>
                     <div>
-                        <Input inputtype="input" label='Enter Business email where emails ar received' parentObj={props.parentObj} name='contactUsEmail' value={contactUsEmail} onChange={props.handleChange}/>
+                        <Input inputtype="input" label='Enter Business email where emails are received' parentObj={props.parentObj} name='contactUsEmail' value={contactUsEmail} onChange={props.handleChange}/>
                     </div>
                 </Minimizer>
 
