@@ -2,12 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import styled from 'styled-components';
-import NavigationItem from './NavigationItem/NavigationItem';
 import { withRouter } from 'react-router-dom';
 
 import Button from '../../UI/Buttons/Button'
 import DropdownMenu from '../../UI/Menu/DropdownMenu'
-import Template from '../../../containers/Admin/template/Template';
 class NavigationItems extends Component {
 
     state = {

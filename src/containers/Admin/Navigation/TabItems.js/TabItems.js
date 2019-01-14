@@ -9,6 +9,8 @@ import Flex from '../../../../components/UI/Wrappers/Flex';
 import Box from '../../../../components/UI/Wrappers/Box';
 import Spinner from '../../../../components/UI/Spinner';
 import Minimizer from '../../../../components/UI/Wrappers/Minimizer';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 import Dashboard from '../../../Dashboard/Dashboard'
  
@@ -21,6 +23,7 @@ const TabItems = (props) => {
             parentId={props.pageId} 
             parent={props.children} 
             onChange={props.onChange}
+            handlePageDelete={props.handlePageDelete}
             openMediaModal={props.openMediaModal}
             updatePageSubmit={props.updatePageSubmit}
             isUpdating={props.isUpdating}
@@ -28,6 +31,7 @@ const TabItems = (props) => {
             stateBackup={props.stateBackup}
             availableRoutes={props.availableRoutes}
             template={props.template}
+            plugins={props.plugins}
             />  )
     }
 
@@ -62,6 +66,10 @@ const TabItems = (props) => {
     const clearInput = (inputName) => {
         const event = { name: inputName, value: '' }
         props.onChange(event, props.pageId, props.parentId )
+    }
+
+    const deletePage = () => {
+        props.handlePageDelete(props.pageId, props.parentId)
     }
 
     const {
@@ -147,17 +155,26 @@ const TabItems = (props) => {
                 <Input inputtype="textarea" label='Main Body Text' name='mainText' value={mainText} onChange={handleChange}/>
               </div>
               <Preview>
-                <Dashboard pageInfo={props.itemProps} {...props} template={props.template} overlayBlocker={true}/>
+                <Dashboard pageInfo={props.itemProps} {...props} template={props.template} plugins={props.plugins} overlayBlocker={true}/>
               </Preview>
             </StyledTabItems>
-            <Flex justifyContent='flex-start'>
-                <Button margin="2px 5px 15px 20px" onClick={handlesubmit}>Update</Button>
-                {props.isUpdating &&
-                    <Spinner/>
-                }
-                {props.stateBackup &&
-                    <Button margin="2px 20px 15px 20px" onClick={props.cancelUpdate} >Undo Changes</Button>
-                }
+            <Flex justifyContent={'space-between'}>
+                <div>
+                    <Flex justifyContent='flex-start'>
+                        <Button margin="2px 5px 15px 20px" onClick={handlesubmit}>Update</Button>
+                        {props.isUpdating &&
+                            <Spinner/>
+                        }
+                        {props.stateBackup &&
+                            <Button margin="2px 20px 15px 20px" onClick={props.cancelUpdate} >Undo Changes</Button>
+                        }
+                    </Flex>
+                </div>
+                <DeletePageIcon>
+                    <IconButton onClick={deletePage}>
+                        <DeleteIcon fontSize='large'/>
+                    </IconButton>
+                </DeletePageIcon>
             </Flex>
         </Paper>
     );
@@ -181,6 +198,10 @@ const Preview = styled.div`
         display:none
 
     }
+`;
+
+const DeletePageIcon = styled.div`
+    padding: 5px;
 `;
 
 export default TabItems

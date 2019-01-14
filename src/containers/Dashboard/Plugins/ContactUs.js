@@ -63,7 +63,7 @@ class ContactUs extends Component {
       return (
             <ContactForm>
                 <h1>Contact Us</h1>
-                <h4></h4>
+                
                 <form onSubmit={ this.handleSubmit.bind(this)}>
                     <Input inputtype='input' label='Name' name='name' onChange={this.handlechange}/>
                     <Input inputtype='input' type='email' label='Email' name='email' onChange={this.handlechange}/>

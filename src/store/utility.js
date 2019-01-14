@@ -82,13 +82,12 @@ export const cleanPageObj = (obj, state, action, updatefunction) => {
 
     Object.keys(obj).map((key, i) => {
         let property = obj[key]
-        emptyVals.map(val => {
+        return emptyVals.map(val => {
             if ( key.includes(val) ){
                 property = '';
-                newState = updatefunction( newState, action, key, property );
+               return newState = updatefunction( newState, action, key, property );
             }
         })
-
     })
     
 

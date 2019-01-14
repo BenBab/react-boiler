@@ -11,7 +11,6 @@ import Modal from '../../components/UI/Modal';
 import Button from '../../components/UI/Buttons/Button';
 import Toast from '../../components/UI/Toast';
 import Flex from '../../components/UI/Wrappers/Flex'
-import DeleteIcon from '@material-ui/icons/Delete';
 
 import NewPageForm from '../../components/Forms/NewPageForm';
 import Media from './media/Media';
@@ -31,12 +30,13 @@ class Admin extends Component {
     showSignIn : false,
     newPageOpen : false,
     deletePageModal: false,
+    pageToDelete: null,
     openMediaModal: false,
     mediaModalTabItemRef: [],
+    mediaImages: [],
     newPageToast: null,
     loading: false,
     error: null,
-    mediaImages: [],
     
   }
   
@@ -172,12 +172,34 @@ class Admin extends Component {
   }
 
 
-  handleDeletePageModal = () => {
-     this.setState({ deletePageModal : !this.state.deletePageModal })
+  handleDeletePageModal = (pageId, parentId) => {
+     if (this.state.deletePageModal){
+       this.setState({ deletePageModal : false, pageToDelete: null })
+     }else {
+       this.setState({ deletePageModal : true, pageToDelete: { 'id': pageId, 'parentId': parentId } })
+     }
   }
 
   submitDeletePage = () => {
-    console.log('delete')
+    console.log(this.state.pageToDelete)
+    const that = this
+    const { id, parentId} = this.state.pageToDelete
+    let url = `/${siteName}/site/navigationItems/${id}`
+
+    if (parentId){
+      url = `/${siteName}/site/navigationItems/${parentId}/dropdownPages/${id}`
+    }
+
+    firebase.database().ref(url).remove()
+    .then(function() {
+      console.log("Remove succeeded.")
+      that.props.onInitWebsiteState()
+      that.setState({ deletePageModal: false, pageToDelete: null})
+    })
+    .catch(function(error) {
+      console.log("Remove failed: " + error.message)
+    });
+
   }
 
   updatePage = (eventTarget, key, parent) => {
@@ -302,10 +324,8 @@ class Admin extends Component {
             <Accordian title='Navigation and Pages' name={'navigation_accordian'} onClick={(e) => this.accordianClick(e)}>
             {navigation_accordian &&
             <div className="fullwidth">
-              <Flex justifyContent={'space-between'}>
               <Button onClick={this.handleNewPageButton}>Add a new page</Button>
-              <Button onClick={this.handleDeletePageModal}>Delete page &nbsp; <DeleteIcon /></Button>
-              </Flex>
+              
               <Modal 
                 open={this.state.newPageOpen}
                 navigationItems={this.props.navigationItems}
@@ -327,7 +347,7 @@ class Admin extends Component {
                 description="You are about to delete selected page this is a permanent action, would you like to continue with deleting this page" >
                 
                 <Flex>
-                  <Button onClick={this.submitDeletePage}>Delete &nbsp; <DeleteIcon /></Button>
+                  <Button onClick={this.submitDeletePage}>Delete</Button>
                   <Button onClick={this.handleDeletePageModal}>Cancel</Button>
                 </Flex>
                 
@@ -340,6 +360,7 @@ class Admin extends Component {
                 updatePageSubmit={this.updatePageSubmit} 
                 onChange={this.updatePage}
                 openMediaModal={this.openMediaModal}
+                handlePageDelete={this.handleDeletePageModal}
                 isUpdating={this.props.isUpdating}
                 cancelUpdate={this.props.onRevertChanges}
                 isError={this.props.isError}

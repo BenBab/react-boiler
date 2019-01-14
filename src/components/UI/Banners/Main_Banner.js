@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import styled from 'styled-components';
 import ReactHtmlParser from 'react-html-parser';
 
-import Grid from '../Wrappers/Grid';
-
 export class Main_Banner extends Component {
   
   convertToHtml = (mainText, image) => {
@@ -70,12 +68,8 @@ const StyledMainBanner = styled.div`
         text-align: ${props => props.centerTitle ? 'center' : props.textAlignment};
         margin: 0;
         
-    }
-        
-
-    
-
-    }
+    }      
+  }
     
     
 `;

@@ -61,6 +61,7 @@ export default class TabMenu extends Component {
                         parentId={parentId || null} 
                         itemProps={navigationItems[key]} 
                         onChange={this.props.onChange}
+                        handlePageDelete={this.props.handlePageDelete}
                         openMediaModal={this.props.openMediaModal}
                         updatePageSubmit={this.props.updatePageSubmit}
                         isUpdating={this.props.isUpdating}
@@ -68,6 +69,7 @@ export default class TabMenu extends Component {
                         stateBackup={this.props.stateBackup}
                         availableRoutes={this.props.availableRoutes}
                         template={this.props.template}
+                        plugins={this.props.plugins}
                         >
                         <h2>{ navigationItems[key].title }</h2>
                     </TabItems> )
