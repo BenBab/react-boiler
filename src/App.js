@@ -6,8 +6,6 @@ import Layout from './hoc/Layout/Layout';
 import Dashboard from './containers/Dashboard/Dashboard';
 import Admin from './containers/Admin/Admin';
 import Auth from './containers/Auth/Auth';
-import ContactUs from './components/Pages/ContactUs/ContactUs';
-//import DynamicPage from './components/Pages/DynamicPage/DynamicPage'
 
 import { ThemeProvider } from 'styled-components';
 import { mainTheme } from './styles/theme';
@@ -65,7 +63,6 @@ class App extends Component {
           <Route path='/' exact render={(props) => (<Dashboard pageInfo={homePage} {...props} template={this.props.template} plugins={this.props.plugins} />)} />
           <Route path='/admin' component={Admin} />
           <Route path='/authenticate-admin' component={Auth} />
-          <Route path='/ContactUs' component={ContactUs} />
           {dynamicRoutes}
         </Layout>
       </ThemeProvider>
