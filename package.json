@@ -27,13 +27,16 @@
     "styled-components": "^4.1.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "set NODE_ENV=production&&node index.js",
+
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "client": "npm run start",
+
+    "client": "react-scripts start",
     "server": "nodemon index.js",
     "devServer": "set NODE_ENV=dev&&nodemon --inspect index.js",
+    
     "dev": "concurrently --kill-others-on-fail \"npm run devServer\" \"npm run client\""
   },
   "eslintConfig": {
