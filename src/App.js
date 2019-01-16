@@ -22,7 +22,14 @@ class App extends Component {
 
   }
 
+  isClientOrServer = () => {
+    return (typeof window !== 'undefined' && window.document) ? 'client' : 'server';
+  };
+
   render() {
+
+    console.log(this.isClientOrServer())
+    
     //console.log('app file state', this.state)
     console.log('app file props', this.props)
     let dynamicRoutes = []
